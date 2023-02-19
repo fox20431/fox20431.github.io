@@ -1,3 +1,8 @@
+---
+title:  "Root Android"
+excerpt: "为 Android 获取 Root 权限"
+---
+
 # Root Android
 
 ## 获取Root
