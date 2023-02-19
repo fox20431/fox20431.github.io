@@ -1,19 +1,24 @@
-# JavaScript
+---
+title: "JavaScript Snippets"
+excerpt: "The Document will list the some JavaScript concepts."
+---
 
-## 实用技能
+# JavaScript Guidebook
 
-**JavaScript中有 6 个值为“假”：**
+The documentation will show some key knowledge points.
+
+## The False Value
 
 - false
 - null 
 - undefined
 - 0
-- ''（空字符）
+- '' (empty string)
 - NaN
 
-**时间相关函数**
+## Date
 
-获取具体时间戳
+Get current time:
 
 ```js
 let timestamp=new Date().getTime()；
@@ -31,7 +36,7 @@ Date 所能解析的时间戳
 6. new Date(yyyy,mth,dd);
 7. new Date(ms);
 
-**垃圾回收**
+## Gabage Collection
 
 内存分配 -> 内存使用 -> 内存回收
 
@@ -39,7 +44,7 @@ Date 所能解析的时间戳
 
 局部变量不用时被回收
 
-**模块化相关知识**
+## Module
 
 Node引入了JS模块化的概念
 
