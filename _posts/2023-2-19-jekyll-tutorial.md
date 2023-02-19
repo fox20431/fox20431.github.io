@@ -39,11 +39,13 @@ gem install bundler jekyll
 
 Jekyll uses the Liquid templating language to process templates.
 
+{% raw %}
 ```liquid
 # e.g.
 {{variable}}
 {% if statement %}
 ```
+{% endraw %}
 
 [More](https://jekyllrb.com/docs/liquid/)
 
