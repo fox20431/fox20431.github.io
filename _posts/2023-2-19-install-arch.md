@@ -506,8 +506,6 @@ Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
 
-
-
 ### Logitech Micr
 
 罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
