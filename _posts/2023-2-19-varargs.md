@@ -1,0 +1,75 @@
+# 可变参数(Variable Arguments)
+
+## 介绍
+
+Java1.5增加了新特性：可变参数：适用于参数个数不确定，类型确定的情况，java把可变参数当做数组处理。
+
+## 使用方法
+
+- 可变参数只能出现在参数列表的最后； 
+- `...`位于变量类型和变量名之间，前后有无空格都可以；
+- 调用可变参数的方法时，编译器为该可变参数隐含创建一个数组，在方法体中以数组的形式访问可变参数。
+
+### 示例：
+
+代码：
+
+```java
+public class TestVarArgus {
+    public static void dealArray(int... intArray) {
+        for (int i : intArray){
+            System.out.println(i + " ");
+        }
+    }
+ 
+    public static void main(String args[]) {
+        dealArray();
+        dealArray(1);
+        dealArray(1, 2, 3);
+    }
+```
+
+输出结果：
+
+```
+1
+1 2 3
+```
+
+## 与数组的区别
+
+- 可变参数是兼容数组类参数的，但是数组类参数却无法兼容可变参数。
+- 数组需要传递数组对象，而可变参数需要一一传递对应参数。
+
+### 实验
+
+代码：
+
+```java
+public class TestVarArgus {
+    public static void dealArray(int... intArray) {
+        for (int i : intArray){
+            System.out.println(i + " ");
+        }
+    }
+    public static void dealArray(int[] intArray) {
+        // 会有Duplicate method dealArray(int[]) in type TestVarArgus的错误
+        for (int i : intArray){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+ 
+    public static void main(String args[]) {
+        dealArray();
+        dealArray(1);
+        dealArray(1, 2, 3);
+    }
+}
+```
+
+结论：
+
+方法不能重载，两者发生冲突。在类的类型相同的情况下说明参数的类型也相同。
+
+

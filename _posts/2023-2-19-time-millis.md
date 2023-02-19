@@ -1,0 +1,1 @@
+Java中System.currentTimeMillis() 返回的是从GMT 1970年1月1日00:00:00开始到现在的毫秒数(long型)。1970年是UNIX系统正式发布的时间，所以这一时间也称为UNIX时间戳(UNIX epoch) 

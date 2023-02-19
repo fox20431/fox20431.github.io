@@ -1,0 +1,5 @@
+springboot yaml vs properties
+
+yaml连接数据库时，如果密码是纯数字，需要用双引号识别其为字符串
+
+properties连接数据库不需要，否则他会把双引号算入字符串中

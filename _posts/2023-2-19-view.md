@@ -1,0 +1,9 @@
+## 创建视图
+CREATE VIEW 视图名(列1，列2...) AS SELECT (列1，列2...) FROM ...;
+
+## 删除视图
+CREATE OR REPLACE VIEW 视图名 AS SELECT [...] FROM [...];
+
+## 注意
+
+视图的记录会根据表的内容变动

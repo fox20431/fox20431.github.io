@@ -1,0 +1,32 @@
+# this关键字
+
+**this 代指这个对象**
+
+## this.变量
+对象的变量即成员变量
+
+## this.方法
+对象的方法即成员方法
+
+## this作为构造函数
+
+```java
+class Person{
+    private String name;
+    private int age;
+    public Person() {
+        System.out.println("***");
+    }   
+    public Person(String name) {
+        this();//调用本类中的无参构造
+        this.name=name;
+    }
+    public Person(String name,int age) {
+        this(name);//调用本类中的有参构造
+        this.age=age;   
+    }
+    public String getInfo() {
+        return "姓名： "+this.name+"  年龄："+this.age;
+    }
+}
+```

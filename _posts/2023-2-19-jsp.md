@@ -1,0 +1,70 @@
+# JSP
+
+## 脚本元素
+### JSP Scriptlet
+`<% java code %>`  
+局部变量  
+局部方法  
+
+### JSP Declaration
+`<%! java code %>`  
+成员变量  
+成员方法  
+
+### JSP Expressions
+`<%= java code %>`  
+输出内容  
+
+## 注释
+`<!-- comment -->`  
+html5注释  
+在非脚本内使用  
+注释内容能在网页源码中看到  
+``` java
+// comment
+/* comment */
+```
+java注释  
+在脚本内使用  
+注释内容无法在网页源码中看到  
+`<%-- comment %-->`  
+jsp注释  
+在非脚本内使用  
+注释内容无法在网页源码中看到  
+(表现形式类似html，功能作用类似java)  
+
+
+## Page指令
+| Attribute    | function              |
+| -            | -                     |
+| language     | jsp页面使用的脚本语言 |
+| import       | 导入类                |
+| pageEncoding | jsp文件自身编码       |
+| contentType  | 浏览器解析编码        |
+
+
+## JSP内置对象
+### out
+输出对象，向客户端输出内容  
+
+### pageContext
+
+### request
+请求对象  
+存储客服端向服务端发送的信息  
+#### 常用方法
+`void setCharacterEncoding("编码格式utf-8")`:设置请求编码（tomcat7以前默认iso-8859-1，tomcat8以后默认utf-8）  
+`String getParameter(String name)`:根据请求的字段名key，返回字段值value  
+`String[] getParameterValues(String name)`:根据请求的字段名key，返回多个字段值value()  
+`getRequestDispatcher("b.jsp").forward(request,response);`:请求转发 的方式跳转页面A->B  
+`ServletContext getServerContext()`:获取项目的servletContext对象  
+#### 请求方式
+- get:内容显示在地址栏，地址栏内容长度受限且不安全  
+- post:文件上传  
+
+### response
+session
+application
+config
+page
+exception

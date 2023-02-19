@@ -1,0 +1,33 @@
+# 数组
+
+## 数组的声明方式
+
+```java
+type arrayName[];
+type[] arrayName;
+```
+
+## 数组的初始化
+
+静态数组
+
+```java
+int intArray[] = {1,2,3,4};
+```
+
+动态数组
+
+```java
+float floatArray[] = new float[3];
+floatArray[0] = 1.0f;
+floatArray[1] = 132.63f;
+floatArray[2] = 100F;
+```
+
+## 数组的使用方法
+
+## 数组本质
+对象
+
+
+## ArrayList

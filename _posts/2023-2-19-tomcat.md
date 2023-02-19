@@ -1,0 +1,33 @@
+# document
+## bin
+## catalina.sh
+tomcat主要脚本，用于启动和关闭tomcat服务器  
+## startup.sh
+启动运行tomcat实例，相当于`catalina.shstart`  
+## shutdown.sh
+停止tomcat实例的运行，相当于`catalina.shstop`  
+## daemon.sh
+tomcat服务的启动脚本，可以复制到`/etc/init`下使用  
+## catalina-tasks.xml
+定义tomcat载入的库文件，类文件  
+## version.sh
+查看当前tomcat的版本信息  
+## configtest.sh
+校验tomcat配置文件server.xml的格式、内容等是否合法、正确  
+## setclasspath.sh
+catalina.sh依赖这个脚本来设置tomcat的classpath等环境变量  
+## digest.sh
+用于生成加密过的tomcat用户密码  
+## tool-wrapper.sh
+一般和digest脚本结合使用  
+## bootstrap.jar
+tomcat启动时所依赖的一个类  
+## commons-daemon.jar
+jsvc工具所依赖的java类  
+## common-daemon-native.tar.gz
+jsvc工具，可以使tomcat以守护进程方式运行，需单独编译安装  
+## tomcat-juli.jar
+tomcat启动时所依赖的一个类，是一款tomcat开发时十分关键的一款jar包  
+## tomcat-native.tar.gz
+使tomcat可以使用apache的apr运行库，以增强tomcat的性能需单独编译安装  
+## conf

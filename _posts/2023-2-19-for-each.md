@@ -1,0 +1,43 @@
+# 增强for循环
+
+## 使用
+
+```java
+for( 类型 变量: 数组){...}
+```
+
+用指定类型变量去遍历数组
+
+### 示例：
+
+代码：
+
+```java
+public class ForDemo {
+    public static void main(String[] args) {
+        String []str= {"bob","tom","alice"};
+        for(String s:str) {
+            System.out.println(s);
+        }
+    }
+}
+```
+
+输出结果
+
+```
+bob
+tom
+alice
+```
+
+
+
+
+
+## 特点
+
+- 按照数组的下标顺序遍历，直到遍历完成循环结束
+- 循环的每次遍历都执行**数组元素赋值给变量**的操作
+- 变量类型与数组元素类型保持一致
+    - 例如：遍历对象为int[]，那么变量类型应为int

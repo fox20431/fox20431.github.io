@@ -1,0 +1,157 @@
+
+## web.xml约束
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+</web-app>
+```
+
+
+## Spring约束
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+</beans>
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.spri  resources:
+    static-locations:ngframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+</beans>
+```
+
+## Mybatis核心配置约束
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+</configuration>
+```
+
+## Mybatis映射约束
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="">
+
+</mapper>
+```
+
+## Gradle依赖
+```groovy
+// Junit jupiter
+testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
+testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
+
+// Database
+compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.6.2'
+
+// Database pool
+compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.5'
+
+
+// Web
+providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.3'
+providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+
+// Jackson
+compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+
+// Spring
+compile group: 'org.springframework', name: 'spring-context', version: '5.2.8.RELEASE'
+compile group: 'org.springframework', name: 'spring-aop', version: '5.2.8.RELEASE'
+compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.8.RELEASE'
+compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.8.RELEASE'
+
+// AOP
+compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.6'
+
+// Mybatis
+compile group: 'org.mybatis', name: 'mybatis', version: '3.5.5'
+compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.5'
+```
+
+
+## test任务
+
+```groovy
+test {
+    useJUnitPlatform()
+}
+```
+
+
+## spring-boot
+
+```groovy
+    // hot deploy
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // springboot starter
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // jdbc
+    implementation 'com.alibaba:druid:1.2.3'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
+```
+
+## applica
+```yaml
+server:
+  port: 8989
+
+spring:
+  application:
+    name: springboot-demo
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/springbootdb
+    username: root
+    password: '0204'
+
+mybatis:
+  mapper-locations: classpath:/cn/arrayblog/demo/mapper/*.xml
+  type-aliases-package: cn.arrayblog.demo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+```
