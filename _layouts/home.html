@@ -12,7 +12,7 @@ layout: archive
   {% assign posts = site.posts %}
 {% endif %}
 
-{% assign entries_layout = page.entries_layout | default: 'list' %}
+{% assign sorted_posts = site.posts | sort: "date" | reverse %}
 <div class="entries-{{ entries_layout }}">
   {% for post in posts %}
     {% include archive-single.html type=entries_layout %}
