@@ -1,7 +1,7 @@
 # main links
 main:
-  # - title: "Home"
-  #   url: /
+  - title: "Categories"
+    url: /categories/
   # - title: "Blog"
   #   url: /year-archive/
   # - title: "Sample Collections"
