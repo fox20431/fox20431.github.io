@@ -16,26 +16,26 @@ VLESS 无加密，很容易被GFW检测到。
 
 ```json
 {
-  "log": {
-    "loglevel": "warning"
-  },
-	"inbounds": {
-      "port": 10808,
-      "protocol": "vmess",
-			"settings": {
-					"clients": [
-							{
-									"id": "<uuid>",
-			"alterId": 4
-							}
-					]
-			}
-	},
-	"outbounds": [
-		{
-			"protocol": "freedom"
-		}
-	]
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": {
+        "port": 10808,
+        "protocol": "vmess",
+        "settings": {
+            "clients": [
+                {
+                    "id": "<uuid>",
+                    "alterId": 4
+                }
+            ]
+        }
+    },
+    "outbounds": [
+        {
+            "protocol": "freedom"
+        }
+    ]
 }
 ```
 
@@ -173,142 +173,142 @@ VMESS 自带加密
 
 ```json
 {
-  "log": {
-    "loglevel": "warning",
-    "access": "/usr/local/var/v2ray/access.log",
-    "error": "/usr/local/var/v2ray/error.log"
-  },
-  // 入站
-  "inbounds": [
-    // 开放socks端口
-    {
-      "port": 10808,
-      "listen": "127.0.0.1",
-      "protocol": "socks",
-      "sniffing": {
-        "enable": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "settings": {
-        "auth": "noauth",
-        "udp": true
-      }
+    "log": {
+        "loglevel": "warning",
+        "access": "/usr/local/var/v2ray/access.log",
+        "error": "/usr/local/var/v2ray/error.log"
     },
-    // 开放HTTP端口
-    {
-      "port": 8118,
-      "listen": "127.0.0.1",
-      "protocol": "http",
-      "settings": {
-        "timeout": 0
-      }
-    }
-  ],
-  // 出站规则
-  "outbounds": [
-    // 基于tls的vless
-    {
-      "protocol": "vless",
-      "tag": "us-vless-proxy",
-      "settings": {
-        "vnext": [
-          {
-            "address": "www.hihusky.com",
-            "port": 443,
-            "users": [
-              {
-                "id": "uuid",
-                "encryption": "none"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "serverName": "www.hihusky.com"
+    // 入站
+    "inbounds": [
+        // 开放socks端口
+        {
+            "port": 10808,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "sniffing": {
+                "enable": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true
+            }
         },
-        "wsSettings": {
-          "path": "/websocket"
+        // 开放HTTP端口
+        {
+            "port": 8118,
+            "listen": "127.0.0.1",
+            "protocol": "http",
+            "settings": {
+                "timeout": 0
+            }
         }
-      }
-    },
-    // vmess
-    {
-      "protocol": "vmess",
-      "tag": "us-proxy",
-      "settings": {
-        "vnext": [
-          {
-            "address": "www.hihusky.com",
-            "port": 20808,
-            "users": [
-              {
-                "id": "<uuid>",
-                "alterId": 0
-              }
-            ]
-          }
+    ],
+    // 出站规则
+    "outbounds": [
+        // 基于tls的vless
+        {
+            "protocol": "vless",
+            "tag": "us-vless-proxy",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "www.hihusky.com",
+                        "port": 443,
+                        "users": [
+                            {
+                                "id": "uuid",
+                                "encryption": "none"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "www.hihusky.com"
+                },
+                "wsSettings": {
+                    "path": "/websocket"
+                }
+            }
+        },
+        // vmess
+        {
+            "protocol": "vmess",
+            "tag": "us-proxy",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "www.hihusky.com",
+                        "port": 20808,
+                        "users": [
+                            {
+                                "id": "<uuid>",
+                                "alterId": 0
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        // 不走代理的出口
+        {
+            "protocol": "freedom",
+            "tag": "direct",
+            "settings": {}
+        }
+    ],
+    // 设置 dns
+    "dns": {
+        "servers": [
+            "114.114.114.114",
+            {
+                "address": "1.1.1.1",
+                "port": 53,
+                "domains": [
+                    "geosite:geolocation-!cn"
+                ]
+            }
         ]
-      }
     },
-    // 不走代理的出口
-    {
-      "protocol": "freedom",
-      "tag": "direct",
-      "settings": {}
+    // 设置路由
+    "routing": {
+        "domainStrategy": "IPOnDemand",
+        "rules": [
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:private"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "geosite:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "jp-proxy",
+                "network": "tcp,udp"
+            }
+        ]
     }
-  ],
-  // 设置 dns
-  "dns": {
-    "servers": [
-      "114.114.114.114",
-      {
-        "address": "1.1.1.1",
-        "port": 53,
-        "domains": [
-          "geosite:geolocation-!cn"
-        ]
-      }
-    ]
-  },
-  // 设置路由
-  "routing": {
-    "domainStrategy": "IPOnDemand",
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "ip": [
-          "geoip:private"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "domain": [
-          "geosite:cn"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "ip": [
-          "geoip:cn"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "jp-proxy",
-        "network": "tcp,udp"
-      }
-    ]
-  }
 }
 ```
 
