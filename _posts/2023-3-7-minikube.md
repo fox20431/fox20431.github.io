@@ -74,15 +74,15 @@ minikube start --image-mirror-country="cn"  --image-repository="registry.cn-hang
 minikube dashboard
 ```
 
-## 使用Kube
+## 管理K8S
 
-1. 安装kube的控制器
+### 安装kubectl
 
 ```sh
 sudo pacman -S kubectl
 ```
 
-2. 查看`kubectl`信息
+查看`kubectl`信息
 
 ```sh
 kubectl version
@@ -99,7 +99,9 @@ WARNING: version difference between client (1.26) and server (1.23) exceeds the 
 
 上述内容告知了 client（即kubectl）的版本信息，以及服务器（启动的minikube）版本信息等信息。
 
-3. 启动一个nginx的pod
+### Pod 管理
+
+启动一个nginx的pod
 
 ```sh
 kubectl run ngx --image=nginx:alphine
@@ -116,4 +118,72 @@ kubectl get pod
 ```sh
 kubectl describe pod ngx
 ```
+
+删除pod
+
+```sh
+kubectl delete pod <POD_NAME>
+```
+
+创建用于生成pod的yaml文件：
+
+```sh
+kubectl run ngx --image=nginx:alpine --dry-run=client -o yaml > pod.yml
+```
+
+*--dry-run用于模拟kubernetes命令，而不会真正地创建、更新或删除资源。--dry-client=client是默认参数*
+
+对文件稍作修改：
+
+```yml
+# 原文
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ngx
+  name: ngx
+spec:
+  containers:
+  - image: nginx:alpine
+    name: ngx
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+# 修改后
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ngx
+  name: ngx
+spec:
+  containers:
+  - image: nginx:alpine
+    name: ngx
+    resources: {}
+  restartPolicy: Always
+```
+
+应用该文件生成pod：
+
+```sh
+kubectl apply -f pod.yml
+```
+
+通过文件删除pod：
+
+```sh
+kubectl delete -f pod.yml
+```
+
+### 离线业务 Job/CronJob
+
+
+
+### Service
+
+
 
