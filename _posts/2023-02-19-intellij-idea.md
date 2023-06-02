@@ -6,8 +6,7 @@
 
 refer: https://youtrack.jetbrains.com/issue/IDEA-253459/buffer-overflow-detected-when-importing-a-project
 
-
-## springboot devtools热交换
+## springboot devtools 热交换
 
 1. build, execution, deploy > compiler > check 'compile independent automatically'
 
