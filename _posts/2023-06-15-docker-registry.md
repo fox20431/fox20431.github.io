@@ -140,3 +140,19 @@ http:
 But when I push the image to the server, no matter how to tag the repository, it always tells me `404`.
 
 This is missing on the Internet, so I don't think that's what I need to care about at the moment. At least in the time spent and the return is not worth it.
+
+## Test
+
+You can access the URL of the host to check the image, but you need to log in with basic auth, so please use the following cmd:
+
+```
+curl ip:port/v2/_catalog -u admin
+```
+
+If you use the docker client, you can use the following command:
+
+```
+docker login ip:port
+```
+
+Then you can push and pull image.
