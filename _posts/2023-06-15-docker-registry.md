@@ -156,3 +156,17 @@ docker login ip:port
 ```
 
 Then you can push and pull image.
+
+**THERE BE DRAGONS**
+
+ZeroSSL is not supported by Linux by default, we need install it.
+
+First, the Root Certification(CA) certification need to move to `/usr/local/share/ca-certificates/`; certificates must have a .crt extension in order to be included by update-ca-certificates.
+
+then run the command:
+
+```
+sudo update-ca-certificates
+```
+
+reboot the system.
