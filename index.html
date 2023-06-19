@@ -1,0 +1,30 @@
+---
+layout: default
+author_profile: true
+---
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <div class="archive">
+    {% unless page.header.overlay_color or page.header.overlay_image %}
+      <h1 id="page-title" class="page__title">{{ page.title }}</h1>
+    {% endunless %}
+    <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+
+    {% if paginator %}
+      {% assign posts = paginator.posts %}
+    {% else %}
+      {% assign posts = site.posts %}
+    {% endif %}
+
+    {% assign sorted_posts = site.posts | sort: "date" | reverse %}
+    <div class="entries-{{ entries_layout }}">
+      {% for post in posts %}
+        {% include archive-single.html type=entries_layout %}
+      {% endfor %}
+    </div>
+
+    {% include paginator.html %}
+  </div>
+</div>
