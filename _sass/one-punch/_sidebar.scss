@@ -121,7 +121,7 @@
    Author profile and links
    ========================================================================== */
 
-.author__avatar {
+.author-avatar {
   display: table-cell;
   vertical-align: top;
   width: 36px;
@@ -144,7 +144,7 @@
   }
 }
 
-.author__content {
+.author-content {
   display: table-cell;
   vertical-align: top;
   padding-left: 15px;
@@ -164,7 +164,7 @@
   }
 }
 
-.author__name {
+.author-name {
   margin: 0;
 
   @include breakpoint($large) {
@@ -172,12 +172,12 @@
     margin-bottom: 10px;
   }
 }
-.sidebar .author__name {
+.sidebar .author-name {
   font-family: $sans-serif;
   font-size: $type-size-5;
 }
 
-.author__bio {
+.author-bio {
   margin: 0;
 
   @include breakpoint($large) {
@@ -186,7 +186,7 @@
   }
 }
 
-.author__urls-wrapper {
+.author-urls-wrapper {
   position: relative;
   display: table-cell;
   vertical-align: middle;
@@ -200,7 +200,7 @@
     }
   }
 
-  .author__urls {
+  .author-urls {
     span.label {
       padding-left: 5px;
     }
@@ -238,7 +238,7 @@
   }
 }
 
-.author__urls {
+.author-urls {
   display: none;
   position: absolute;
   right: 0;

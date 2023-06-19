@@ -2,8 +2,6 @@
 main:
   - title: "Categories"
     url: /categories
-  - title: "About Me"
-    url: /about-me
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"

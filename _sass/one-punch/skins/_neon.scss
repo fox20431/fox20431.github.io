@@ -1,16 +1,16 @@
 /* ==========================================================================
-   Plum skin
+   Neon skin
    ========================================================================== */
 
 /* Colors */
-$background-color: #521477 !default;
-$text-color: #fffd86 !default;
-$primary-color: #c327ab !default;
+$background-color: #141010 !default;
+$text-color: #fff6fb !default;
+$primary-color: #f21368 !default;
 $border-color: mix(#fff, $background-color, 20%) !default;
 $code-background-color: mix(#000, $background-color, 15%) !default;
 $code-background-color-dark: mix(#000, $background-color, 20%) !default;
 $form-background-color: mix(#000, $background-color, 15%) !default;
-$footer-background-color: mix(#000, $background-color, 25%) !default;
+$footer-background-color: mix($primary-color, #000, 10%) !default;
 $link-color: $primary-color !default;
 $link-color-hover: mix(#fff, $link-color, 25%) !default;
 $link-color-visited: mix(#000, $link-color, 25%) !default;
@@ -19,10 +19,10 @@ $masthead-link-color-hover: mix(#000, $text-color, 20%) !default;
 $navicon-link-color-hover: mix(#000, $background-color, 30%) !default;
 
 /* notices */
-$notice-background-mix: 70% !default;
-$code-notice-background-mix: 80% !default;
+$notice-background-mix: 90% !default;
+$code-notice-background-mix: 95% !default;
 
-/* plum syntax highlighting (base16) */
+/* neon syntax highlighting (base16) */
 $base00: #ffffff !default;
 $base01: #e0e0e0 !default;
 $base02: #d0d0d0 !default;
@@ -40,18 +40,11 @@ $base0d: #3777e6 !default;
 $base0e: #ad00a1 !default;
 $base0f: #cc6633 !default;
 
-.author__urls.social-icons i,
-.author__urls.social-icons .svg-inline--fa,
+.author-urls.social-icons i,
+.author-urls.social-icons .svg-inline--fa,
 .page__footer-follow .social-icons i,
 .page__footer-follow .social-icons .svg-inline--fa  {
   color: inherit;
-}
-
-.page__content {
-  a,
-  a:visited {
-    color: inherit;
-  }
 }
 
 /* next/previous buttons */

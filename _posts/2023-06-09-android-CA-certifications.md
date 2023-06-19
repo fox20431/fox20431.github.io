@@ -10,7 +10,7 @@ title: Android CA Certifications
 
 后续了解到是因为TLS验证证书问题，原因是我服务器使用的ZeroSSL CA签发的免费内证书其根证书并不在Android系统中，所以系统无法建立TLS连接。
 
-我尝试通过 `Settings` 里为安装 CA，却无济于事，其原因我也在[掘金博文](https://juejin.cn/post/7149098344445378568)上找到答案：
+我尝试通过 `Settings` 里为安装 CA，却无济于事，其原因我也在[掘金文章](https://juejin.cn/post/7149098344445378568)上找到答案：
 
 **Android 7.0以后，用户安装的证书不被系统认可。**
 

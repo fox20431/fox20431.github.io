@@ -68,7 +68,7 @@ body {
   }
 }
 
-.page__title {
+.page-title {
   margin-top: 0;
   line-height: 1;
 
@@ -211,7 +211,7 @@ body {
       }
     }
 
-    .page__title,
+    .page-title,
     .page__meta,
     .page__lead,
     .btn {
@@ -223,7 +223,7 @@ body {
       max-width: $medium;
     }
 
-    .page__title {
+    .page-title {
       font-size: $type-size-2;
 
       @include breakpoint($small) {

@@ -12,7 +12,8 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
+one-punch-skin          : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
@@ -104,30 +105,29 @@ analytics:
 
 # Site Author
 author:
-  name             : "Ming Li"
-  avatar           : "/assets/img/avatar.jpg"
-  bio              : "To Make the World Better."
-  location         : "Shenzhen, China"
-  email            : "fox20431@gmail.com"
+  name        : "Ming Li"
+  avatar      : "/assets/img/avatar.jpg"
+  bio         : "To Make the World Better."
+  location    : "Shenzhen, China"
   links:
-    # - label: "Email"
-    #   icon: "fas fa-fw fa-envelope-square"
-    #   url: "mailto:fox20431@gmail.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
+    - label: "Email"
+      icon: "fa-solid fa-envelope"
+      url: "mailto:fox20431@gmail.com"
+    - label: "GitHub"
+      icon: "fa-brands fa-github"
+      url: "https://github.com/fox20431"
+    - label: "Bilibili"
+      icon: "fa-brands fa-bilibili"
+      url: "https://space.bilibili.com/9192551"
     - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
+      icon: "fa-brands fa-twitter"
       url: "https://twitter.com/fox20431"
     - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
+      icon: "fa-brands fa-facebook"
       url: "https://www.facebook.com/profile.php?id=100033376125502"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/fox20431"
     - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+      icon: "fa-brands fa-instagram"
+      url: "https://instagram.com/fox24031"
 
 # Site Footer
 footer:
