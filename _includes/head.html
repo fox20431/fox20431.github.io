@@ -4,7 +4,7 @@
 
 {% unless site.atom_feed.hide %}
   <link
-    href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative-url }}{% endif %}"
+    href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"
     type="application/atom+xml"
     rel="alternate"
     title="{{ site.title }} Feed">
@@ -17,7 +17,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative-url }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 <!-- awesome font -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
@@ -30,6 +30,6 @@
 
 {% if site.head_scripts %}
   {% for script in site.head_scripts %}
-    <script src="{{ script | relative-url }}"></script>
+    <script src="{{ script | relative_url }}"></script>
   {% endfor %}
 {% endif %}
