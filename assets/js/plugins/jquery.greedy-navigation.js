@@ -6,14 +6,14 @@ Copyright (c) 2015 Luke Jackson http://lukejacksonn.com
 
 $(function() {
 
-  var $btn = $("nav.greedy-nav .greedy-nav__toggle");
+  var $btn = $("nav.greedy-nav .greedy-nav-toggle");
   var $vlinks = $("nav.greedy-nav .visible-links");
   var $hlinks = $("nav.greedy-nav .hidden-links");
   var $nav = $("nav.greedy-nav");
   var $logo = $('nav.greedy-nav .site-logo');
   var $logoImg = $('nav.greedy-nav .site-logo img');
   var $title = $("nav.greedy-nav .site-title");
-  var $search = $('nav.greedy-nav button.search__toggle');
+  var $search = $('nav.greedy-nav button.search-toggle');
 
   var numOfItems, totalSpace, closingTime, breakWidths;
 

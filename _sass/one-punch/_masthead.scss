@@ -11,7 +11,7 @@
   animation-delay: 0.15s;
   z-index: 20;
 
-  &__inner-wrap {
+  &-inner-wrap {
     @include clearfix;
     margin-left: auto;
     margin-right: auto;
@@ -58,7 +58,7 @@
   font-size: $type-size-8;
 }
 
-.masthead__menu {
+.masthead-menu {
   float: left;
   margin-left: 0;
   margin-right: 0;
@@ -81,7 +81,7 @@
   }
 }
 
-.masthead__menu-item {
+.masthead-menu-item {
   display: block;
   list-style-type: none;
   white-space: nowrap;

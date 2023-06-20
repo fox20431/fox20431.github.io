@@ -385,7 +385,7 @@ body:hover .visually-hidden button {
   }
 }
 
-.greedy-nav__toggle {
+.greedy-nav-toggle {
   &:before {
     @supports (pointer-events: none) {
       content: '';
@@ -412,7 +412,7 @@ body:hover .visually-hidden button {
   }
 }
 
-.greedy-nav__toggle:hover {
+.greedy-nav-toggle:hover {
   .navicon,
   .navicon:before,
   .navicon:after {
@@ -587,7 +587,7 @@ a.reversefootnote {
 // full screen video fixes
 :-webkit-full-screen-ancestor {
   .masthead,
-  .page__footer {
+  .page-footer {
     position: static;
   }
 }

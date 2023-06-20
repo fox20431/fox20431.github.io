@@ -2,7 +2,7 @@
    FOOTER
    ========================================================================== */
 
-.page__footer {
+.page-footer {
   @include clearfix;
   float: left;
   margin-left: 0;
@@ -46,12 +46,12 @@
   }
 }
 
-.page__footer-copyright {
+.page-footer-copyright {
   font-family: $global-font-family;
   font-size: $type-size-7;
 }
 
-.page__footer-follow {
+.page-footer-follow {
   ul {
     margin: 0;
     padding: 0;
