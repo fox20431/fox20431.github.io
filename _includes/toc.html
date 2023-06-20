@@ -102,7 +102,7 @@
         {% assign _classWorkspace = _classWorkspace[1] | split: '"' %}
         {% assign htmlClass = _classWorkspace[0] %}
 
-        {% if htmlClass contains "no_toc" %}
+        {% if htmlClass contains "no-toc" %}
             {% continue %}
         {% endif %}
 

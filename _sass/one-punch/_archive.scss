@@ -23,7 +23,7 @@
     font-size: 0.6em;
 }
 
-.archive__item {
+.archive-item {
   position: relative;
 
   a {
@@ -36,19 +36,15 @@
   }
 }
 
-.archive__subtitle {
+.archive-subtitle {
   margin: 1.414em 0 0.5em;
   padding-bottom: 0.5em;
   font-size: $type-size-5;
   color: $muted-text-color;
   border-bottom: 1px solid $border-color;
-
-  + .list__item .archive__item-title {
-    margin-top: 0.5em;
-  }
 }
 
-.archive__item-title {
+.archive-item-title {
   margin-bottom: 0.25em;
   font-family: $sans-serif-narrow;
   line-height: initial;
@@ -71,13 +67,13 @@
 
 /* remove border*/
 .page__content {
-  .archive__item-title {
+  .archive-item-title {
     margin-top: 1em;
     border-bottom: none;
   }
 }
 
-.archive__item-excerpt {
+.archive-item-excerpt {
   margin-top: 0;
   font-size: $type-size-6;
 
@@ -90,7 +86,7 @@
   }
 }
 
-.archive__item-teaser {
+.archive-item-teaser {
   position: relative;
   border-radius: $border-radius;
   overflow: hidden;
@@ -100,7 +96,7 @@
   }
 }
 
-.archive__item-caption {
+.archive-item-caption {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -143,7 +139,7 @@
   }
 }
 
-.grid__item {
+.grid-item {
   margin-bottom: 2em;
 
   @include breakpoint($small) {
@@ -203,12 +199,12 @@
     }
   }
 
-  .archive__item-title {
+  .archive-item-title {
     margin-top: 0.5em;
     font-size: $type-size-5;
   }
 
-  .archive__item-excerpt {
+  .archive-item-excerpt {
     display: none;
 
     @include breakpoint($medium) {
@@ -217,7 +213,7 @@
     }
   }
 
-  .archive__item-teaser {
+  .archive-item-teaser {
     @include breakpoint($small) {
       max-height: 200px;
     }
@@ -237,12 +233,12 @@
   margin-bottom: 2em;
   border-bottom: 1px solid $border-color;
 
-  .archive__item-title {
+  .archive-item-title {
     margin-bottom: 0;
   }
 }
 
-.feature__item {
+.feature-item {
   position: relative;
   margin-bottom: 2em;
   font-size: 1.125em;
@@ -267,13 +263,13 @@
       margin-left: gutter(of 12);
     }
 
-    .feature__item-teaser {
+    .feature-item-teaser {
       max-height: 200px;
       overflow: hidden;
     }
   }
 
-  .archive__item-body {
+  .archive-item-body {
     padding-left: gutter(1 of 12);
     padding-right: gutter(1 of 12);
   }
@@ -296,11 +292,11 @@
     clear: both;
     font-size: 1.125em;
 
-    .archive__item {
+    .archive-item {
       float: left;
     }
 
-    .archive__item-teaser {
+    .archive-item-teaser {
       margin-bottom: 2em;
     }
 
@@ -314,12 +310,12 @@
     }
 
     @include breakpoint($small) {
-      .archive__item-teaser {
+      .archive-item-teaser {
         float: left;
         width: span(5 of 12);
       }
 
-      .archive__item-body {
+      .archive-item-body {
         float: right;
         padding-left: gutter(0.5 of 12);
         padding-right: gutter(1 of 12);
@@ -337,11 +333,11 @@
     clear: both;
     font-size: 1.125em;
 
-    .archive__item {
+    .archive-item {
       float: left;
     }
 
-    .archive__item-teaser {
+    .archive-item-teaser {
       margin-bottom: 2em;
     }
 
@@ -357,12 +353,12 @@
     @include breakpoint($small) {
       text-align: right;
 
-      .archive__item-teaser {
+      .archive-item-teaser {
         float: right;
         width: span(5 of 12);
       }
 
-      .archive__item-body {
+      .archive-item-body {
         float: left;
         width: span(7 of 12);
         padding-left: gutter(0.5 of 12);
@@ -380,12 +376,12 @@
     clear: both;
     font-size: 1.125em;
 
-    .archive__item {
+    .archive-item {
       float: left;
       width: 100%;
     }
 
-    .archive__item-teaser {
+    .archive-item-teaser {
       margin-bottom: 2em;
     }
 
@@ -401,12 +397,12 @@
     @include breakpoint($small) {
       text-align: center;
 
-      .archive__item-teaser {
+      .archive-item-teaser {
         margin: 0 auto;
         width: span(5 of 12);
       }
 
-      .archive__item-body {
+      .archive-item-body {
         margin: 0 auto;
         width: span(7 of 12);
       }
@@ -418,16 +414,16 @@
 
 .archive {
   .feature__wrapper {
-    .archive__item-title {
+    .archive-item-title {
       margin-top: 0.25em;
       font-size: 1em;
     }
   }
 
-  .feature__item,
-  .feature__item--left,
-  .feature__item--center,
-  .feature__item--right {
+  .feature-item,
+  .feature-item--left,
+  .feature-item--center,
+  .feature-item--right {
     font-size: 1em;
   }
 }

@@ -1,6 +1,6 @@
 {% if paginator.total_pages > 1 %}
   <nav class="pagination">
-    {% assign first_page_path = paginator.first_page_path | default: site.paginate_path | replace: 'page:num', '' | replace: '//', '/' | relative_url %}
+    {% assign first_page_path = paginator.first_page_path | default: site.paginate_path | replace: 'page:num', '' | replace: '//', '/' | relative-url %}
       <ul>
       {% comment %} Link for previous page {% endcomment %}
       {% if paginator.previous_page %}
@@ -10,7 +10,7 @@
           </li>
         {% else %}
           <li>
-            <a href="{{ site.paginate_path | replace: ':num', paginator.previous_page | replace: '//', '/' | relative_url }}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+            <a href="{{ site.paginate_path | replace: ':num', paginator.previous_page | replace: '//', '/' | relative-url }}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
           </li>
         {% endif %}
       {% else %}
@@ -50,7 +50,7 @@
       {% for index in (page_start..page_end) %}
         {% if index == paginator.page %}
           <li>
-            <a href="{{ site.paginate_path | replace: ':num', index | replace: '//', '/' | relative_url }}" class="disabled current">{{ index }}</a>
+            <a href="{{ site.paginate_path | replace: ':num', index | replace: '//', '/' | relative-url }}" class="disabled current">{{ index }}</a>
           </li>
         {% else %}
           {% comment %} Distance from current page and this link {% endcomment %}
@@ -60,7 +60,7 @@
             {% assign dist = 0 | minus: dist %}
           {% endif %}
           <li>
-            <a href="{{ site.paginate_path | replace: ':num', index | relative_url }}">{{ index }}</a>
+            <a href="{{ site.paginate_path | replace: ':num', index | relative-url }}">{{ index }}</a>
           </li>
         {% endif %}
       {% endfor %}
@@ -78,14 +78,14 @@
         </li>
       {% else %}
         <li>
-          <a href="{{ site.paginate_path | replace: ':num', paginator.total_pages | replace: '//', '/' | relative_url }}">{{ paginator.total_pages }}</a>
+          <a href="{{ site.paginate_path | replace: ':num', paginator.total_pages | replace: '//', '/' | relative-url }}">{{ paginator.total_pages }}</a>
         </li>
       {% endif %}
 
       {% comment %} Link next page {% endcomment %}
       {% if paginator.next_page %}
         <li>
-          <a href="{{ site.paginate_path | replace: ':num', paginator.next_page | replace: '//', '/' | relative_url }}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+          <a href="{{ site.paginate_path | replace: ':num', paginator.next_page | replace: '//', '/' | relative-url }}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
         </li>
       {% else %}
         <li>

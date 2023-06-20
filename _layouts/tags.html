@@ -11,7 +11,7 @@ layout: archive
   {% endif %}
 {% endfor %}
 
-<ul class="taxonomy__index">
+<ul class="taxonomy-index">
   {% for i in (1..tags_max) reversed %}
     {% for tag in site.tags %}
       {% if tag[1].size == i %}
@@ -25,15 +25,15 @@ layout: archive
   {% endfor %}
 </ul>
 
-{% assign entries_layout = page.entries_layout | default: 'list' %}
+{% assign entries-layout = page.entries-layout | default: 'list' %}
 {% for i in (1..tags_max) reversed %}
   {% for tag in site.tags %}
     {% if tag[1].size == i %}
-      <section id="{{ tag[0] | slugify | downcase }}" class="taxonomy__section">
-        <h2 class="archive__subtitle">{{ tag[0] }}</h2>
-        <div class="entries-{{ entries_layout }}">
+      <section id="{{ tag[0] | slugify | downcase }}" class="taxonomy-section">
+        <h2 class="archive-subtitle">{{ tag[0] }}</h2>
+        <div class="entries-{{ entries-layout }}">
           {% for post in tag.last %}
-            {% include archive-single.html type=entries_layout %}
+            {% include archive-single.html type=entries-layout %}
           {% endfor %}
         </div>
         <a href="#page-title" class="back-to-top">{{ site.data.ui-text[site.locale].back_to_top | default: 'Back to Top' }} &uarr;</a>

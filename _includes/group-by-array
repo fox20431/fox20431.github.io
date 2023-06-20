@@ -35,13 +35,13 @@
 {% for name in group_names %}
 
 <!-- Collect if contains -->
-{% assign __item = __empty_array %}
+{% assign -item = __empty_array %}
 {% for __element in include.collection %}
 {% if __element[include.field] contains name %}
-{% assign __item = __item | push: __element %}
+{% assign -item = -item | push: __element %}
 {% endif %}
 {% endfor %}
 
 <!-- Push to group_items -->
-{% assign group_items = group_items | push: __item %}
+{% assign group_items = group_items | push: -item %}
 {% endfor %}

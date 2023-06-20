@@ -437,7 +437,7 @@
   }
 }
 
-.nav__list .nav__items {
+.nav__list .nav-items {
   margin: 0;
   font-size: 1.25rem;
 
@@ -467,7 +467,7 @@
 }
 
 @include breakpoint(max-width $large - 1px) {
-  .nav__list input:checked ~ .nav__items {
+  .nav__list input:checked ~ .nav-items {
     -webkit-transition: 0.5s ease-in-out;
     transition: 0.5s ease-in-out;
     max-height: 9999px; /* exaggerate max-height to accommodate tall lists*/

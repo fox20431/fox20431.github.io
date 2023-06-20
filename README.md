@@ -10,6 +10,12 @@ This is the blog that records the notes.
 
 If you have installed the ruby on your machine, follow the following steps to run it. If not, check `Install Ruby`.
 
+Install the dependencies:
+
+```sh
+bundle install
+```
+
 Build the site and make it available to Jekyll, a local server.
 
 ```
@@ -21,10 +27,6 @@ bundle exec jekyll serve
 **for Windows**
 
 Download and install `Ruby` from [the official website](https://www.ruby-lang.org/en/) then execute the command:
-
-```sh
-bundle install
-```
 
 **for Linux**
 

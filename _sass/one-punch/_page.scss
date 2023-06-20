@@ -353,7 +353,7 @@ body {
   }
 }
 
-.taxonomy__section {
+.taxonomy-section {
   margin-bottom: 2em;
   padding-bottom: 1em;
 
@@ -361,16 +361,16 @@ body {
     border-bottom: solid 1px $border-color;
   }
 
-  .archive__item-title {
+  .archive-item-title {
     margin-top: 0;
   }
 
-  .archive__subtitle {
+  .archive-subtitle {
     clear: both;
     border: 0;
   }
 
-  + .taxonomy__section {
+  + .taxonomy-section {
     margin-top: 2em;
   }
 }
@@ -384,7 +384,7 @@ body {
   color: $muted-text-color;
 }
 
-.taxonomy__index {
+.taxonomy-index {
   display: grid;
   grid-column-gap: 2em;
   grid-template-columns: repeat(2, 1fr);

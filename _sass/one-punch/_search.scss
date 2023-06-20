@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .layout--search {
-  .archive__item-teaser {
+  .archive-item-teaser {
     margin-bottom: 0.25em;
   }
 }
@@ -91,7 +91,7 @@
     font-size: $type-size-6;
   }
 
-  .archive__item {
+  .archive-item {
     margin-bottom: 2em;
 
     @include breakpoint($large) {
@@ -103,11 +103,11 @@
     }
   }
 
-  .archive__item-title {
+  .archive-item-title {
     margin-top: 0;
   }
 
-  .archive__item-excerpt {
+  .archive-item-excerpt {
     margin-bottom: 0;
   }
 }
@@ -119,13 +119,13 @@
   margin-bottom: 2em;
 }
 
-.archive__item-title .ais-Highlight {
+.archive-item-title .ais-Highlight {
   color: $primary-color;
   font-style: normal;
   text-decoration: underline;
 }
 
-.archive__item-excerpt .ais-Highlight {
+.archive-item-excerpt .ais-Highlight {
   color: $primary-color;
   font-style: normal;
   font-weight: bold;

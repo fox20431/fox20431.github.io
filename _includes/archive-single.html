@@ -11,17 +11,17 @@
   {% assign title = post.title %}
 {% endif %}
 
-<div class="{{ include.type | default: 'list' }}__item">
+<div class="mt-4">
   <article
-    class="archive__item"
+    class="archive-item"
     itemscope
     itemtype="https://schema.org/CreativeWork">
     {% if include.type == "grid" and teaser %}
-      <div class="archive__item-teaser">
+      <div class="archive-item-teaser">
         <img src="{{ teaser | relative_url }}" alt="">
       </div>
     {% endif %}
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive-item-title no-toc" itemprop="headline">
       {% if post.link %}
         <a href="{{ post.link }}">{{ title }}</a>
         <a href="{{ post.url | relative_url }}" rel="permalink">
@@ -40,7 +40,7 @@
       {{ post.date | date_to_string }}
     </div>
     {% if post.excerpt %}
-      <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>
+      <p class="archive-item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>
     {% endif %}
   </article>
 </div>
