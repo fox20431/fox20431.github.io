@@ -497,7 +497,7 @@ $(document).ready(function() {
       var ref = result[item].ref;
       if(store[ref].teaser){
         var searchitem =
-          '<div class="list-item">'+
+          '<div>'+
             '<article class="archive-item" itemscope itemtype="https://schema.org/CreativeWork">'+
               '<h2 class="archive-item-title" itemprop="headline">'+
                 '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
@@ -511,7 +511,7 @@ $(document).ready(function() {
       }
       else{
     	  var searchitem =
-          '<div class="list-item">'+
+          '<div>'+
             '<article class="archive-item" itemscope itemtype="https://schema.org/CreativeWork">'+
               '<h2 class="archive-item-title" itemprop="headline">'+
                 '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+

@@ -24,7 +24,7 @@ const hitTemplate = function(hit) {
   const content = hightlight.html && hightlight.html.value  || "";
 
   return `
-    <div class="list-item">
+    <div">
       <article class="archive-item" itemscope itemtype="https://schema.org/CreativeWork">
         <h2 class="archive-item-title" itemprop="headline"><a href="{{ site.baseurl }}${url}">${title}</a></h2>
         <div class="archive-item-excerpt" itemprop="description">${content}</div>
