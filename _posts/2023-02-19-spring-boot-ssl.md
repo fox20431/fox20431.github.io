@@ -10,7 +10,7 @@ keytool -genkeypair -alias <cert-name> -keyalg RSA -keysize 2048 -storetype PKCS
 
 `storetype`有两种类型，推荐使用`PKCS`：
 
-- PKCS12: [Public Key Cryptographic Standards](https://en.wikipedia.org/wiki/PKCS_12) is a password protected format that can contain multiple certificates and keys; it's an industry-wide used format
+- PKCS12: [Public Key Cryptographic Standards](https://en.wikipedia.org/wiki/PKCS_12) is a password-protected format that can contain multiple certificates and keys; it's an industry-wide used format
 - JKS: [Java KeyStore](https://en.wikipedia.org/wiki/Keystore) is similar to PKCS12; it's a proprietary format and is limited to the Java environment.
 
 ## 配置Spring Boot项目

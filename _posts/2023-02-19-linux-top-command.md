@@ -1,3 +1,5 @@
+# Linux Top Command
+
 PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND
 
 序号列名含义

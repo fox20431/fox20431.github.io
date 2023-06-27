@@ -1,10 +1,22 @@
-# 关于 Chrome 浏览器的小技巧
+---
+title: Chrome tips
+---
 
-**截图**
+
+
+# Chrome tips
+
+**Capture full size page screenshot**
+
+1. Get into (F12)Development mode of the page;
+2. Press `ctrl + shift + p` to call the cmd panel;
+3. Input `Screenshot capture full size screenshot`.
 
 打开浏览器，f12 进入开发者模式，使用快捷键 Ctrl+shift+p 呼出命令面板，输入 full 来过滤命令，找到一个 名叫 Screenshot capture full size screenshot  的那一项，点击后稍等一会就会生成一整图片保存到本地。
 
-**删除 Auto Fill/Auto Complete 选项**
+
+
+**Delete Auto Fill/Auto Complete Options**
 
 就是平时浏览器输入框，会自动提示的内容。
 

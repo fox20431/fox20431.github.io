@@ -1,6 +1,12 @@
+---
+title: Java collect vs arrays vs map
+---
+
+
+
 Collection 继承树🌲(Collection inheritance tree)
 
-![Collection Hierarchy in Java | Collection Interface - Scientech Easy](assets/java-collection-hierarchy.png)
+
 
 ## 解读
 

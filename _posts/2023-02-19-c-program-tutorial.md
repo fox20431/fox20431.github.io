@@ -1,3 +1,9 @@
+---
+title: C program tutorial
+---
+
+
+
 # C
 
 ## Getting Start

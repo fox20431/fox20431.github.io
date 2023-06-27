@@ -1,12 +1,18 @@
-# HttpURLConnection 明文传输问题
+---
+title: Android development HttpURLConnection error for cleartext error
+---
 
-## 起因
+
+
+# Android development HttpURLConnection error for cleartext error
+
+**Reason**
 
 > Starting with Android 9 (API level 28), cleartext support is disabled by default.
 
-[Android developers官方原文](https://developer.android.com/training/articles/security-config#CleartextTrafficPermitted)
+Excerpt to [Android developers官方原文](https://developer.android.com/training/articles/security-config#CleartextTrafficPermitted)
 
-## 现象
+**Logs**
 
 如果采用明文传输将出现如下报错：
 
@@ -26,13 +32,11 @@ at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:63
 at java.lang.Thread.run(Thread.java:764)
 ```
 
-## 解决
+**Solutions**
 
-提示：
-网络传输需要获取网络权限，添加`uses-permission android:name="android.permission.INTERNET" />`到`AndroidManifest.xml`中：
+提示：网络传输需要获取网络权限，添加`uses-permission android:name="android.permission.INTERNET" />`到`AndroidManifest.xml`中：
 
 ```xml
-
 <manifest ...>
   ...
 	<uses-permission android:name="android.permission.INTERNET" />

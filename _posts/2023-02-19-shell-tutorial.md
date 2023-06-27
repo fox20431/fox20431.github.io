@@ -1,63 +1,97 @@
-# SHELL
-## SHELL格式规范
-- 文件名后缀`.sh`  
-- 文本首行声明Shell类型
-  例如：`#!/bin/sh`  
-- 文件为可执行文件
-	执方式为绝对路径或者相对路径  
+---
+title: Shell tutorial
+---
 
-## 注释方式
-### 单行注释
-`#`  
 
-### 多行注释
+
+# Shell Tutorial
+
+## How to create a simple shell script
+
+1. Create the file with `.sh` suffix.
+
+2. Insert the `#!/bin/sh` in the first line of the file to specify which shell it is to be executed by.
+
+3. Make the file executable.
+
+   ```sh
+   chmod +x script.sh
+   ```
+
+## Comment
+
+Single comment: `#`
+
+Multiple line comment:
+
+```sh
+:<<[character]
+the words to be commented
+[character]
 ```
-:<<[字符]
-语句
-[字符]
-```
-例如：  
-```
+For example:
+```sh
 :<<!
-语句
+the words to be commented
 !
 ```
 
-## Shell变量
-### 定义变量
-`your_name="null"` 
+## Variable
 
-变量命名规范：  
+**define the variable**
+
+`your_name="null"`
+
+变量命名规范：
 
 - 命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。
 - 中间不能有空格，可以使用下划线（_）。
 - 不能使用标点符号。
 - 不能使用bash里的关键字（可用help命令查看保留关键字）。
-### 使用变量
-`$your_name`或`${your_name}`  
-### 只读变量
-`readonly your_name`  
-只读变量的值不能被改变。  
-### 删除变量
-`unset your_name`  
-unset 命令不能删除只读变量。  
-### 变量类型
-- 局部变量
-- 环境变量
-	所有程序都能访问环境变量。  
-- shell变量  
-	是由shell程序设置的特殊变量。  
 
-## Shell字符串
+### call the variable
+
+`$your_name`或`${your_name}`  
+
+### read-only variable
+
+`read-only your_name`
+
+只读变量的值不能被改变。  
+
+### delete variable
+
+`unset your_name`
+
+unset 命令不能删除只读变量。  
+
+### variable type
+
+- 局部变量
+
+- 环境变量
+	
+	所有程序都能访问环境变量。  
+	
+- shell变量
+
+  是由shell程序设置的特殊变量。  
+
+## Value
+
+### String
+
 ### 单引号
 `str='this is a string'`  
 单引号里的任何字符都会原样输出  
 ### 双引号
 `str="this is a string"`
+
 - 双引号里可以有变量  
 - 双引号里可以出现转义字符  
 ### 获取字符串长度
 `${#str}`  
+
 ### 提取子字符串
 `${str:a:b}`  
 提取对象为变量str，长度为从a到b  
@@ -69,10 +103,14 @@ echo `expr index "$str" io`
 # 输出最先出现字符的位置
 # 输出2
 ```
-## Shell数组
+### Array
+
 ### 定义数组
-`数组名=(值1 值2 ... 值n)`  
+
+`数组名=(值1 值2 ... 值n)`
+
 例如：  
+
 ```
 array_name=(value0 value1 value2 value3)
 ```
@@ -108,18 +146,19 @@ valuen=${array_name[n]}
 
 - 手动阀
 
-## 返回值
+## Exit Code
 
-返回0 为正常执行
+The exit code is provided when the command has been finished.
 
-返回1 为错误执行
+0 Successful
 
+1 Failed
 
-
-可以通过
+you can use follow the command to get the exit code:
 
 ```sh
+echo $?
+# or
 echo $#
 ```
 
-查看上个命令的执行结果
