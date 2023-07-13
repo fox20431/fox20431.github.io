@@ -16,7 +16,7 @@ There are a few concerns related to the creation of the GitHub OAuth App.
 2. We need to generate the Client Secret manually.
 3. The purpose of the `application name` is to display it on the consent page for the user, so fill it in with any name you want.
 4. `Homepage URL` and `Application description` are in order to help users learn more about your application, so fill it with any content you want too.
-5. The `Authorization callback URL` is important, only the value of the `Authorization callback URL` can carry the `authorization code` and receive the `access token`.
+5. The `Authorization callback URL` is important, it determines which page the authorization server will redirect. The redirect page will contain an `authorization code` to register the `access token`.
 
 ## Create the Application
 

@@ -14,6 +14,20 @@ Linux下使用DHCP协议很简单，及安装`dhcpcd`并用`systemctl`启动它�
 
 对于静态IP的设置，要看使用的网络管理是什么。
 
+这里建议推荐使用 `systemd-networkd` 并关闭其它的网络管理工具。
+
+```sh
+# 关闭networking
+sudo systemctl disable networking
+sudo systemctl stop networking
+# 移除netplan培植文件
+sudo cp /etc/netplan/*.yaml /path/to/backup/location/
+sudo rm /etc/netplan/*.yaml
+# 启动systemd-networkd
+sudo systemctl enable systemd-networkd
+sudo systemctl restart systemd-networkd
+```
+
 ### for Systemd-Networkd
 
 该网络管理为 Systemd 自带的网络管理，常见于 Arch 发行版。
@@ -76,7 +90,7 @@ network:
 
 让配置文件生效：
 
-```
+```sh
 sudo netplan apply
 ```
 
@@ -85,7 +99,7 @@ refer：https://www.linuxtechi.com/static-ip-address-on-ubuntu-server/
 
 ### for Networking
 
-典型代表，debian
+这个服务本质上使用`ifup`命令，这个命令本质上属于`ifupdown`包中。典型代表，Debian。
 
 修改配置文件
 

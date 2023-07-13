@@ -22,7 +22,7 @@ We will deploy the `Docker Registry` next; I adopt the nginx proxy to make it ca
 
 Config the Docker Registry.
 
-Create the `./data/config.yml`
+Create the `./config/config.yml`
 
 ```yaml
 version: 0.1
@@ -56,7 +56,7 @@ More detail to see [the documentation](https://docs.docker.com/registry/configur
 
 Then we also need to create the `htpasswd` file to support docker registry auth.
 
-To `htpasswd` file, you need install the `htpasswd` tool.
+To `htpasswd` file, you need to install the `htpasswd` tool.
 
 ```sh
 # for debain/ubunut
@@ -73,11 +73,11 @@ Then run the docker:
 
 ```sh
 docker run -d -p 5000:5000 \
-    -v ./data/registry/:/var/lib/registry/ \
-    -v ./data/auth/:/auth/ \
-    -v ./data/config.yml:/etc/docker/registry/config.yml \
+    -v $HOME/docker/registry/registry/:/var/lib/registry/ \
+    -v $HOME/docker/registry/auth/:/auth/ \
+    -v $HOME/docker/registry/config/config.yml:/etc/docker/registry/config.yml \
     --restart=always \
-    --name=docker-registry \
+    --name=registry \
     registry
 ```
 
@@ -87,7 +87,7 @@ Config nginx.
 http {
     # ...
     
-    upstream docker-registry {
+    upstream registry {
         server 127.0.0.1:5000;
     }
     
@@ -103,7 +103,7 @@ http {
         # ...
             
         location /v2/ {
-            proxy_pass          http://docker-registry;
+            proxy_pass          http://registry;
             proxy_set_header    Host              $http_host;   # required for docker client's sake
             proxy_set_header    X-Real-IP         $remote_addr; # pass on real client's IP
             proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
@@ -157,16 +157,3 @@ docker login ip:port
 
 Then you can push and pull image.
 
-**THERE BE DRAGONS**
-
-ZeroSSL is not supported by Linux by default, we need install it.
-
-First, the Root Certification(CA) certification need to move to `/usr/local/share/ca-certificates/`; certificates must have a .crt extension in order to be included by update-ca-certificates.
-
-then run the command:
-
-```
-sudo update-ca-certificates
-```
-
-reboot the system.
