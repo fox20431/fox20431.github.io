@@ -7,6 +7,10 @@ excerpt:
 
 # Java Resources
 
+我们要明白，无论开发环境还是生产环境 Java 运行的程序都是编译后的，所以通过程序获取的相对路径都是相对于编译后程序的位置。
+
+现在Maven还有Gradle项目的目录都包含了`src/main/java`和`src/main/resource`，这些目录下的内容都会被递归编译/拷贝到jar包的根目录中。
+
 There are a lot of approaches to getting project resources that refer to files located in `src/main/resources` here. 
 
 Why is it necessary to be recorded?
@@ -46,19 +50,9 @@ I recommend `Approach 2` to get resources because the interface provides a lot o
 
 ## PITFALL
 
-Now, I have to say an **important** pitfall.
-
-As we all know, the project should be packed in a `jar` package when the project is deployed on the server. There is no doubt the project resources are packed in `jar` package.
-
-THIS IS IMPORTANT!!!
-
-YOU CAN'T USE ANY FILE INTERFACE.
-
-OR IT WILL REPORT:
+Java中的文件系统API不支持直接访问位于JAR文件内部的资源。如果您想访问JAR文件中的资源，应该使用Java的类加载器来获取资源的输入流，而不是通过文件系统路径。
 
 ```
 Caused by: java.io.FileNotFoundException: class path resource [dicts/JMdict] cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/C:/Users/ming/projects/omoidasu-api/build/libs/omoidasu-api-1.0-SNAPSHOT.jar!/BOOT-INF/classes!/dicts/JMdict
 ```
-
-This is because the `jar` is just a file, not its own file system so that file packed in it is not a file now.
 
