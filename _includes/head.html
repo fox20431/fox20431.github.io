@@ -12,10 +12,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script>
-  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-</script>
-
 <!-- For all browsers -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 <!-- awesome font -->
@@ -25,7 +21,14 @@
 <!-- tailwindcss -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-  tailwind.config = {}
+  tailwind.config = {
+    corePlugins: {
+      preflight: false,
+    },
+    theme: {},
+    variants: {},
+    plugins: [],
+  }
 </script>
 
 {% if site.head_scripts %}

@@ -122,7 +122,7 @@ $(function() {
   });
 
   // Add anchors for headings
-  $('.page__content').find('h1, h2, h3, h4, h5, h6').each(function() {
+  $('.page-content').find('h1, h2, h3, h4, h5, h6').each(function() {
     var id = $(this).attr('id');
     if (id) {
       var anchor = document.createElement("a");

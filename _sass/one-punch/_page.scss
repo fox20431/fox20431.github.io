@@ -55,7 +55,7 @@ body {
     width: 100%;
     clear: both;
 
-    .page__content,
+    .page-content,
     .page__meta,
     .page__share {
       position: relative;
@@ -87,7 +87,7 @@ body {
   font-size: $type-size-4;
 }
 
-.page__content {
+.page-content {
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;
