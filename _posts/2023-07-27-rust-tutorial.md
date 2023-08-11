@@ -15,6 +15,7 @@ Rust 教程
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default stable
 ```
 
 **For Windows**
@@ -69,13 +70,9 @@ cargo new <your_project_name>
 cargo run
 ```
 
-## 开发
+## 开发环境
 
-### 开发环境配置
-
-**for Windows**
-
-推荐使用 VSCode + WSL 开发，具体与纳音
+推荐使用 VSCode + WSL 开发，以下针对 VSCode + WSL 环境配置做介绍。
 
 VSCode 插件推荐：
 
@@ -97,9 +94,48 @@ Rust 分析工具，必备。
 
 ![image-20230801144115864](./assets/image-20230801144115864.png)
 
+
+
+当你安装 `CodeLLDB` 之后，可以配置`.vscode/launch.json` 设置调试的的配置：
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug Current File",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=${fileBasenameNoExtension}"
+                ]
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
+```
+
+通过 `Primary Side bar` 选择 `Run and Debugger` 选择上述的配置的名称即可调试当前打开的文件，相比寻找 `main` 函数上的按钮速度更快。
+
 ### 预先引入
 
 像其他语言一样，Rust 预先引入了常用类型、traints 以及常用宏，详情可见 [prelude官方文档](https://doc.rust-lang.org/std/prelude/index.html) 。
+
+```rust
+use std::prelude::rust_2018;
+```
+
+也可以利用IDE进行跳转源码，查看预编译的类型。
+
+在翻阅源码的时候我发现，除了`std` 包含 `prelude` 之外， `core` 也包含，那么它两者是什么关系呢？ 
+
+`std` 建立在 `core` 基础之上。
+
+默认引入 `std` 而不是 `core` 。因为 `std` 比 `core` 的 `prelude`  多 `Vec` ，实际开发中 `Vec` 是不需要显性引入。
 
 ### 数据结构
 

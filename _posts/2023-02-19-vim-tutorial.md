@@ -119,6 +119,22 @@ ctrl+x ctrl+f（补全文件名）
 
 jump back: ctrl+o / ctrl+t
 
+## 帮助文档
+
+在VIM中使用下述命令
+
+```vim
+:help
+```
+
+如果你有制定的文件需要打开，可以指定：
+
+```
+:help term.txt
+```
+
+
+
 ---
 
 relative line number: 

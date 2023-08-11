@@ -2,36 +2,27 @@
 
 ## 准备阶段
 
-### step 1
+1. 准备一个U盘
 
-准备一个U盘
+2. 下载镜像
 
-### step 2
+   下载地址： 
 
-下载镜像
+   - [清华镜像站](https://mirrors.tuna.tsinghua.edu.cn/) 
+   - [科大镜像站][http://mirrors.ustc.edu.cn/ ]
 
-下载地址： 
+3. 下载烧录工具
 
-- [清华镜像站](https://mirrors.tuna.tsinghua.edu.cn/) 
-- [科大镜像站][http://mirrors.ustc.edu.cn/ ]
+   - Windows环境推荐使用**USBWriter**应用
 
-### step 3
+   - Linux环境推荐使用**dd**命令
 
-下载烧录工具
+   - Mac环境也推荐使用**dd**命令
 
-- Windows环境推荐使用**USBWriter**应用
-- Linux环境推荐使用**dd**命令
-- Mac环境也推荐使用**dd**命令
 
-### step 4
+4. 使用烧录工具将镜像烧入到U盘
 
-使用烧录工具将镜像烧入到U盘
-
-### step 5
-
-开机选择从U盘进入系统
-
-*具体操作搜索引擎查询关键字“开机启动项”*
+5. 重启电脑并选择U盘作为开机启动项
 
 ## 安装基本系统
 
@@ -90,7 +81,9 @@ swap分区：与windows虚拟内存原理类似，当内存的使用超出实际
 #### 4.格式化分区
 
 efi分区文件系统：exfat
-swap分区文件系统：swap  
+
+swap分区文件系统：swap
+
 家目录/根目录分区文件系统：ext4
 
 > efi格式化建议选择exfat，也可以选择fat16和fat32。fat16容量最大支持2GB，fat32最大只能拷贝4GB，exfat没有他们的缺点。
@@ -117,47 +110,21 @@ mkdir /mnt/home
 mount /dev/家目录分区 /mnt/home
 ```
 
-### 网络处理
+### 链接网络
 
-#### 连接网络
-
-- 无线网连接命令：`iw/wpa_supplicant`
-- 有线网连接命令：`dhcpcd`
-
-这里讲述下无线网络，无线网络加密方式多种，比如 `WEP` 和 `WPA/WPA2` 。
-
-现在主流的使用 `WPA/WPA2` 加密（更新更安全）。
-
-**操作**
-
-1. 扫描网络
+通过下述命令进入 `iw` 交互界面：
 
 ```sh
-sudo iw dev <无线网络接口> scan
+iwctl
 ```
 
-2. 连接网络
+在交互终端中执行下述操作连接网络：
 
 ```sh
-sudo iw dev <无线网络接口> connect <无线网络名称> key <密码> [options]
+# use the 
+station <net_intface_name> get-networks
+station <net_interface_name> connect <ap_name>
 ```
-
-如果加密使用的是 wpa ，推荐使用 `wpa_supplicant` 取代 `iw` 。
-
-首先我不确定 iw 命令对 `wpa` 支持如何，其次命令行稍显复杂。
-
-```sh
-wpa_passphrase MYSSID passphrase >> /etc/wpa_supplicant/<filename>
-wpa_supplicant -i <network_interface> -c /etc/wpa_supplicant/<filename>
-```
-
-3. 获取IP
-
-```sh
-sudo dhclient <无线网络接口>
-```
-
-测试网络:`ping baidu.com`
 
 #### 修改镜像源
 
@@ -237,52 +204,53 @@ mkinitpio -p linux
 
 ### 语言设置
 
-#### 1.生成locale
+1. 生成locale
 
-locale作用：  
-显示本地化的文字、货币、时间、日期、特殊字符等包含地域属性的内容
+   locale作用：
 
-```
-# 修改语言的配置文件
-# 取消`en_US.UTF-8`的注释
-vim /etc/locale.gen
-# 生成locale
-locale-gen
-```
+   显示本地化的文字、货币、时间、日期、特殊字符等包含地域属性的内容
 
-#### 2.设置locale.conf
+    ```
+    # 修改语言的配置文件
+    # 取消`en_US.UTF-8`的注释
+    vim /etc/locale.gen
+    # 生成locale
+    locale-gen
+    ```
 
-locale.conf作用:设置系统语言
+2. 设置locale.conf
 
-locale.conf会在系统启动的早期被`systemd`读取
+    locale.conf作用:设置系统语言
 
-```
-# 编辑locale.conf
-vim /etc/locale.conf:
-# 设置英文需添加：LANG=en_US.UTF-8
-# 设置中文需添加：LANG=zh_CN.UTF-8
-# 其他语言以类似
-```
+    locale.conf会在系统启动的早期被`systemd`读取
 
-#### 3.安装中文字体
+    ```sh
+    # 编辑locale.conf
+    vim /etc/locale.conf:
+    # 设置英文需添加：LANG=en_US.UTF-8
+    # 设置中文需添加：LANG=zh_CN.UTF-8
+    # 其他语言以类似
+    ```
 
-缺失中文字体会出现方块字情况，需要安装对应语言字体
+3. 安装字体
 
-中文推荐`wqy-zenhei`或`wqy-microhei`字体
+    缺失对应字体会出现方块字情况，需要安装相应的语言字体。
 
-```
-# 安装中文字体
-pacman -S wqy-zenhei wqy-microhei
-```
+    对于中文字体目前我只推荐Adobe公司开发的 `adobe-source-han-sans-otc-fonts`。
+
+    Google 公司开发的 `noto` 中文系列的字体中的某些字体形状怪异或者缺失，不推荐；但是非中文系列的 `noto-fonts` 还是值得安装的，此外 `nerd` 系列拥有更全面的字体，因此安装 `ttf-noto-nerd` ；以及 `noto-fonts-emoji` 是为了提供 emoji 支持需要安装的。
+    
+    综上，安装如下字体：
+    
+    ```sh
+    sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-emoji ttf-noto-nerd
+    ```
 
 ### 时间设置
 
-Arch Linux以BIOS的时间为世界统一时间（UTC）
+Arch Linux以BIOS的时间为世界统一时间（UTC）。
 
-中国在东八区，即UTC时间加8个小时  
-将对应配置文件链接到对应位置即可将时间设置成东八区
-
-*在我这里发生了小问题，安装Arch Linux会修改BIOS时间为东八区时间，需要进BIOS内再修改*
+中国在东八区，即UTC时间加8个小时，将对应配置文件链接到对应位置即可将时间设置成东八区。
 
 ```
 # 设置时区为东八区
@@ -290,6 +258,8 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ```
 
 ### 网络设置
+
+若想配合图形界面，建议安装 `NetworkManager`。
 
 ```sh
 # 方案一
@@ -299,8 +269,11 @@ pacman -S networkmanager dhcpcd
 systemctl enable NetworkManager
 # 启动有线网络
 systemctl enable dhcpcd
+```
 
-# 方案二
+非图形界面安装 `iwd` 占用更小。
+
+```sh
 # 最小化安装
 pacman -S iwd dhcpcd
 # 启动无线网络
@@ -308,9 +281,6 @@ systemctl enable iwd
 # 启动有线网络
 systemctl enable dhcpcd
 ```
-
-NetworkManager用法：`nmtui-connect`
-dhcpcd用法：`dhcpcd`
 
 ### 安装引导
 
@@ -325,15 +295,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 Tips:
 
-`/etc/default/grub`为grub配置文件  
+`/etc/default/grub` 为 grub 配置文件  
 
-修改配置文件后，执行
+修改配置文件后，执行下述命令进行更新：
 
 ```sh
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
-可以使配置文件的修改生效
 
 ### 新建用户
 
@@ -341,7 +309,7 @@ root作为超级用户，在平时使用会存在风险
 
 需要新建用户，然后赋予root的权限
 
-```
+```sh
 # 创建test用户生成家目录并加入wheel组
 useradd -m -G wheel test
 # 设置test的密码
@@ -354,7 +322,7 @@ vim /etc/sudoers
 
 ### 退出系统并结束所有流程
 
-```
+```sh
 # 退出系统
 exit
 # 解除挂载
@@ -373,55 +341,89 @@ Xorg由于设计原因逐渐被Wayland替代，目前KDE和GTK等都默认选择
 
 下述均以Gnome为例讲述，KDE也是很好的图形界面，但Gnome更受其他厂商推崇。
 
-### 安装
+### 安装 Gnome
 
-```
-pacman -S gnome
+```sh
+sudo pacman -S gnome gnome-tweaks
 systemctl enable gdm
 ```
 
-### 音量处理
+### 组件配置
+
+**网络**
+
+确保 `networkmanager` 包安装并且被 `systemd` 启用并运行。
+
+**音量**
 
 安装声音相关的固件，如果不安装可能导致无法正常播放音频。
 
 
 ```sh
-pacman -S sof-firmware alsa-firmware alsa-utils pulseaudio pulseaudio-alsa pulseaudio-bluetooth
+sudo pacman -S sof-firmware alsa-firmware alsa-utils pulseaudio pulseaudio-alsa pulseaudio-bluetooth
 # sof is short for "sound open firmware
 ```
 
-### 蓝牙处理
+**蓝牙**
 
 ```sh
 # 安装蓝牙组件
-pacman -S bluez
+sudo pacman -S bluez
 # 启用蓝牙服务
 systemctl enable bluetooth
 ```
 
+### 配置
+
+`Tweaks` 中可以配置字体
+
+- Interface Text：表示系统界面字体，选择 Source Han Sans SC Regular
+- Documentation Text：选择 Source Han Sans SC Regular
+- Monospace Text：等宽字体，一般会影响终端字体，选择 FiraMono Nerd Font Regular（任何等宽字体）
+- Legency Window Titles：选择 Source Han Sans SC Regular
+
 ### 注意事项
 
-#### No.1
+- GNOME的三指操作需要在Wayland下才能做到
 
-GNOME的三指操作需要在Wayland下才能做到。
+  终端输入`echo $XDG_SESSION_TYPE`查看当前使用的桌面协议。
 
-终端输入`echo $XDG_SESSION_TYPE`查看当前使用的桌面协议。
+  `x11`为xorg，`wayland`为wayland。
 
-`x11`为xorg，`wayland`为wayland。
+- 开机无法检索到wayland，必须注销重新登录才能有wayland选项，但gnome默认使用的是wayland。
 
-常见问题是 开机无法检索到wayland，必须注销重新登录才能有wayland选项，但gnome默认使用的是wayland。
+  原因是显卡驱动加载满，userspace速度太快导致的。修改`/etc/mkinitio.conf`中的`MODULES=(xxx)`，我的是intel核显所以改为`MODUDLES=(i915)`。
 
-原因是显卡驱动加载满，userspace速度太快导致的。
-
-修改`/etc/mkinitio.conf`中的`MODULES=(xxx)`，我的是intel核显所以改为`MODUDLES=(i915)`。
-
-参考：https://bbs.archlinuxcn.org/viewtopic.php?id=11275 & https://wiki.archlinux.org/title/Kernel_mode_setting#Early_KMS_start
-
-#### No.2(TODO)
-
-wayland下gnome在使用`suspend`挂起时会无法点亮屏幕，需要合盖在掀起或切换终端再切换回来（比如alt+f3后在alt+f1切换回图形界面），x11下没有这种情况。
+  参考：https://bbs.archlinuxcn.org/viewtopic.php?id=11275 & https://wiki.archlinux.org/title/Kernel_mode_setting#Early_KMS_start
 
 ## 更多
+
+
+
+### YAY
+
+`yay` 涵盖 `pacman` 仓库缺少的AUR（Arch User Repo，里面有闭源的软件）。
+
+我把这一项放在最前面考虑到有些包需要借助 `yay` 安装。
+
+安装
+
+```sh
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+详情见[yay仓库主页](https://github.com/Jguer/yay)
+
+### emoji
+
+安装 emoji picker
+
+```sh
+yay -S emote
+```
 
 ### 输入法
 
@@ -439,16 +441,14 @@ sudo pacman -S ibus-rime
 
 同时可以使用修改 `~/.config/ibus/rime/build/ibus_rime.yaml`
 
-```
+```yaml
 style:
   horizontal: true
 ```
 
 将输入法设置横向。
 
-但是 `ctrl - \``  与 Visual Studio Code 冲突了，所以当你调用快捷键的时候请切换到其他语言或者按照如下修改快捷键：
-
-~/.config/ibus/rime/build/default.yaml
+Rime 输入法快捷键 `ctrl - grave`   与 Visual Studio Code 冲突，在 ``~/.config/ibus/rime/build/default.yaml``  文件中注释该快捷键：
 
 ```yaml
 switcher:
@@ -456,22 +456,23 @@ switcher:
   caption: "〔方案選單〕"
   fold_options: true
   hotkeys:
+  	# - "Control+grave"
 ```
 
 ### 增加软件库
 
-```
+```sh
 sudo vim /etc/pacman.conf
 ```
 文件尾添加下面两行
-```
+```sh
 [archlinuxcn]
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 ```
 
 [multilib]为32位软件库，取消注释
 
-```
+```sh
 sudo pacman -Syu
 sudo pacman -S archlinuxcn-keyring
 ```
@@ -502,7 +503,7 @@ Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 
 修改 Windows 的注册表的命令
 
-```
+```sh
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
 
@@ -517,7 +518,7 @@ sudo updatedb
 
 罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
 
-```
+```sh
 sudo pacman -S libratbag
 sudo systemctl enable ratbagd
 sudo systemctl restart ratbagd
@@ -564,7 +565,6 @@ OBS在x11上表现并没有太大问题，但在wayland上又有一些问题。
 ```sh
 sudo pacman -S gst-plugin-pipewire
 sudo pacman -S obs-studio
-sudo pacman -S qt5-wayland qt6-wayland
 ```
 
 首先obs通过`PipeWire`捕获屏幕，所以需要安装pipewire。
@@ -597,7 +597,7 @@ Pdf阅读器我推荐两个：okular、evince。
 evince涵盖在gnome集合包中，安装gnome时自动安装evince。
 
 ```sh
-sudo pamcna -S evince
+sudo pacman -S evince
 ```
 
 ### 多屏幕显示问题及暂时解决方案
@@ -711,7 +711,6 @@ alsamixer
 > 我测试的结果是 gtk4 确实比较适合 text input v3
 
 > 虽然用 fcitx5 的话 不会错位
-
 
 ### 触摸板滚动速度问题
 

@@ -1,6 +1,26 @@
-# Python
+---
+title: python tutorial
+date: 2023-02-19
+---
 
-## Command
+# Python Tutorial
+
+
+
+## Environment
+
+Install
+
+```sh
+sudo pacman -S python python-pip
+```
+
+check the env
+
+```
+python --version
+pip --version
+```
 
 ### Install Package
 
@@ -11,7 +31,9 @@ pip install <package-name>
 pip show <installe-package-name>
 ```
 
-## Visual Studio Code
+## Config IDE
+
+**for VSCode**
 
 插件 Python Pylance
 
@@ -25,7 +47,11 @@ setting.json
 
 他不会检测虚拟环境，需要你全局环境有这个包，不然会报警告。
 
-## PyCharm Matplotlib Backend Problem
+
+
+## Q&A
+
+- PyCharm Matplotlib Backend Problem
 
 在Pycharm中Matplotlib Backend绘图会存在问题，解决方案为使用`TkAgg`后端进行绘图。
 
@@ -46,7 +72,9 @@ matplotlib.use('TkAgg')
 
 同时配置运行选项（或运行模版配置），将`Run with Python Console`取消勾选。
 
-## Check `site-package` Content
+
+
+- Check `site-package` Content
 
 查看 `site-package` 的内容
 

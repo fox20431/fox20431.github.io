@@ -1,4 +1,14 @@
-# Jupyter
+---
+title: jupyter tutorial
+---
+
+
+
+
+
+# Jupyter Tutorial
+
+
 
 ## Common
 

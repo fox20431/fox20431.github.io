@@ -20,7 +20,7 @@ windows 缩放多少合适 1.25
 
 
 
-下面使用python更准确的计算：
+下面使用 `python` 更准确的计算：
 
 ```py
 import math

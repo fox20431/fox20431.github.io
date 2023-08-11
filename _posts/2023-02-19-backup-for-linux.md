@@ -1,6 +1,6 @@
 # Backup for Linux
 
-我想知道linux下收否存在类似mac平台下的time-machine的工具，mac下的time-machine的特性是可以记录不同时间点的文件状态，且是增量更新的。
+我想知道linux下是否存在类似mac平台下的time-machine的工具，mac下的time-machine的特性是可以记录不同时间点的文件状态，且是增量更新的。
 
 通过询问群友发现解决方案为有以下几种：
 
@@ -18,36 +18,30 @@ Btrfs (B-tree file system) is a modern file system that supports advanced featur
 
 2. Once you have the Btrfs partition, you can use the btrfs subvolume create command to create a new subvolume on the partition, which will be used to store the backup.
 
-```sh
-sudo btrfs subvolume create /path/to/backup/partition/backup
-```
+    ```sh
+    sudo btrfs subvolume create /path/to/backup/partition/backup
+    ```
 
 3. To backup the ext4 file system, you can use the rsync command to copy the entire file system to the new Btrfs subvolume.
 
-```sh
-sudo rsync -avxHAX --numeric-ids --delete / /path/to/backup/partition/backup
-```
-
-a archive 
-v verbose
-x cross file bo
-
---delete
+    ```sh
+    # a archive 
+	#v verbose
+	# x cross file bo
+    sudo rsync -avxHAX --numeric-ids --delete / /path/to/backup/partition/backup
+    ```
 
 4. Once the backup is complete, you can take a snapshot of the subvolume with the btrfs subvolume snapshot command.
 
-```sh
-sudo btrfs subvolume snapshot -r /path/to/backup/partition/backup /path/to/backup/partition/snapshot
-```
+    ```sh
+    sudo btrfs subvolume snapshot -r /path/to/backup/partition/backup /path/to/backup/partition/snapshot
+    ```
 
-more:
+    delete the snapshot:
 
-delete the snapshot:
-
-
-```sh
-sudo btrfs subvolume delete <snapshot>
-```
+    ```sh
+    sudo btrfs subvolume delete <snapshot>
+    ```
 
 ---
 
