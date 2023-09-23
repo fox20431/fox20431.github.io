@@ -1,4 +1,26 @@
+---
+title: gradle tutorial
+---
+
+
+
+
+
 # Gradle
+
+## Create a gradle project
+
+1. create and get into the directory
+
+    ```
+    mkdir my-wrapper-project && cd my-wrapper-project
+    ```
+
+2. Execute the init:
+
+    ```
+    gradle init
+    ```
 
 ## CMD
 

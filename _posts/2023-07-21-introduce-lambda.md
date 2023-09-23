@@ -9,15 +9,11 @@ date: 2023-07-21
 
 意义在于函数式编程（函数作为一等公民）。
 
-## Lambda 表达式 起源
+## Lambda 表达式起源
 
-源自 $\lambda$演算 （Lambda calculus），由数学家阿隆佐·邱奇在20世纪30年代首次发表。
+源自 $\lambda$演算 （Lambda calculus），由数学家阿隆佐·邱奇（Alonzo Church）在20世纪30年代首次发表。它被认为是计算机科学的理论基础之一，并对函数式编程语言的设计产生了深远影响。
 
-*图灵机（Turing Machine）由英国数学家艾伦·图灵在1936年提出的理论模型。*
-
-*世界上第一台电子计算机 - ENIAC（Electronic Numerical Integrator and Computer）由美国的约翰·普雷斯班（John W. Mauchly）和约翰·艾克特（J. Presper Eckert）等人于1945年建造的。*
-
-该思想最早被应用到LISP语言，因此也产生了函数的概念。LISP是由约翰·麦卡锡（John McCarthy）在1958年开发的。
+该思想最早被应用到LISP语言，因此也产生了函数的概念。LISP是在1958年由约翰·麦卡锡（John McCarthy）开发。
 
 ### lambda 演算介绍
 
@@ -25,15 +21,15 @@ lambda演算用于研究函数抽象、递归和计算过程的形式化工具�
 
 由以下三个基本元素组成：
 
-1. 变量（Variables）：用来表示参数和函数的输入。
-2. 抽象（Abstraction）：用 $\lambda$（lambda）符号表示，用于创建函数。例如，$\lambda x.x$ 表示一个以变量 $x$ 为参数并返回 $x$ 的函数。
-3. 应用（Application）：用空格表示，表示函数调用。例如，(λx.x) y 表示将参数 y 应用于函数 λx.x。
+1. 变量（Variables）：表示一个标识符，如 x、y、z 等。
+2. 抽象（Abstraction）：使用$\lambda$符号表示，后跟一个变量和一个点，然后是一个表达式。它表示一个匿名函数的定义，例如 $\lambda x.x$ 表示一个接受一个参数 x 并返回 x 的函数。
+3. 应用（Application）：将一个表达式应用到另一个表达式上，用空格分隔。例如 (λx.x) y 表示将函数 λx.x 应用到参数 y 上。
 
-Lambda演算的基本原则是通过抽象和应用来定义和操作函数。在Lambda演算中，所有的计算都通过替换（substitution）进行。例如，应用表达式 (λx.x) y 中的 y 将替换抽象表达式 λx.x 中的 x，得到结果 y。
+Lambda演算可以使用这些基本形式来表示和计算复杂的函数和表达式。它具有很强的表达能力，可以表示任何可计算的函数，并且通过一系列规约操作可以进行计算。
 
 ### lambda 演算应用
 
-Lambda演算表达式： $(\lambda x.\lambda y.(x + y))$。$x$ 和 $y$ 分别表示函数的两个参数，$(x + y)$ 表示它们的和。
+Lambda演算表达式：$(\lambda x.\lambda y.(x + y))$。$x$ 和 $y$ 分别表示函数的两个参数，$(x + y)$ 表示它们的和。
 
 通过Lambda演算的替换规则来计算这个函数的应用：
 $$

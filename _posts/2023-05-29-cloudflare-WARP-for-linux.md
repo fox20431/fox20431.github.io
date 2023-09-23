@@ -25,7 +25,7 @@ You may question my solution; why not just use Cloudflare WARP directly, but ren
 
 1. Config the package repository
 
-reference: https://pkg.cloudflareclient.com
+   reference: https://pkg.cloudflareclient.com
 
 2. Install the package
 

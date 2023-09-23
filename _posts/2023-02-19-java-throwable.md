@@ -1,11 +1,12 @@
 ---
 
 title: Throwable
+date:2023-02-19
 ---
 
-
-
 # Throwable
+
+## 类型介绍
 
 The following class diagram is the inheritance diagram about the `Throwable`:
 
@@ -23,202 +24,21 @@ classDiagram
 
 
 
+Error用于表示严重的问题，通常是由于 JVM 或系统级别的错误引起的。
 
+Exception一般性异常，是通常是由程序逻辑、输入错误或外部环境导致的，所以在开发过程中这个更常见。
 
-## Error vs Exception vs RuntimeException
+### 常见类
 
-在`Throwable`继承关系中，我们只需要关心`Error`，`Exception`和`RuntimeException`。
+Error：
 
-先说结论：
+- OutOfMemoryError
+- StackOverflowError
+- NoClassDefFoundError
+- ClassNotFoundException
+- NoSuchMethodError
 
-| 类名             | 编译是否需要被捕获 | try-catch捕获是否生效 |
-| ---------------- | ------------------ | --------------------- |
-| Error            | 是                 | 否                    |
-| Exception        | 是                 | 是                    |
-| RuntimeException | 否                 | 是                    |
-
-**如果程序中有异常没有被捕获，会导致当前线程终止，从而出现异常之后的代码是运行不到的。**
-
-### 对比试验
-
-接下来代码均使用下述代码进行编译运行：
-
-```sh
-javac Class.java -d .
-java main.Main
-```
-
-**代码1-1：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        try {
-            throw new Error("Error.");
-        } catch (Exception e) {
-            System.out.println("Catch");
-        }
-        System.out.println("After");
-    }
-}
-```
-
-**编译通过，无输出**
-
-**运行输出：**
-
-```log
-Before
-Exception in thread "main" java.lang.Error: Error.
-        at main.Main.main(Main.java:7)
-```
-
-**代码1-2：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        throw new Error("Error");
-        System.out.println("After");
-    }
-}
-```
-
-**编译失败，输出：**
-
-```log
-.\Main.java:7: error: unreachable statement
-        System.out.println("World!");
-        ^
-1 error
-```
-
-
-
-**代码2-1：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        try {
-            throw new Exception("Exception.");
-        } catch (Exception e) {
-            System.out.println("Catch");
-        }
-        System.out.println("After");
-    }
-}
-```
-
-**编译通过，无输出**
-
-**运行输出：**
-
-```log
-Before
-Catch
-After
-```
-
-**代码2-2：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        throw new Exception("Exception");
-        System.out.println("After");
-    }
-}
-```
-
-**编译失败，输出：**
-
-```log
-Exception in thread "main" java.lang.Error: Unresolved compilation problems: 
-        Unhandled exception type Exception
-        Unreachable code
-
-        at main.Main.main(Main.java:6)
-```
-
-**代码3-1：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        try {
-        	throw new RuntimeException("Exception");
-        } catch (Exception e) {
-            System.out.println("Catch");
-        }
-        System.out.println("After");
-    }
-}
-```
-
-**编译通过，无输出**
-
-**运行输出：**
-
-```log
-Before
-Catch
-After
-```
-
-**代码3-2：**
-
-```java
-package main;
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Before");
-        throw new RuntimeException("Exception");
-        System.out.println("After");
-    }
-}
-```
-
-**编译通过，无输出**
-
-**运行输出：**
-
-```log
-Exception in thread "main" java.lang.Error: Unresolved compilation problem: 
-        Unreachable code
-
-        at main.Main.main(Main.java:7)
-```
-
-
-
-## 异常类型
-
-### RuntimeException
-
-运行时异常：
-
-此类异常为unchecked（非受查）
-
-即编译不会检测出异常，运行时才会出现的异常  
-
-常见的类型有：
+RuntimeException：
 
 - NullPointerException
 - ArithmeticException
@@ -226,15 +46,7 @@ Exception in thread "main" java.lang.Error: Unresolved compilation problem:
 - IndexOutOfBoundsException
 - IllegalArgumentException
 
-### OtherException（编译时异常）
-
-编译时异常：
-
-此类异常为checked（受查）
-
-即编译时会检测出异常
-
-常见的类型有：
+OtherException（除RuntimeException）：
 
 - FileNotFoundException
 - ClassNotFoundException
@@ -243,14 +55,28 @@ Exception in thread "main" java.lang.Error: Unresolved compilation problem:
 - NoSuchMethodException
 - ParseException
 
-## 错误与异常区别
+## 用法
 
-- 异常可以是受查或非受查的，错误总是非受查的；
-- 异常是由代码导致的，错误是由系统或者低层资源导致的；
-- 异常在应用级被处理，能够识别的错误会在系统级被捕捉；
+`Throwable`的实现类可以通过`throw`关键字抛出异常，当抛出的`Throwable`的实现类经过整个调用栈过程中没被捕获处理，将会导致当前线程的从抛出异常的位置退出，后面的代码将无法被执行。捕获处理使用`try/catch`语法，但该语法只针对`Exception`生效，所以抛出的`Error`类及子类将注定当前线程的退出。
 
-## 异常处理
+### Error vs Exception vs RuntimeException
+
+在`Throwable`继承关系中，我们只需要关心`Error`，`Exception`和`RuntimeException`。
+
+先说结论：
+
+| 类名             | 编译期间是否检查 | try-catch捕获是否生效 |
+| ---------------- | ---------------- | --------------------- |
+| Error            | 是               | 否                    |
+| Exception        | 是               | 是                    |
+| RuntimeException | 否               | 是                    |
+
+*根据Java编译器是否会在编译器检查异常分为`unchecked`和`checked`异常，根据上述描述可以了解`RuntimeException`为非受查，其他未受查。*
+
+## 异常捕获处理
+
 ### 捕获异常：try&catch&finally
+
 ``` java
 try{...} 
 // one or more catch statements
@@ -265,7 +91,8 @@ finally{...}
 
 **try内声明的变量只能在try内部使用**  
 
-示例：  
+示例：
+
 ``` java
 public class DealException
 {
@@ -311,11 +138,15 @@ Tips：
 
 ## 自定义异常
 1. 创建类
+
 2. 继承Exception或Exception的子类
+
 3. 重写构造方法
-如何让自定义异常发挥作用？  
-依靠throw来抛出自定义的异常  
-```
+
+  如何让自定义异常发挥作用？
+
+  依靠throw来抛出自定义的异常  
+```java
 public class NoMappingParamString extends Exception {
     //无参构造函数
     public NoMappingParamString(){
@@ -338,25 +169,3 @@ public class NoMappingParamString extends Exception {
     }
 }
 ```
-
-
-## Q&A
-
-### 捕获异常为什么不使用if&else，而是用try&catch&finally？
-
-- 代码臃肿  
-- 处理繁琐  
-- 无法区分业务代码和异常代码  
-
-### throw与throws的异同
-
-相同：
-
-- throw与throws单词类似
-- 后均跟异常类
-- 都是对异常的处理
-
-不同：  
-
-- throw是给自己创造困难从而磨炼自己，throws是甩锅给上级让自己过的安稳  
-- throw写在结构体中，throws写在声明方法中  

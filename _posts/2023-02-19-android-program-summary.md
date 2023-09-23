@@ -41,8 +41,6 @@ AndroidMenifest.xml -> AndroidMenifest.xml配置主Activity -> 主Acitivy类 -> 
 
 当一个activity寻找嵌套其中的fragment时，可以通过xml布局文件静态设置（'app:name'关联类），也可以在类文件中动态添加（用到FragmentManger）。
 
-
-
 ---10.27---
 
 关于navigation，你需要引入：

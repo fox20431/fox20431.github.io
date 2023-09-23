@@ -1,102 +1,118 @@
-# Spring Framework
+---
+title: Read Spring Source Code
+---
+
+
+
+# Read Spring Source Code
 
 Spring Framework
 
-## Compile Spring Framework Experience
+## Build Spring Framework
 
-首先克隆项目到本地：
+1. 首先克隆项目到本地：
 
-```shell
-git clone https://github.com/spring-projects/spring-framework.git
-```
+    ```shell
+    git clone https://github.com/spring-projects/spring-framework.git
+    ```
 
-根据tag选择分支：
+2. 选择稳定的版本进行构建：
 
-```sh
-git tag
-```
+   - Spring 的 main 的不同版本都会被打赏 Tag ，同下属命令查看所有版本
 
-这里我选择`5.3.23`版本。
+     ```sh
+     git tag
+     ```
 
-```shell
-./gradlew build
-```
+   - 选择合适的版本，创建分支并切换到当对应 Tag 的提交
 
-根据文档选择正确的Java版本（或者根据经验？🤔）
+     ```sh
+     # craete the branch
+     git checkout -b reading/v6.0.9
+     # switch to the version
+     git reset --hard v6.0.9
+     ```
 
-直接构建会出现下面问题：
+3. 配置合适的环境
 
-```sh
-error: warnings found and -Werror specified
-```
+    - Java 环境：查看 `Gradle` 配置中的 `sourceCompatibility/targetCompatibility`
 
-该项目使用了弃用的接口，启用的接口会发出警告，然后`-Werror`参数认为警告为错误行为，然后构建终止。
+4. 执行构建脚本
 
-修复的方法很简答，在`buildSrc/src/main/java/org/springframework/build/compile/CompilerConventionsPlugin.java`文件中将这个参数取消：
+    ```sh
+    ./gradlew build
+    ```
 
-```java
-COMPILER_ARGS.addAll(Arrays.asList(
-  // blah, blah...
-  // , "-Werror"
-));
-```
+5. 然后将项目安装到本地的Maven
 
-然后将项目安装到本地的Maven（参考[官方文档](https://github.com/spring-projects/spring-framework/wiki/Build-from-Source)，由于官方文档落后版本且未说明针对的具体版本，对于不同情况需作出调整）：
+   参考[官方文档](https://github.com/spring-projects/spring-framework/wiki/Build-from-Source) *（由于官方文档落后版本且未说明针对的具体版本，对于不同情况需作出调整）*
 
-```sh
-./gradlew publishToMavenLocal -x api -x javadoc -x dokkaHtmlMultiModule -x asciidoctor -x asciidoctorPdf
-```
+    ```sh
+    ./gradlew publishToMavenLocal -x api -x javadoc -x dokkaHtmlMultiModule -x asciidoctor -x asciidoctorPdf
+    ```
 
-编译的项目会被安装到：
+	编译的项目会被安装到：
 
-```sh
-$HOME/.m2/repository/org/springframework
-```
+    ```sh
+    $HOME/.m2/repository/org/springframework
+    ```
 
-提一下这里我怎么找到的：
+6. 引入上述手动构建的Spring库
 
-事先我知道 gradle 和 maven 默认的用户文件位置为 `$HOME/.gralde`和`$HOME/.m2`
+   以下是子模块项目中的 `build.gradle`
 
-我使用命令查找到最近修改/创建的文件：
+    ```groovy
+    plugins {
+        id 'java'
+    }
+   
+    group 'com.hihusky.hellobeanannotation'
+    version '1.0'
+   
+    repositories {
+            mavenLocal()
+        // mavenCentral()
+    }
+   
+    dependencies {
+        implementation "org.springframework:spring-context:5.3.23"
+   
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    }
+   
+    test {
+        useJUnitPlatform()
+    }
+    ```
 
-```sh
-# 返回最近24小时内修改过的文件
-find ./ -mtime 0
-```
+    在上述文件中我们添加 ` mavenLocal` 告知 Gradle 从本地寻找依赖，同时将 `mavenCentral` 注释以防止本地无法找到从云端寻找。依赖的引入和从Maven仓库引入的方法一致。
 
-剩下就是在项目中引入安装的依赖，以下是子模块项目中的`build.gradle`：
+    由于 `gradle` 和 `maven` 会本地缓存之前安装的依赖，请确保你引入依赖正确，可以采用以下几种方式：
 
-```groovy
-plugins {
-    id 'java'
-}
+    - 根据现在IDE提供的功能，查看引入依赖的文件位置；
+    - 在库中DIY一些输出信息，随后编译，在引用库后设法打印出该信息。
 
-group 'com.hihusky.hellobeanannotation'
-version '1.0'
+### Common Questions and Resolutions：
 
-repositories {
-		mavenLocal()
-    // mavenCentral()
-}
-
-dependencies {
-    implementation "org.springframework:spring-context:5.3.23"
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-}
-
-test {
-    useJUnitPlatform()
-}
-```
-
-在上述文件中我们将`mavenCentral`注释，然后在依赖中按照平常的方式引入依赖。
-
-由于gradle和maven会本地缓存之前安装的依赖，请确保你引入依赖正确，可以采用以下几种方式：
-
-- 根据现在IDE提供的功能，查看引入依赖的文件位置；
-- 在库中DIY一些输出信息，随后编译，在引用库后设法打印出该信息；
+- 接口弃用导致的错误
+  
+    编译提示如下错误
+    
+    ```sh
+    error: warnings found and -Werror specified
+    ```
+    
+    该项目使用了弃用的接口，启用的接口会发出警告，然后`-Werror`参数认为警告为错误行为，然后构建终止。
+    
+    修复的方法很简答，在`buildSrc/src/main/java/org/springframework/build/compile/CompilerConventionsPlugin.java` 文件中将这个参数取消：
+    
+    ```java
+    COMPILER_ARGS.addAll(Arrays.asList(
+      // blah, blah...
+      // , "-Werror"
+    ));
+    ```
 
 ## Thinking in Reading Spring Framework Source Code
 
