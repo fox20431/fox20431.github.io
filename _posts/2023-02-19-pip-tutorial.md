@@ -1,7 +1,17 @@
+---
+title: pip tutorial
+date: 2023-02-19
+---
+
+# pip tutorial
+
 关于python模块使用，如果环境变量无法找到对应命令，可以使用 `python3 -m <command>` 来使用对应命令
 
-pip默认全局安装，如果需要针对当前用户，需要使用--user命令，类似
+pip默认全局安装，如果需要针对当前用户，需要使用 `--user` 命令，类似
+
+```sh
 pip3 install --user <package>
+```
 
 Mac下
 pip全局下bin目录
@@ -21,7 +31,6 @@ pip list  --outdated
 批量下载并更新：
 pip install pip-review
 pip-review --local --interactive
-
 
 WARNING: Ignoring invalid distribution -ip
 原因可能是之前下载库的时候没有成功或者中途退出。

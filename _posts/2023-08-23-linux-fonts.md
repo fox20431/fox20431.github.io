@@ -1,11 +1,17 @@
 ---
-title: linux fonts
+title: Linux Fonts
 date: 2023-08-23
 ---
 
 # Linux fonts
 
 Linux 系统的字体配置：/etc/fonts/fonts.conf
+
+需要安装一些字体库：
+
+```sh
+sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-cjk
+```
 
 常见命令：
 
@@ -41,9 +47,8 @@ fc-list :family
     <alias>
 	    <family>monospace</family>
 	    <prefer>
-		    <family>FiraMono Nerd Font Mono</family>
+		    <family>Noto Sans Mono CJK SC</family>
 	    </prefer>
     </alias>
 </fontconfig>
-
 ```

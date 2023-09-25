@@ -149,11 +149,17 @@ vim /etc/pacman.d/mirrorlist
 ```sh
 # 安装系统
 pacstrap /mnt base base-devel linux linux-headers linux-docs linux-firmware
+
+# 微码（微码也不一定需要安装，我的电脑安装完后反而G302无限鼠标不能用了）
 # 如果CPU是intel，执行下载操作
 pacstrap /mnt intel-ucode
 # 如果CPU是AMD，执行下载操作
 pacstrap /mnt amd-ucode
 ```
+
+微码是嵌入在中央处理器（CPU）内部的一种固件，它可以对 CPU 的操作进行微小的修改，以修复硬件错误、提供新的功能、改进性能或者增强安全性。
+
+当 Intel 发现 CPU 中存在一些问题、漏洞或者需要改进的地方时，他们可以通过更新微码来解决这些问题，而无需对硬件进行物理更改。这可以通过操作系统或主板固件的更新来实现。
 
 - base：包含最基础工具
 - base-devel：包含最基础的开发工具

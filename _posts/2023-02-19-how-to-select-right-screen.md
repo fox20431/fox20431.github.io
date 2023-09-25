@@ -73,3 +73,9 @@ print("2.8k 对角线像素：", k_28)
 """
 ```
 
+
+
+![图片pic1]({{ "/assets/image-20230801143838599.png" | absolute_url }})
+
+
+
