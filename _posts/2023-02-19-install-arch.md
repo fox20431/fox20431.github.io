@@ -354,13 +354,13 @@ sudo pacman -S gnome gnome-tweaks
 systemctl enable gdm
 ```
 
-### 组件配置
+### 组件安装
 
-**网络**
+#### 网络
 
 确保 `networkmanager` 包安装并且被 `systemd` 启用并运行。
 
-**音量**
+#### 音量
 
 安装声音相关的固件，如果不安装可能导致无法正常播放音频。
 
@@ -370,7 +370,7 @@ sudo pacman -S sof-firmware alsa-firmware alsa-utils pulseaudio pulseaudio-alsa 
 # sof is short for "sound open firmware
 ```
 
-**蓝牙**
+#### 蓝牙
 
 ```sh
 # 安装蓝牙组件
@@ -379,32 +379,46 @@ sudo pacman -S bluez
 systemctl enable bluetooth
 ```
 
-### 配置
+#### 输入法
 
-`Tweaks` 中可以配置字体
+由于 `Gnome` 集成了 `ibus` ，所以推荐使用 `ibus` 输入法
 
-- Interface Text：表示系统界面字体，选择 Source Han Sans SC Regular
-- Documentation Text：选择 Source Han Sans SC Regular
-- Monospace Text：等宽字体，一般会影响终端字体，选择 FiraMono Nerd Font Regular（任何等宽字体）
-- Legency Window Titles：选择 Source Han Sans SC Regular
+```shell
+sudo pacman -S ibus-libpinyin
+# 也可以选择rime
+# 优点是提示词库准确
+# 缺点是每次启动要初始化并提示
+sudo pacman -S ibus-rime
+```
+
+### 系统配置
+
+#### Tweak
+
+需要说明的是，legacy在Tweak表示针对之前x开发的应用，比如chrome。
+
+**字体**
+
+- Interface Text：表示系统界面字体，选择 Source Han Sans SC Regular 11
+- Documentation Text：选择 Source Han Sans SC Regular 11
+- Monospace Text：等宽字体，一般会影响终端字体，选择 FiraMono Nerd Font Regular 10（任何等宽字体）
+- Legency Window Titles：选择 Source Han Sans SC Regular 11
+
+**主题**
+
+当系统使用暗黑主题，需要手动调整 `Appearance` 的 `Legacy Application` 的选项为 `Adwaita-dark`
 
 ### 注意事项
 
-- GNOME的三指操作需要在Wayland下才能做到
+- GNOME的三指操作需要在 `Wayland` 下才能做到
 
-  终端输入`echo $XDG_SESSION_TYPE`查看当前使用的桌面协议。
+  终端输入`echo $XDG_SESSION_TYPE`查看当前使用的桌面协议，`x11`为xorg，`wayland`为wayland。
 
-  `x11`为xorg，`wayland`为wayland。
-
-- 开机无法检索到wayland，必须注销重新登录才能有wayland选项，但gnome默认使用的是wayland。
-
-  原因是显卡驱动加载满，userspace速度太快导致的。修改`/etc/mkinitio.conf`中的`MODULES=(xxx)`，我的是intel核显所以改为`MODUDLES=(i915)`。
+- 开机无法检索到wayland，必须注销重新登录才能有wayland选项，但gnome默认使用的是wayland。原因是显卡驱动加载满，userspace速度太快导致的。修改`/etc/mkinitio.conf`中的`MODULES=(xxx)`，我的是intel核显所以改为`MODUDLES=(i915)`。
 
   参考：https://bbs.archlinuxcn.org/viewtopic.php?id=11275 & https://wiki.archlinux.org/title/Kernel_mode_setting#Early_KMS_start
 
 ## 更多
-
-
 
 ### YAY
 
@@ -431,11 +445,7 @@ makepkg -si
 yay -S emote
 ```
 
-### 输入法
-
-如果你安装 `Gnome` 的话，由于 `Gnome` 集成了 `ibus` ，所以推荐使用 `ibus` 输入法。
-
-具体 ibus 的什么输入法，这里我推荐 `ibus-rime`，因为好用。
+### RIME输入法
 
 如何安装：
 
@@ -443,7 +453,7 @@ yay -S emote
 sudo pacman -S ibus-rime
 ```
 
-默认是繁体字，可以使用 `ctrl - \`` 设置简体中文。
+默认是繁体字，可以使用 ctrl - \` 设置简体中文。
 
 同时可以使用修改 `~/.config/ibus/rime/build/ibus_rime.yaml`
 
@@ -513,14 +523,9 @@ Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
 
-### plocate
+### Logitech
 
-```sh
-sudo pacman -S plocation
-sudo updatedb
-```
-
-### Logitech Micr
+当安装微码后，罗技的无线鼠标不能用（个人情况不代表全部）
 
 罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
 
@@ -587,8 +592,6 @@ sudo pacman -S obs-studio
 
 可以选择 `wqy-zenhei` 自发开源组织的字体（貌似不再维护），推荐使用选 google 的开源字体 `noto-fonts` 系列的字体（有大厂背书），同时 Adobe 也开源了 `souce-han` 系列字体。关于代码相关的字体，我推荐 `fira` 字体。
 
-在不安装 `noto-fonts` 包会出现很多特殊字符缺失，所以这个算是必装的吧。
-
 ```sh
 sudo pacman -S noto-fonts
 # 其他的通过关键字搜索
@@ -606,51 +609,9 @@ evince涵盖在gnome集合包中，安装gnome时自动安装evince。
 sudo pacman -S evince
 ```
 
-### 多屏幕显示问题及暂时解决方案
+### 多屏幕不同缩放显示问题及暂时解决方案
 
-When you use multiple monitors in wayland gnome environment with different scale, you will find scaling problems which make you have to use single monitor.
-
-The problem:
-
-- The cursor scales abnormally in some applications, for example `telegram`
-- The application scaling is not adapt the other minotor scale, for example `chrome`, `visual studio code`, other `electron application`, and `firefox`
-- Even the gnome has the second problem
-
-Althought the single monitors also has the part of problems, but it not effect the daily use.
-
-To solve the problem to use the idle monitor, we should enable the experimental fractional scaling feature:
-
-```sh
-gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-```
-
-ref: https://wiki.archlinux.org/title/HiDPI#Wayland
-
-Now you will find the almost old application which run on x11 well run well on wayland.
-
-But it still have some problems, such as `chrome`, `visual studio code` and so on is blur...
-
-Luckily, we know the `chrome` and `visual studio code` can pass the parameter:
-
-```sh
---ozone-platform=wayland
-```
-
-So, we just need add the `alias` into `~/.bashrc` and add options into `xxx.desktop`.
-
-But i will find the ibus chinese not working when open it.
-
-Unluckily, I just know the `chrome` which allow `--gtk-version=4` parameter to make ibus chinese well.
-
-`visual studio code` cannot do it, so I use the English to write the part.
-
-I will wait update and it's fine.
-
-==== update ====
-
-我仍然选择单个屏幕，因为多个屏幕很多软件显示很模糊。
-
-然后我整理了下思绪...
+多个屏幕不同缩放会有一些的问题。有些应用是运行x上的，wayland通过xwayland才能在wayland上显示，所以对wayland选择缩放，并不能对运行在xwayland上的生效，所以需要调整x协议的缩放，但x协议的缩放会模糊。
 
 下面是对适配 `gtk` 的应用的缩放：
 
@@ -685,18 +646,6 @@ systemctl --user start pipewire pipewire-pulse wireplumber
 解决方案：https://wiki.archlinux.org/title/mpv#Unable_to_play_audio_if_PipeWire_is_masked
 
 将 `--ao=alsa` 写入 `mpv.conf` 。
-
-### 耳机有电流声（bazzing）
-
-测试同一耳机同台电脑Windows平台没有电流声，猜测是驱动问题。
-
-顺便钻研了下 `alsa` 详细配置：
-
-```sh
-alsamixer
-```
-
-`F6` 将 `Mic Boos（Microphone Boost）` 是将麦克风的声音增强。
 
 ### 输入法漂移的问题
 
