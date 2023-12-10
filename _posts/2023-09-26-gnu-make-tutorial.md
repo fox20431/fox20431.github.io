@@ -3,7 +3,7 @@ title: GNU make utility tutorial
 date: 2023-09-26
 ---
 
-# GNU Make 工具教程
+# GNU Make 教程
 
 ## Introduce
 
