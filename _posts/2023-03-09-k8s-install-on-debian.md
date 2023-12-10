@@ -162,7 +162,7 @@ sudo sysctl --system
 
 ```sh
 # 创建设备
-cat <<EOF > /etc/systemd/network/vip.netdev \
+cat <<EOF > /etc/systemd/network/vip.netdev
 [NetDev]
 Name=vip
 Kind=dummy
