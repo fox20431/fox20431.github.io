@@ -1,4 +1,4 @@
-# Linux Server 点评
+# Reviews of Linux Distributions
 
 纵横 Linux 三年，几乎安装过所有的 Linux 版本。
 
@@ -23,5 +23,4 @@ OpenSUSE虽然很有个性但小众的不太可靠，排除。
 所以Debian没毛病。
 
 如果Debian也不行，我会选择Gentoo，费力就费力点。
-
 
