@@ -1,10 +1,10 @@
 ---
-title: Install K8S on Debian
+title: kubernates installation
 ---
 
 
 
-# Install K8S on Debian
+# Kubernates Installation
 
 Debian Version: 11
 
@@ -110,8 +110,8 @@ K8S支持较多的容器运行时，具体可见[Container Runtimes](https://kub
    ```sh
    # 将containerd的配置设置为默认模板
    containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
-   # 用阿里云镜像替换官方镜像
-   sudo sed -i "s#registry.k8s.io/pause#registry.cn-hangzhou.aliyuncs.com/google_containers/pause#g" /etc/containerd/config.toml
+   # 由于国内下载不到registry.k8s.io的镜像，修改sandbox_image的值为：
+   sudo sed -i "s#k8s.gcr.io/pause#registry.cn-hangzhou.aliyuncs.com/google_containers/pause#g" /etc/containerd/config.toml
    # 开启SystemdCgroup
    sudo sed -i "s#SystemdCgroup = false#SystemdCgroup = true#g" /etc/containerd/config.toml
    
@@ -135,23 +135,33 @@ sudo sed -i '/ swap / s/^(.*)$/#1/g' /etc/fstab
 **配置内核模块和内核参数**
 
 ```sh
-# 开启内核模块
+# 开启内核模块（当前会话生效）
 # net.bridge.bridge-nf-call-iptables 需要开启这个模块
 modprobe br_netfilter
-# 开机默认开启内核模块（模块持久化）
-echo "br_netfilter" >> /etc/modules
+modprobe ip_vs_rr
 
-# 配置内核参数
+# 开机默认开启内核模块（模块持久化）
+grep -q "br_netfilter" /etc/modules || echo "br_netfilter" | sudo tee -a /etc/modules
+grep -q "ip_vs_rr" /etc/modules || echo "ip_vs_rr" | sudo tee -a /etc/modules
+
+
+# 配置内核参数（当前会话生效）
+# Swappiness 的取值范围是 0 到 100
+# 当 Swappiness 为 0 时，操作系统会尽量避免使用交换空间，只有在绝对必要的情况下才会发生页面置换。
+sysctl vm.swappiness=0
 sysctl net.ipv4.ip_forward=1
 sysctl net.bridge.bridge-nf-call-iptables=1
+sysctl net.bridge.bridge-nf-call-ip6tables=1
 # 持久化内核参数
-echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
-echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+grep -q "vm\.swappiness=0" /etc/sysctl.conf || echo "vm.swappiness=0" | sudo tee -a /etc/sysctl.conf
+grep -q "net\.ipv4\.ip_forward=1" /etc/sysctl.conf || echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+grep -q "net\.bridge\.bridge-nf-call-iptables=1" /etc/sysctl.conf || echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.conf
+grep -q "net\.bridge\.bridge-nf-call-ip6tables=1" /etc/sysctl.conf || echo "net.bridge.bridge-nf-call-ip6tables=1" | sudo tee -a /etc/sysctl.conf
 
 # 应用内核参数的配置文件
-sudo sysctl -p
+# sudo sysctl -p
 # 或者系统级别应用内核配置文件
-sudo sysctl --system
+# sudo sysctl --system
 ```
 
 **设置虚拟网卡（针对于公网）**
@@ -227,6 +237,8 @@ systemctl restart systemd-networkd
 
     ```sh
     kubectl get nodes
+    # 如果有cni则需要删除如下文件夹，比如安装过flannel
+    rm -rf /etc/cni/net.d/
     ```
 
 **（可选）集群创建帮助信息**
@@ -242,6 +254,15 @@ kubectl label node <NODE-NAME> node-role.kubernetes.io/worker=worker
 ```
 
 ## Configure the k8s network
+
+由于上述配置仅用了了网络分配，获取节点是会出现状态为 `NotReady`：
+
+```sh
+root@main:~# kubectl get nodes
+NAME     STATUS     ROLES           AGE     VERSION
+main     NotReady   control-plane   3m24s   v1.28.2
+node-1   NotReady   <none>          5s      v1.28.2
+```
 
 flannel 会自动配置各个节点的网络。
 
@@ -264,7 +285,6 @@ kubectl apply -f kube-flannel.yml
 创建 `nginx.yaml` 的pod配置文件：
 
 ```yaml
-
 apiVersion: v1
 kind: Pod
 metadata:
