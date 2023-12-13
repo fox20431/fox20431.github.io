@@ -1,10 +1,10 @@
 ---
-title: kubernates installation
+title: kubernetes installation
 ---
 
 
 
-# Kubernates Installation
+# Kubernetes Installation
 
 Debian Version: 11
 
@@ -199,8 +199,8 @@ systemctl restart systemd-networkd
 
     ```sh
     # sudo kubeadm init
-    # --pod-network-cidr：集群中分给pod网络的IP地址，默认10.244.0.0/16
-    # --service-cidr：为Service分配的IP地址，默认10.96.0.0/12
+    # --pod-network-cidr：pod网段，默认10.244.0.0/16
+    # --service-cidr：service网段，默认10.96.0.0/12
     # --image-repository：指定阿里云镜像，
     # --apiserver-advertise-address 指定公网ip
     sudo kubeadm init --pod-network-cidr=10.244.0.0/16 \
@@ -268,7 +268,7 @@ flannel 会自动配置各个节点的网络。
 
 获取配置内容：
 
-```
+```sh
 wget https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
 
@@ -282,47 +282,79 @@ kubectl apply -f kube-flannel.yml
 
 ## Create the First Pod
 
-创建 `nginx.yaml` 的pod配置文件：
+1. 创建 `nginx.yml` 的pod配置文件：
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx
-  # 指定 label，便于检索
-  labels:
-    app: nginx
-spec:
-  containers:
-  - name: nginx
-    # 指定镜像
-    image: nginx:alpine
-    # 指定暴露端口
-    ports:
-    - containerPort: 80
-```
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: nginx
+      # 指定 label，便于检索
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        # 指定镜像
+        image: nginx:alpine
+        # 指定暴露端口
+        ports:
+        - containerPort: 80
+    ```
 
-让pod配置文件生效：
+2. 让pod配置文件生效：
 
-```sh
-kubectl apply -f nginx.yaml
-```
+    ```sh
+    kubectl apply -f nginx.yml
+    ```
 
-查看Pod创建进度：
+    查看Pod创建进度：
 
-```sh
-kubectl get pods nginx -o wide
-```
+    ```
+    $ kubectl get pods nginx -o wide
 
-查看pod详细信息
+    NAME    READY   STATUS    RESTARTS   AGE   IP           NODE     NOMINATED NODE   READINESS GATES
+    nginx   1/1     Running   0          19m   10.244.1.9   node-1   <none>           <none>
+    ```
 
-```
-kubectl describe pod nginx
-```
+    当 `STATUS` 为 `Running` 表示Pod正常运行。
 
+3. 检验 POD 是否可用
 
+    **检查 pod 运行在哪些节点上**，如上我得Pod运行在 `node-1` 节点上。
 
-## Install Helm
+    已知 pod 的内部IP，在`node-1` 节点服务器上运行下述命令：
+
+    ```sh
+    curl 10.244.1.9:80
+    ```
+    
+     可以获取Nginx的返回的默认HTML页面。
+
+4. （可选）映射POD端口到宿主机上
+
+   这是Service的工作，我们可以新建针对该功能的Service新文件，也可以对 `nginx.yml` 文件追加如下内容：
+
+   ```yaml
+   --- # split two configurations
+   # Create the service to route the network traffic
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: nginx-service
+   spec:
+     selector:
+       app: nginx
+     ports:
+       - protocol: TCP
+         port: 80
+         nodePort: 30001
+     type: NodePort
+   ```
+
+## Advanced
+
+### (Optional) Install Helm - K8S Automate Tool
 
 `Helm` 是一个在 Kubernetes 上管理应用程序的包管理工具。它允许用户定义、安装和升级 Kubernetes 应用程序，并处理与应用程序相关的所有资源，如部署、服务、持久卷等。
 
@@ -345,15 +377,7 @@ helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts/
 helm repo list
 ```
 
-## Plugin Recommand
-
-### flannel
-
-```sh
-helm install flannel --set podCidr="10.244.0.0/16" https://github.com/flannel-io/flannel/releases/latest/download/flannel.tgz
-```
-
-更多可看：https://github.com/flannel-io/flannel#deploying-flannel-manually
+### Plugin Recommand
 
 ### 安装Dashboard UI（推荐）
 
@@ -362,40 +386,3 @@ helm install flannel --set podCidr="10.244.0.0/16" https://github.com/flannel-io
 ### 安装Prometheus（推荐）
 
 [Prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main)
-
-拉取配置：
-
-```sh
-wget https://github.com/prometheus-operator/kube-prometheus/archive/refs/tags/v0.12.0.tar.gz
-```
-
-解压缩：
-
-```sh
-tar -xzvf v0.12.0.tar.gz
-```
-
-由于网络环境问题，需要对image的地址进行更换。
-
-首先进入到工作目录文件：
-
-```sh
-cd ./kube-prometheus-0.12.0/manifests
-```
-
-定位需要修改的文件（文本内容含有境外源，这里主要是`quay.io|k8s.gcr|grafana/`）：
-
-```sh
-# -i 忽略大小写
-# -r 递归
-# -E 正则
-grep -riE 'quay.io|k8s.gcr|grafana/' *
-```
-
-然后将定位到的文件进行替换：
-
-```sh
-sed -i 's/quay.io/quay.mirrors.ustc.edu.cn/g' <file>
-sed -i 's/k8s.gcr.io/lank8s.cn/g' <file>
-grep "image: " * -r		# 确认一下是否还有国外镜像
-```
