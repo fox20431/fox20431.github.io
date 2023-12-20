@@ -7,11 +7,21 @@ date: 2023-12-10
 
 # HTTPS Certification Secret - PKI
 
-HTTPS 证书的秘密
+HTTPS 证书的秘密 —— PKI（Public Key Infrastructure，公钥基础建设）
+
+PKI 是一种安全框架，用于管理密钥和数字证书，以确保在计算机网络上进行的通信的安全性和可靠性。PKI 通过使用非对称密钥加密技术，提供了一种安全的通信和身份验证机制。
+
+常见保证安全连接的是TLS（SSL的继任者）。
+
+*SSL: Secure Sockets Layer（安全套接字层）*
+
+*TLS: Transport Layer Security（传输层安全性）*
+
+
 
 ## Prerequisite
 
-**HTTPS建立安全通信流程**
+**TLS Handshake Protocal**
 
 1. 客户端向服务器发送 SSL 握手请求，请求建立 SSL/TLS 连接。
 2. 服务器向客户端发送自己的证书，证书中包含了服务器的公钥和其他信息。
@@ -26,6 +36,16 @@ HTTPS 证书的秘密
    - 验证通过后，客户端会从证书中获取服务器的公钥，并使用该公钥对一个随机生成的对称密钥进行加密，然后将加密后的密钥发送给服务器。
 4. 服务器使用自己的私钥对客户端发送的密钥进行解密，得到对称密钥。
 5. 双方使用对称密钥来加密和解密数据，确保数据在传输过程中的安全性。
+
+*详情可见[IETF的RFC标准](https://datatracker.ietf.org/doc/rfc8446/)。*
+
+**TLS vs. TCP**
+
+TLS和TCP都有握手，他们的区别是什么？
+
+1. 协议层：TCP属于传输层，TLS属于传输层和应用层；
+2. 目的：TCP旨在建立可靠的信道，TLS旨在保证通信的机密性和完整性；
+3. 流程：TLS握手前需要确保TCP握手建立可靠的信道。
 
 ## What is PKI
 

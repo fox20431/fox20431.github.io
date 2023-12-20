@@ -408,6 +408,14 @@ sudo pacman -S ibus-rime
 
 当系统使用暗黑主题，需要手动调整 `Appearance` 的 `Legacy Application` 的选项为 `Adwaita-dark`
 
+ **插件推荐**
+
+- Hibernate Status Button
+- AppIndicator and KStatusNotifierItem support (tray tool)
+- Dash to Dock
+- Just Perfection
+- GSConnect
+
 ### 注意事项
 
 - GNOME的三指操作需要在 `Wayland` 下才能做到
@@ -418,7 +426,7 @@ sudo pacman -S ibus-rime
 
   参考：https://bbs.archlinuxcn.org/viewtopic.php?id=11275 & https://wiki.archlinux.org/title/Kernel_mode_setting#Early_KMS_start
 
-## 更多
+## 安装应用
 
 ### YAY
 
@@ -435,19 +443,21 @@ cd yay
 makepkg -si
 ```
 
-详情见[yay仓库主页](https://github.com/Jguer/yay)
+*详情见[yay仓库主页](https://github.com/Jguer/yay)。*
 
-### emoji
+### 安装输入法
 
-安装 emoji picker
+#### Libpinyin（推荐）
 
-```sh
-yay -S emote
+安装：
+
+```
+sudo pacman -S ibus-libpinyin
 ```
 
-### RIME输入法
+#### RIME
 
-如何安装：
+安装：
 
 ```sh
 sudo pacman -S ibus-rime
@@ -475,23 +485,46 @@ switcher:
   	# - "Control+grave"
 ```
 
-### 增加软件库
+### Docker
+
+安装Docker和Docker-compose：
 
 ```sh
-sudo vim /etc/pacman.conf
-```
-文件尾添加下面两行
-```sh
-[archlinuxcn]
-Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+pacman -S docker docker-compose
+
+
+reboot
 ```
 
-[multilib]为32位软件库，取消注释
+启用服务
 
 ```sh
-sudo pacman -Syu
-sudo pacman -S archlinuxcn-keyring
+systemctl enable --now docker
 ```
+
+将当前用户加入docker组，从而可以有权使用docker
+
+```sh
+usermod -a -G docker <username>
+# 需要重启生效
+reboot
+```
+
+### PDF阅读器
+
+Pdf阅读器我推荐两个：okular、evince。
+
+这两个都是开源的，但okular是KDE平台的，evince是gnome平台的。
+
+evince涵盖在gnome集合包中，安装gnome时自动安装evince。
+
+```sh
+sudo pacman -S evince
+```
+
+## Advanced
+
+进阶设置。
 
 ### 双系统
 
@@ -523,49 +556,8 @@ Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
 
-### Logitech
 
-当安装微码后，罗技的无线鼠标不能用（个人情况不代表全部）
 
-罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
-
-```sh
-sudo pacman -S libratbag
-sudo systemctl enable ratbagd
-sudo systemctl restart ratbagd
-```
-
-更多关于libratbag可见：https://github.com/libratbag/libratbag
-
-更多可见：https://wiki.archlinux.org/title/Logitech_Unifying_Receiver
-
-### Intel显卡
-
-我之前一致认为intel显卡是最简单最不需要配置的显卡，直到入手了这台电脑。
-
-阅读WiKi十分重要！！！https://wiki.archlinux.org/title/intel_graphics
-
-我首先是将`i915`加入到`/etc/mkinitcpio.conf`的module中，然后还需要通过GRUB传参防止闪烁。
-
-```
-GRUB_CMDLINE_LINUX="i915.enable_psr=0"
-```
-
-关于intel的PSR：https://www.intel.com/content/www/us/en/support/articles/000057194/graphics.html
-
-PSR is short for panel self refresh.
-
-面板自动刷新，可以降低系统功耗。
-
-### Docker
-
-```sh
-pacman -S docker
-systemctl enable docker
-systemctl start docker
-usermod -a -G docker <username>
-reboot
-```
 
 ### OBS
 
@@ -583,49 +575,6 @@ sudo pacman -S obs-studio
 然后OBS是基于QT开发的软件，如果要让其支持wayland需要安装qt相关的包。
 
 最后配置环境变量。
-
-### Fonts
-
-当对应编码的字体不存在时，会出现“方块字”的现象。
-
-解决这个问题的方法就是安装上对应确实的字体。
-
-可以选择 `wqy-zenhei` 自发开源组织的字体（貌似不再维护），推荐使用选 google 的开源字体 `noto-fonts` 系列的字体（有大厂背书），同时 Adobe 也开源了 `souce-han` 系列字体。关于代码相关的字体，我推荐 `fira` 字体。
-
-```sh
-sudo pacman -S noto-fonts
-# 其他的通过关键字搜索
-```
-
-### PDF阅读器
-
-Pdf阅读器我推荐两个：okular、evince。
-
-这两个都是开源的，但okular是KDE平台的，evince是gnome平台的。
-
-evince涵盖在gnome集合包中，安装gnome时自动安装evince。
-
-```sh
-sudo pacman -S evince
-```
-
-### 多屏幕不同缩放显示问题及暂时解决方案
-
-多个屏幕不同缩放会有一些的问题。有些应用是运行x上的，wayland通过xwayland才能在wayland上显示，所以对wayland选择缩放，并不能对运行在xwayland上的生效，所以需要调整x协议的缩放，但x协议的缩放会模糊。
-
-下面是对适配 `gtk` 的应用的缩放：
-
-```sh
-gsettings set org.gnome.desktop.interface scaling-factor 2
-```
-
-下面是针对 `x11` 的应用的缩放，比如 `Visual Studio Code` 等：
-
-```sh
-gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "[{'Gdk/WindowScalingFactor', <2>}]"
-```
-
-目前属于 `x11` 到 `wayland` 过渡的镇痛期。
 
 ### 安装pipewire
 
@@ -647,25 +596,78 @@ systemctl --user start pipewire pipewire-pulse wireplumber
 
 将 `--ao=alsa` 写入 `mpv.conf` 。
 
+### 安装字体
+
+当对应编码的字体不存在时，会出现“方块字”的现象。
+
+解决这个问题的方法就是安装上对应确实的字体。
+
+可以选择 `wqy-zenhei` 自发开源组织的字体（貌似不再维护），推荐使用选 google 的开源字体 `noto-fonts` 系列的字体（有大厂背书），同时 Adobe 也开源了 `souce-han` 系列字体。关于代码相关的字体，我推荐 `fira` 字体。
+
+```sh
+sudo pacman -S noto-fonts
+# 其他的通过关键字搜索
+# 安装微软相关的字体，这个字体不是很全，像楷体、仿宋之类的字体依旧不存在。
+yay -S ttf-ms-fonts
+```
+
+**自定义扩充方案**
+
+解决方案也很简单粗暴，如 Windows 系统去`C:\Windows\Fonts`将所有字体下载下载，再将该目录完全拷贝下来，根据Linux中的`/etc/fonts/fonts.conf`的配置，默认用户`~/.fonts/`目录可以用于存放字体文件。将Windows的所有字体都拖入到这里。
+
+利用 fontsconfig 工具刷新下缓存即可：
+
+```sh
+fc-cache -f -v
+```
+
+
+
+## 问题及解决方案
+
+### Intel显卡
+
+我之前一致认为intel显卡是最简单最不需要配置的显卡，直到入手了这台电脑。
+
+阅读WiKi十分重要！！！https://wiki.archlinux.org/title/intel_graphics
+
+我首先是将`i915`加入到`/etc/mkinitcpio.conf`的module中，然后还需要通过GRUB传参防止闪烁。
+
+```
+GRUB_CMDLINE_LINUX="i915.enable_psr=0"
+```
+
+关于intel的PSR：https://www.intel.com/content/www/us/en/support/articles/000057194/graphics.html
+
+PSR is short for panel self refresh.
+
+面板自动刷新，可以降低系统功耗。
+
+### 多屏幕不同缩放显示问题及暂时解决方案
+
+多个屏幕不同缩放会有一些的问题。有些应用是运行x上的，wayland通过xwayland才能在wayland上显示，所以对wayland选择缩放，并不能对运行在xwayland上的生效，所以需要调整x协议的缩放，但x协议的缩放会模糊。
+
+下面是对适配 `gtk` 的应用的缩放：
+
+```sh
+gsettings set org.gnome.desktop.interface scaling-factor 2
+```
+
+下面是针对 `x11` 的应用的缩放，比如 `Visual Studio Code` 等：
+
+```sh
+gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "[{'Gdk/WindowScalingFactor', <2>}]"
+```
+
+目前属于 `x11` 到 `wayland` 过渡的镇痛期。
+
+
+
 ### 输入法漂移的问题
 
 在 Linux Wayland Gnome 上发现 gnome 绑定生态的应用都会出现 ibus 飘逸的问题。
 
 多次解决无果，尝试询问群友，原来是因为我多加了 `GTK_IM_MODULE` 环境变量，将这个删除后生效。
-
-下面是群友原话：
-
-> 这个东西是这样 你设置的话会走 ibus 的 gtk im module
-
-> 不设置就是 gtk 的 wayland text input v3
-
-> 我也不知道 gtk 上游在搞些啥。。。
-
-> 但我知道 fedora 默认是不用 gtk im module 的（默认就走 text input v3
-
-> 我测试的结果是 gtk4 确实比较适合 text input v3
-
-> 虽然用 fcitx5 的话 不会错位
 
 ### 触摸板滚动速度问题
 
@@ -676,21 +678,21 @@ systemctl --user start pipewire pipewire-pulse wireplumber
 scroll-factor=0.4
 ```
 
-### Office 安装
+### Logitech鼠标安装微码后无法使用解决方案
 
-可以安装 `LibreOffice` 和 `WPS`，推荐 `LibreOffice` 。
+当安装微`intel-ucode`码后，罗技的无线鼠标不能用（个人情况不代表全部）。解决方案：卸载微码。
 
-安装微软相关的字体 `yay -S ttf-ms-fonts`。这个字体不是很全，像楷体、仿宋之类的字体依旧不存在。
+不想卸载微码需要如下操作才能使用：
 
-解决方案也很简单粗暴，如 Windows 系统去`C:\Windows\Fonts`将所有字体下载下载，再将该目录完全拷贝下来，根据Linux中的`/etc/fonts/fonts.conf`的配置，默认用户`~/.fonts/`目录可以用于存放字体文件。将Windows的所有字体都拖入到这里。
-
-利用 fontsconfig 工具刷新下缓存即可。
+罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
 
 ```sh
-fc-cache -fv
+sudo pacman -S libratbag
+sudo systemctl enable ratbagd
+sudo systemctl restart ratbagd
 ```
 
-### Gnome 插件推荐
+更多关于libratbag可见：https://github.com/libratbag/libratbag
 
-- Hibernate Status Button
-- Tray Icons: Reloaded
+更多可见：https://wiki.archlinux.org/title/Logitech_Unifying_Receiver
+

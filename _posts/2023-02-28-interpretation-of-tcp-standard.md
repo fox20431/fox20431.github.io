@@ -1,17 +1,40 @@
 ---
-title: "TCP的三次握手和四次挥手"
-excerpt: "TCP三次握手和四次挥手做了什么？为什么要这么做？"
+title: interpretation of tcp standard
+date: 2023-2-28
 ---
 
-# TCP三次握手和四次挥手
+# TCP标准解读
 
-## 三次握手
+关于TCP（Transmission Control Protocol）IETF的RFC标准
+
+https://datatracker.ietf.org/doc/html/rfc793
+
+## 3-Way Handshake for Connection Synchronization
+
+针对的连接同步的三次握手。
 
 **步骤**
 
-1. 第一次握手，客户端向服务器发送一个SYN包，表示请求建立连接，并附上一个初始序列号seq；
-2. 第二次握手，在服务器收到SYN包后，回复一个SYN+ACK包，表示同意建立连接，并附上一个确认号（等于客户端的seq+1），以及一个自己的初始序列号；
-3.  第三次握手，客户端再回复一个ACK包，表示确认建立接连，并附上一个确认号ack（等于服务端的seq+1）。
+ Basic 3-Way Handshake for Connection Synchronization
+
+```
+      TCP A                                                TCP B
+
+  1.  CLOSED                                               LISTEN
+
+  2.  SYN-SENT    --> <SEQ=100><CTL=SYN>               --> SYN-RECEIVED
+
+  3.  ESTABLISHED <-- <SEQ=300><ACK=101><CTL=SYN,ACK>  <-- SYN-RECEIVED
+
+  4.  ESTABLISHED --> <SEQ=101><ACK=301><CTL=ACK>       --> ESTABLISHED
+
+  5.  ESTABLISHED --> <SEQ=101><ACK=301><CTL=ACK><DATA> --> ESTABLISHED
+
+```
+
+`SEQ（Sequence Number）`：序列数，随机数，用于返回时确认字ACK；
+
+`ACK（acknowledgment）`：序列数+1。
 
 三次握手后，双方都知道了对方的序列号和确认号，就可以传输数据了。
 

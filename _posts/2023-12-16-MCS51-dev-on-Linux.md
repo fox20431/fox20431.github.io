@@ -48,8 +48,6 @@ yay -R orca
 yay -R brltty
 ```
 
-
-
 ## 测试
 
 设置波特率
@@ -73,3 +71,14 @@ sudo echo "Hello111" > /dev/ttyUSB0
 ```
 
 这样你可以在另外screen的tty中看到发送的信息，如果想退出screen，使用`ctrl+a k`快捷键。
+
+## 开发
+
+编译环境：
+
+```sh
+sudo pacman -S sdcc
+```
+
+vscode 安装 `C/C++ Extension Pack`
+
