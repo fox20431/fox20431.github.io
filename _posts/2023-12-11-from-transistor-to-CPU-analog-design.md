@@ -16,6 +16,8 @@ date: 2023-12-11
 - 场效应管（FET，Feild Effect Transistor），有栅极（gate）、漏极（Drain）和源极（Source）
 - 双极晶体管（BJT，Bipolar Junction Transistor），有发射极（Emitter）、基极（Base）和集电极（Collector）
 
+真空管 -> BJT -> FET
+
 ### FET
 
 MOSFET（Metal Oxide Metal Oxide Semiconductor FET）是常见的FET，常用于CPU。

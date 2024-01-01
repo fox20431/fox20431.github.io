@@ -621,6 +621,8 @@ yay -S ttf-ms-fonts
 fc-cache -f -v
 ```
 
+### 切换内核
+
 
 
 ## 问题及解决方案
@@ -661,17 +663,17 @@ gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "[{'Gdk/Wind
 
 目前属于 `x11` 到 `wayland` 过渡的镇痛期。
 
-
-
 ### 输入法漂移的问题
 
 在 Linux Wayland Gnome 上发现 gnome 绑定生态的应用都会出现 ibus 飘逸的问题。
 
 多次解决无果，尝试询问群友，原来是因为我多加了 `GTK_IM_MODULE` 环境变量，将这个删除后生效。
 
-### 触摸板滚动速度问题
+### 调节触摸板滚动速度
 
-一般都是使用libinput，对于这种情况可以使用(libinput-config)[https://gitlab.com/warningnonpotablewater/libinput-config]，修改对应配置文件`/etc/libinput.conf`。
+一般都是使用libinput，对于这种情况可以使用[libinput-config](https://gitlab.com/warningnonpotablewater/libinput-config)，修改对应配置文件`/etc/libinput.conf`。
+
+[reddit帖子](https://www.reddit.com/r/gnome/comments/kopjm0/still_no_way_to_adjust_touchpad_scrollspeed/)也有讨论这个问题的话题。
 
 ```sh
 # 0.4倍速度
@@ -696,3 +698,12 @@ sudo systemctl restart ratbagd
 
 更多可见：https://wiki.archlinux.org/title/Logitech_Unifying_Receiver
 
+### Xwayland在缩放情况下滚动速度问题
+
+目前没发现的好的解决方案，但是chrome可以针对设置（**不推荐，会导致鼠标情况下滚轮速度非常慢**）
+
+Chrome地址栏输入：chrome://flags/
+
+搜索 `Windows Scrolling Personality` ，将其设置为Enable。
+
+但对于VSCode这类的不提供设置的暂时没好的解决方案。

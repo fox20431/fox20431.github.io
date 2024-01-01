@@ -1,5 +1,6 @@
 ---
 title: kubernetes installation
+date: 2023-12-25
 ---
 
 
@@ -16,26 +17,14 @@ Debian Version: 11
 
 - https://snapshooter.com/learn/linux/install-kubernetes
 
-## 系统设置
-
-为满足K8S的运行条件，我们需要对系统进行设置。
-
-```sh
-# 关闭swap分区
-sudo swapoff -a
-# 从文件系统表中注释掉swap分区，防止重启swap分区自动生效
-# 这个命令将在/etc/fstab文件中找到包含" swap "的行，并在行首添加"#"，从而将其注释掉。
-sudo sed -i '/ swap / s/^(.*)$/#1/g' /etc/fstab
-```
-
 ## Intalling kubeadm
 
-为了规避GFW带来的网络问题，下面教程将针对阿里云K8S镜像站进行配置。
+为了规避GFW带来的网络问题，下面教程将针对阿里云K8S镜像站进行配置；如果你想要使用官方的镜像请查[官方文档](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)。
+
+镜像配置帮助信息：
 
 - [阿里云镜像站地址](https://mirrors.aliyun.com/kubernetes/)
-- (阿里云镜像站使用教程)[https://developer.aliyun.com/mirror/kubernetes/]
-
-*如果你想要使用官方的镜像请查[官方文档](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)。*
+- [阿里云镜像站使用教程](https://developer.aliyun.com/mirror/kubernetes/)
 
 **Install rrerequisite utils**
 
@@ -44,12 +33,11 @@ sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 ```
 
-**Add the  appropriate Kubernetes `apt` repository **
+**Add the appropriate Kubernetes `apt` repository **
 
 ```sh
-# 下载GPG密钥并导入APT中
+# 添加阿里的 kubernetes 的 apt 镜像源
 curl -fsSL https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring-aliyun.gpg
-
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring-aliyun.gpg] https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
@@ -110,7 +98,8 @@ K8S支持较多的容器运行时，具体可见[Container Runtimes](https://kub
    ```sh
    # 将containerd的配置设置为默认模板
    containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
-   # 由于国内下载不到registry.k8s.io的镜像，修改sandbox_image的值为：
+   # containerd责任之一就是拉取镜像
+   # 由于国内无法下载registry.k8s.io的镜像，修改sandbox_image的值为阿里云的镜像
    sudo sed -i "s#k8s.gcr.io/pause#registry.cn-hangzhou.aliyuncs.com/google_containers/pause#g" /etc/containerd/config.toml
    # 开启SystemdCgroup
    sudo sed -i "s#SystemdCgroup = false#SystemdCgroup = true#g" /etc/containerd/config.toml
@@ -282,7 +271,9 @@ kubectl apply -f kube-flannel.yml
 
 ## Create the First Pod
 
-1. 创建 `nginx.yml` 的pod配置文件：
+1. 创建POD
+
+    编辑名为 `nginx.yml` 的POD配置文件：
 
     ```yaml
     apiVersion: v1
@@ -302,36 +293,32 @@ kubectl apply -f kube-flannel.yml
         - containerPort: 80
     ```
 
-2. 让pod配置文件生效：
+    让POD配置文件生效：
 
     ```sh
     kubectl apply -f nginx.yml
     ```
 
-    查看Pod创建进度：
+2. 检验 POD 是否可用
+
+    查看Pod状态，如果为 `Running` 则表示正在运行：
 
     ```
     $ kubectl get pods nginx -o wide
-
+    
     NAME    READY   STATUS    RESTARTS   AGE   IP           NODE     NOMINATED NODE   READINESS GATES
     nginx   1/1     Running   0          19m   10.244.1.9   node-1   <none>           <none>
     ```
 
-    当 `STATUS` 为 `Running` 表示Pod正常运行。
-
-3. 检验 POD 是否可用
-
-    **检查 pod 运行在哪些节点上**，如上我得Pod运行在 `node-1` 节点上。
-
-    已知 pod 的内部IP，在`node-1` 节点服务器上运行下述命令：
+    **在 pod 运行的节点上**运行下述命令，检查服务是否正常工作：
 
     ```sh
     curl 10.244.1.9:80
     ```
-    
+
      可以获取Nginx的返回的默认HTML页面。
 
-4. （可选）映射POD端口到宿主机上
+3. （可选）映射POD端口到宿主机上
 
    这是Service的工作，我们可以新建针对该功能的Service新文件，也可以对 `nginx.yml` 文件追加如下内容：
 
@@ -353,6 +340,74 @@ kubectl apply -f kube-flannel.yml
    ```
 
 ## Advanced
+
+### 启动针对kubectl的补全
+
+安装 `bash-completion` ，启用自动不全特性：
+
+```sh
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+```
+
+### Namespace 特性介绍
+
+> In Kubernetes, *namespaces* provides a mechanism for isolating groups of resources within a single cluster.	
+>
+> From kubernetes doc
+
+namespace为单一集群提供了将资源隔离成组的一个方法。
+
+```sh
+# 查看所有的 namespace
+kubectl get namespaces
+# 删除指定的 namespace
+kubectl delete namespace <namespace_name>
+# 获取指定namespace的所有pods节点
+kubectl get pods --namespace=ingress-nginx
+```
+
+### Nignx Ingress
+
+[Ingress Nginx 安装文档](https://kubernetes.github.io/ingress-nginx/deploy/)
+
+**对于有网络问题的建议看下如下教程！！！**
+
+虽然执行 `--dry-run` 成功，他仅代表在 `control plane` 能成功，实际上部署的 pod 是运行在 worker 节点上的，这时候可能会因为 worker 的网络环境导致执行不成功（比如国内网络环境）。
+
+with `kubectl apply`, using YAML manifests.
+
+1. 拉取部署配置文件
+
+    ```sh
+    wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+    ```
+
+2. 更换无法拉去的镜像地址
+
+    ```sh
+    # registry.k8s.io 国内无法访问，更换为k8s.dockerproxy.com镜像站
+    sed -i "s#registry.k8s.io#k8s.dockerproxy.com#g" deploy.yaml
+    ```
+
+3. 应用修改后的配置文件
+
+    ```sh
+    kubectl apply -f deploy.yaml
+    ```
+
+运行完后还有问题，
+
+> Error from server (InternalError): error when creating "yaml/xxx/xxx-ingress.yaml": Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": Post https://ingress-nginx-controller-admission.ingress-nginx.svc:443/extensions/v1beta1/ingresses?timeout=30s: Temporary Redirect
+
+解决方案：
+
+```sh
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+```
+
+参考
+
+https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook
 
 ### (Optional) Install Helm - K8S Automate Tool
 

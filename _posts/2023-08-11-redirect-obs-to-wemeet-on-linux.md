@@ -22,10 +22,10 @@ title: redirect obs to wemeet on linux
 sudo pacman -S pipewire pipewire-alsa pipewire-jack pipewire-pulse
 ```
 
-创建名为 `wemeet` 的虚拟麦克风，将桌面音频作为麦克风的输入：
+创建名为 `audio_remap` 的虚拟麦克风，将桌面音频作为麦克风的输入：
 
 ```sh
-pactl load-module module-remap-source source_name=weemeet source_properties=device.description=wemeet master=$(pactl get-default-sink).monitor
+pactl load-module module-remap-source source_name=wemeet source_properties=device.description=wemeet master=$(pactl get-default-sink).monitor
 ```
 
 不用的时候可以卸载：

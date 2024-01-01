@@ -2,73 +2,111 @@
 
 ## 简介
 
-Vim是Vi的增强版。
-
-Vim相比其他编辑器提供了多种模式进行切换。
-
-详细信息，请启动Vim使用`:help`获取更多帮助。
-
-默认leader键 `\`
+Vim是Vi的增强版。图形界面下建议安装`gvim`，同样可以在终端下使用`vim`。
 
 ## 操作
 
-以下快捷键均在命令模式。
 
-### 方向键
 
-- h: &larr;.
-- j: &uarr;.
-- k: &darr;.
-- l: &rarr;.
+### 移动光标
 
-### 操作键
+**moving cursor in normal mode**
+
+h: left; j: up; k: down; l: left.
+
+**move cursor shortcut for word in normal mode**
+
+- `w`：下一个单词的开头。
+- `W`：下一个单词的开头，以空白字符为界。
+- `b`：上一个单词的开头。
+- `B`：上一个单词的开头，以空白字符为界。
+- `e`：下一个单词的末尾。
+- `E`：下一个单词的末尾，以空白字符为界。
+- `ge`：上一个单词结尾。
+- `gE`：上一个单词结尾，以空白字符为界。
+
+**move cursor shortcut for line in normal mode**
+
+- `^`：行首
+- `$`：行尾
+
+**move cursor shortcut for text in normal mode**
+
+- `gg`：the start of text
+- `G`: The end of text
+
+### 模式切换
+
+vim模式有如下种类：
+
+- normal
+- insert
+- visual
+- command-line
+- replace
+- visual block
+
+**任何模式的切换都需要通过normal模式！**
+
+**switch to insert mode shortcut from normal mode**
 
 - i: insert before cursor.
-- I: insert the beginning of the line where the cursor is.
 - a: insert after cursor.
+- I: insert the beginning of the line where the cursor is.
 - A: insert the ending of the line where the cursor is.
 - c: selectively delete then insert.
 - cc: delete all characters of the line where the cursor is except enter then insert.
 - s: delete the character under the cursor then insert.
 - S: delete all characters of the line where the cursor is except enter then insert.
-- w: 移动到下一个单词开头
-- e: 移动到当前单词尾部
-- b：移动到上一个单词开头
-- ge：移动到上一个单词结尾
-- o: 下一行创建
-- .：重复上次命令
-- ^：行首
-- $：行尾
+
+**switch to other mode shortcut from normal mode**
+
+- `v`: visual mode
+- `c-v`: visual block mode
+- `:`: command-line mode
+- `R`: replace mode
+
+**undo&redo**
+
+- `u`: undo
+- `<Ctrl-r>`: redo
+
+## 文本操作
+
+**replace**
+
+- `R`: replace mode
+- `r`: replace the charactor on the cursor
+
+**delete**
+
+**如果 `normal ` 模式下显示的光标是方块，`d`选中的范围为光标方块前侧到光标移动的字符（包含方块光标指向的字符）。**
+
+- `x`：删除当前字符
+- `d`：选择范围删除，比如 `de` 删除从当前到单词尾部的内容
+- `dd`：删除当前行
+
+**格式化**
+
+`==`: 格式化当前行
+
+`gg=G`: 将全部代码格式化
+
+**字符串操作**
+
+`/<pattern string>`: 查找
+
+`:<range>s/<targetstring>/<repalced string>[/g]`: 替换
+
+`: g/<string>,[end raw]/d`：删除字符串所在行，比如删除包含特定字符行和接下来两行：g/pattern/,.+2d
+
+\<range\>表示范围，`%`表示全文，n表示第n行，.表示当前行，$表示末行，^表示首行
 
 ### 文件操作
 
 - `:w`: wite
 - `:q`: quit
-
-:qa可以退出所有
-
-查找字符串
-
-/\<pattern string\>
-
-替换字符串
-
-
-:\<range\>s/\<targetstring\>/\<repalced string\>[/g]
-
-删除字符串所在行
-
-: g/\<string\>,[end raw]/d
-
-比如删除包含特定字符行和接下来两行：g/pattern/,.+2d
-
-\<range\>表示范围，`%`表示全文，n表示第n行，.表示当前行，$表示末行，^表示首行
-
-距离：
-
-:n,$s/vivian/sky/ 替换第 n 行开始到最后一行中每一行的第一个 vivian 为 sky
-
-gg=G 将全部代码格式化
+- `:qa`: quit all buffers
 
 ### 窗口操作
 
@@ -133,20 +171,99 @@ jump back: ctrl+o / ctrl+t
 :help term.txt
 ```
 
+## Vimrc
+
+**切忌在 ArchLinux 的 `/etc/vimrc` 中 `runtime! archlinux.vim` 不能删除。**否则会产生一些影响，已知影响map不可用。
+
+下面是 `/etc/vimrc` 的示范配置，后续会跟进更改。
+
+```vimrc
+" This line should not be removed as it ensures that various options are
+" properly set to work with the Vim-related packages.
+runtime! archlinux.vim
 
 
----
+" editor
+" >>>
+set encoding=utf-8
 
-relative line number: 
+" '\t' displays space width
+set tabstop=4
+set expandtab
+" <Tab> and <BS> operate space width
+set softtabstop=4
+" expand tab into spaces
+set smarttab
 
-.vimrc:
+set autoindent
+set cindent
+" indent width
+set shiftwidth=4
+set smartindent
 
-```
-set relative number
-```
+" not working
+"set pastetoggle=<F2>
+nnoremap <F2> :set invpaste paste?<CR>
 
-command:
 
-```
-[number]j` or `[number]k
+"nnoremap <C-k> :set invpaste paste?<CR>
+"set nopaste
+
+set scrolloff=8
+" <<<
+
+" appearance
+" >>>
+syntax on
+
+set wrap
+
+set nolist
+"set list
+set listchars=eol:⮐,tab:-->,trail:·
+"set listchars=eol:!,tab:-->,trail:.
+
+set showcmd
+set cmdheight=1
+"set showmode
+
+set number
+set relativenumber
+
+" status line appearance
+" 0: never; 1: only if there are at least two windows; 2: always
+set laststatus=2
+set statusline=%<
+"full path
+set statusline+=%F            
+set statusline+=\ %m
+"modified flag
+" Separation point between left and right aligned items.
+set statusline+=%=
+set statusline+=%l:%c             "current line
+set statusline+=\ 0x%B          "character under cursor
+
+" <<<
+
+
+" feature
+" >>>
+" forbid indent when adding comments
+"keep the format for pasting action
+"set mouse=a
+" Display tab and space
+"set list
+" fold method
+"set fdm=indent
+
+" Open a new buffer, hide instead of close
+set hidden
+
+" Set the time(ms) that wait for next key of leader
+set timeoutlen=1000
+
+set updatetime=300
+
+"set signcolumn=yes
+" <<<
 ```
