@@ -1,5 +1,5 @@
 ---
-title: english phonetic symbol
+title: English phonetic symbol
 date: 2023-12-13
 ---
 
@@ -7,9 +7,23 @@ date: 2023-12-13
 
 # English Phonetic Symbol
 
-作为非母语英语学习者，音标可以帮助我们正确的读出正确的发音。
+音标（Phonetic Symbol），即表示语音的符号/标记，可以帮助读者正确地朗读单词。
 
-但随着对英语的不断的学习，发现其音标在细节上也会有差异。
+该文章将致力于搞清楚英语音标的意义、发展、各种音标系统的异同、以及发音技巧和规律。
+
+## Introductory Common Sense
+
+### 音素
+
+我们所看到的**音标是由一个个音素（Phoneme）组成的**音素是根据语音的自然属性划分出来的最小语音单位，通俗讲是人耳能区分的不同音声单位，为了以文本形式记录这些音素便发展出了表示声音的字母（Phonetic Alphabet），由于音素字母的样式或数量，以及发音规律等不同则组成了不同的音标系统。
+
+*音素为百度百科的翻译、维基百科翻译为音位，个人比较认可音素，因此文章中统一使用音素。*
+
+## 意义
+
+音标使得声音这种具有时间属性的事物可以通过人们可理解的文本方式得以记录。而作为理解他的我们只需要掌握音标系统则可以再次复现出发音。
+
+> 个人感想，人对持久（或者永久）真的是有一种来自本能的追求。
 
 ## 发展历史
 
@@ -17,14 +31,12 @@ date: 2023-12-13
 
 | Time | Event                                                        |
 | ---- | ------------------------------------------------------------ |
-| 1828 | Noah Webster's ***American Dictionary*** (First edition)     |
+| 1828 | ***American Dictionary*** (First edition) by Noah Webster    |
 | 1897 | ***International Phonetic Association*** formed              |
-| 1917 | Daniel Jones’s ***English Pronouncing Dictionary*** (First Edition) |
-| 1944 | ***A Pronouncing Dictionary of American English***, also referred to as **Kenyon and Knott** |
+| 1917 | ***English Pronouncing Dictionary*** (First Edition) by Daniel Jones |
+| 1944 | ***A Pronouncing Dictionary of American English*** by John Samuel Kenyon, Thomas Albert Knott |
 
-结合上述时间线和现在音标的表现形式来看，不难发现DJ和KK音标基于IPA（International Phonetic Alphabet），Webster由于出现早，所以其音标表现形式不同于IPA。
-
-对于牛津词典的音标发展，以下是[官方原文](https://www.oxfordlearnersdictionaries.com/external/pdf/english/OALD10_phons_GL.pdf)：
+根据作者名字，如今我们通常把他们的音标系统分别称作Webster音标、DJ音标、KK音标；从发展的角度来断定如今某些字典使用的音标为其中上述一种音标系统是不合适的，比如牛津字典，以下是[官方原文](https://www.oxfordlearnersdictionaries.com/external/pdf/english/OALD10_phons_GL.pdf)：
 
 > The OALD has used IPA-based phonemic transcription to indicate pronunciation since its first
 > edition (1948). Early editions used transcriptions similar to those found in contemporary
@@ -38,35 +50,20 @@ date: 2023-12-13
 > the influence of other editors, not least myself) his approach has been followed to OALD10
 > (2020).
 
-上述文献表示其早期也是采用DJ音标，他公开称其第一版就采用IPA-based的音标方式，在IPA-based音标发展路上，先后选择了DJ音标、Jack Windsor Lewis音标等，不变的是都是IPA-based音标。
+上述表示牛津字典采用IPA-based的音标方式，先后选择了Daniel Jones音标、Jack Windsor Lewis音标等。因此对于牛津字典的音标系统是随着时间变化的，但由于采用的音标系统都基于IPA，所以更换音标的学习成本并不高。
 
-## 学习建议
+因此我呼吁大家学习IPA-based音标：
 
-非母语学习者建议学习IPA-based音标，国际通用。
+1. 通用性广，IPA设计之初并不只是为了英语而设计；
+2. 学习成本低，一方面我们大陆接触的IPA-based音标系统，另一方面不同IPA-based音标系统切换学习成本低；
 
-从上面来看目前主流音标类型就两种：IPA-baed音标、韦氏音标。
+*Webster采用专用的音标系统，至于为什么不采用IPA-based，从历史上可以发现其出现早于IPA。*
 
-把KK音标系统、DJ音标系统等IPA-based统一认为IPA子集音标系统。
+## 音标学习
 
-[English Phonetic Symbol vs. International Phonetic Alphabet ](https://www.cambridge.org/features/IPAchart/)
+**该文章以OALD（Oxford Advanced Leaner's Dinctioanry）音标为准**，权威、合理可靠，基于IPA。
 
-## IPA类音标学习
-
-下面音标选自OALD（Oxdord Advanced Leaner's Dinctioanry）。
-
-### 通用
-
-/ˈ/ shows the strong stress in a word
-
-/ˌ/ shows a weaker (or **secondary**) stress.
-
-/ː/ a length mark 
-
-### 英式音标
-
-https://www.oxfordlearnersdictionaries.com/about/english/pronunciation_english
-
-(British English) 表示英式英标所独有
+### [英式音标](https://www.oxfordlearnersdictionaries.com/about/english/pronunciation_english)
 
 **Vowels**
 
@@ -128,69 +125,85 @@ https://www.oxfordlearnersdictionaries.com/about/english/pronunciation_english
 | [j]             | yes    | /jes/         |
 | [w]             | wet    | /wet/         |
 
-### 美式音标
+**letter**
 
-https://www.oxfordlearnersdictionaries.com/about/pronunciation_american_english
+**/ˈ/** shows the strong stress in a word
 
-省略，也可见下方英美发音差距。
+**/ˌ/** shows a weaker (or **secondary**) stress.
 
-### 英音 vs. 美音
+**/ː/** a length mark 
 
-OALD中的英音和美音是有区别的，
+### [美式音标](https://www.oxfordlearnersdictionaries.com/about/pronunciation_american_english)
 
-**美音与英音音素替换（发音相同）**
+省略
 
-规则1：美音省去了长音符号，但发音不变
+### 英美发音差异
 
-| English | America |
-| ------- | ------- |
-| [iː]    | [i]     |
-| [ɑː]    | [ɑ]     |
-| [ɔː]    | [ɔ]     |
-| [uː]    | [u]     |
-| [ɜː]    | [ɜ]     |
+OALD中的英音和美音是有区别的，**根本原因是英国人和美国人对相同词语的发音不同**。
 
-**美音与英音音素替换（发音不同）**
+美式英语的发音和北京话一样，慵懒的感觉，发音微快而有儿化音。
 
-规则1：e变r，发音变化
+规则1：[e] 变 [r]
 
-| English | America |
-| ------- | ------- |
-| [ɪə]    | [ɪr]    |
-| [eə]    | [er]    |
-| [ʊə]    | [ʊr]    |
+| Word | British English Phonetic Symbol | American English Phonetic Symbol |
+| ---- | ------------------------------- | -------------------------------- |
+| here | [ɪə]                            | [ɪr]                             |
+|      | [eə]                            | [er]                             |
+|      | [ʊə]                            | [ʊr]                             |
 
-规则2：ar结尾的英发/ɑː/，美/ɑr/
+规则2：ar结尾的单词 [ɑː] 变 [ɑ:r]
 
-不规则：
+| Word | British English Phonetic Symbol | American English Phonetic Symbol |
+| ---- | ------------------------------- | -------------------------------- |
+| car  | [ɑː]                            | [ɑ:r]                            |
 
-- e变ɛ，[e]发音时嘴巴紧绷，[ɛ]发音是嘴巴放松，因此[e]音调更高，符合偷懒的发音方式，很美国。
--  /ɒ/变/ɑ/
+### 发音参考资料
 
-| English | America |
-| ------- | ------- |
-| [e]     | [ɛ]     |
-| /ɒ/     | /ɑ/     |
+推荐[剑桥的IPA Chart](https://www.cambridge.org/features/IPAchart/)，该表格总结了音素发音的位置、以及嘴唇的松紧。
 
-多数情况[e]和[ɛ]不做区分。
+## 拓展
 
-### 音表其他形式（非OALD）
+### 自然拼读（Natural Spelling）
 
-OALD包含了很多音标，但其中一些音标可以写成其他形式。
+自然拼读原理是根据字素（Graphemes）与音素的映射关系，再配合上下字的发音规律从而发音，这个理念也叫音位/音素正字法（Phonemic Orthography），即其中每个字母或字母组合都对应于语言中的一个音位（phoneme）。英语不是严格的音位正字法，因此自然拼读的发音并不是全部正确。
 
-| OALD Symbal | Symbal | Word        | Pronunciation         |
-| ----------- | ------ | ----------- | --------------------- |
-| [əʊ]        | [o]    | n**o**se    | /nəʊz/ or /noz/       |
-| [ər]        | [ɚ]    | broth**er** | /'brʌðər/ or /'brʌðɚ/ |
-| [ɜr]        | [ɝ]    | b**ir**d    | /bɜrd/ or /bɝd/       |
+### 请抛弃KK音标
 
-### 音标发音方式及规律
+**TL; DR: 不推荐使用KK音标！！！**
 
-注意发音的的位置 前中后、以及嘴巴的松紧、口腔内的配合暂时没关注，后续考虑补充。
+**KK部分表示不遵守IPA标准，增加学习成本！**
 
-非常推荐：https://www.cambridge.org/features/IPAchart/
+| Word        | OALD Symbal | KK Symbal   |
+| ----------- | ----------- | ----------- |
+| n**o**se    | [əʊ]        | [o] or [oʊ] |
+| broth**er** | [ər]        | [ɚ]         |
+| b**ir**d    | [ɜr]        | [ɝ]         |
+| bed         | [e]         | [ɛ]         |
+| lot, hot    | [ɒ]         | [ɑ]         |
 
-## 总结
+**KK省去了长音符号，但发音和音长不变，该写法不够直观！**
 
-事实上，音标是辅助非母语学习者掌握发音的工具，如果细心发现其实每个字母在特定场所都有较为固定的发音，因为英语母语很少去学音标，即使去学也是学学习成本比较低的韦氏音标。
+| Word | OALD Symbal | KK Symbal |
+| ---- | ----------- | --------- |
+| bee  | [iː]        | [i]       |
+|      | [ɑː]        | [ɑ]       |
+|      | [ɔː]        | [ɔ]       |
+|      | [uː]        | [u]       |
+|      | [ɜː]        | [ɜ]       |
+
+## 资源推荐
+
+### 翻译工具
+
+推荐[OALD官方网站](https://www.oxfordlearnersdictionaries.com/)。
+
+**以下APP斟酌使用**
+
+- Google翻译，采用Webster音标
+- 欧路，美音采用KK
+- 有道，美音采用KK
+
+
+
+
 
