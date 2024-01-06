@@ -707,3 +707,33 @@ Chrome地址栏输入：chrome://flags/
 搜索 `Windows Scrolling Personality` ，将其设置为Enable。
 
 但对于VSCode这类的不提供设置的暂时没好的解决方案。
+
+### 多模键盘Function按键失效问题
+
+已知出现问题的键盘有：Keychon K2、腹灵MK870。
+
+**在Linux上，Keychon K2不会将任何F1-F12功能键映射为实际的F键，而是默认将它们视为多媒体键。 Fn+F1-12的组合也不会起作用**
+
+1. 将侧边模式转换键拨至Windows,（如果你习惯使用Mac模式那么应该不会遇到这个问题）
+2. 长按Fn + X + L将F1-F12优先映射到功能键而不是媒体键
+3. 在终端输入
+
+```bash
+echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode
+```
+
+**此时Keychron键盘应该已经可以正常使用了**
+接下来可以将这项设置写入配置文件，否则每次重启你都要重新执行一遍
+
+```bash
+echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf
+```
+
+重启或者执行下面这条命令
+
+```bash
+sudo update-initramfs -u  	//Ubuntu
+mkinitcpio -P   			//ArchLinux
+```
+
+原文链接：[KEYCHRON LINUX FUNCTION KEYS](https://mikeshade.com/posts/keychron-linux-function-keys/)
