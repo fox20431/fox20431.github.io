@@ -1,6 +1,6 @@
 ---
 title: linux tproxy with xray
-date: 2023-01-06
+date: 2024-01-06
 ---
 
 # Linux 透明代理

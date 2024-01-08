@@ -5,27 +5,24 @@ date: 2023-08-23
 
 # Linux fonts
 
-Linux 系统的字体配置：/etc/fonts/fonts.conf
-
-需要安装一些字体库：
+安装基础字体：
 
 ```sh
 sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-cjk
 ```
 
-常见命令：
+## 字体配置
 
-```sh
-fc-cache -f -v
+*配置用户手册`/usr/share/doc/fontconfig/fontconfig-user.html`*
 
-fc-list :lang=zh
-fc-list :file=/usr/share/fonts/adobe-source-han-sans/SourceHanSans.ttc
-fc-list :family
-```
+有两处配置字体的配置文件：
 
-在 archlinux 中同时存在了 `source han` 和 `win11` 的字体为中文字体提供支持，Chrome 在无指定 `font-family` 样式时出现中文多种字体混用情况。
+- 系统的配置，**不推荐修改**：`/etc/fonts/fonts.conf`
+- 用户的配置：`~/.config/fontconfig/fonts.conf`
 
-通过元素属性发现默认使用了 `Times New Roman` 字体，该字体库没中文字体，所以对于中文字体还会使用其他的字体库，所以通过询问ChatGPT得知 Chrome 默认使用无衬线字体，因此决定设置无衬线字体的 `font-family` ，考虑到一般情况用户配置的优先级会高于系统配置，所以就在 `~/.config/fontconfig/fonts.conf` 用户目录下添加了规则：
+### 个人配置推荐
+
+`~/.config/fontconfig/fonts.conf` 
 
 
 ```xml
@@ -38,8 +35,14 @@ fc-list :family
 		    <family>Source Han Sans SC</family>
 	    </prefer>
     </alias>
-    <alias>
+  	<alias>
 	    <family>serif</family>
+	    <prefer>
+		    <family>Noto Serif CJK SC</family>
+	    </prefer>
+    </alias>
+    <alias>
+	    <family>sans</family>
 	    <prefer>
 		    <family>Source Han Sans SC</family>
 	    </prefer>
@@ -52,3 +55,38 @@ fc-list :family
     </alias>
 </fontconfig>
 ```
+
+Chrome和electron会遵守 `sans-serif` 设置字体，所以这个是需要设置的。
+
+## 安装字体
+
+### 通过包安装
+
+nerd-fonts
+
+```sh
+sudo pacman -S nerd-fonts
+```
+
+### 手动安装
+
+1. 将字体文件放在指定目录：
+   - 系统目录：`/usr/share/fonts`
+   - 用户目录：`~/.fonts/`
+2. 刷新字体缓存
+
+    ```sh
+    # 更新系统字体缓存
+    sudo fc-cache -f -v
+    ```
+
+在 archlinux 中同时存在了 `source han` 和 `win11` 的字体为中文字体提供支持，Chrome 在无指定 `font-family` 样式时出现中文多种字体混用情况。
+
+## 查看安装的字体信息
+
+```sh
+fc-list :lang=zh
+fc-list :file=/usr/share/fonts/adobe-source-han-sans/SourceHanSans.ttc
+fc-list :family
+```
+
