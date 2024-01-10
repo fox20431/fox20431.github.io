@@ -66,11 +66,11 @@ Receive Data (RxD or RD)
 
 ## 电路
 
-###  CH340 - STC89C51RC
+###  CH340 - STC89C52RC
 
 使用杜邦线，下面是CH340到STC89C51RC杜邦线连接方向。
 
-| CH340 | STC89C51RC |
+| CH340 | STC89C52RC |
 | ----- | ---------- |
 | 5V    | VCC        |
 | GND   | GND        |

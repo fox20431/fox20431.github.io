@@ -327,3 +327,6 @@ ExecStop=/sbin/ip rule del fwmark 1 table 100 ; \
 WantedBy=multi-user.target
 ```
 
+## TODO
+
+ping 国内地址DNS路由有问题，表现为速度很慢。
