@@ -1,20 +1,55 @@
 # Vim指南
 
-## 简介
+`Vim` is abbr. of `Vi Improved`.
 
-Vim是Vi的增强版。图形界面下建议安装`gvim`，同样可以在终端下使用`vim`。
+`Vim` 是 `Vi` 的增强版。
 
-## 操作
+## Installation
 
+仅终端安装`vim`，图形界面建议安装 `gvim`  。
 
+```sh
+sudo pacman -S vim
+# or
+sudo pacman -S gvim
+```
 
-### 移动光标
+## Conception
 
-**moving cursor in normal mode**
+VIM 在Eidtor有三种常见模式，分别为：Normal、Insert、Visual。
 
-h: left; j: up; k: down; l: left.
+### 模式状态编辑
 
-**move cursor shortcut for word in normal mode**
+VIM 具有多种模式，允许用户在不同的环境下执行不同的操作：
+
+1. **普通模式 (Normal Mode)**：这是默认模式，用于导航、复制、粘贴和删除文本。
+2. **插入模式 (Insert Mode)**：在这个模式下，你可以像普通文本编辑器一样输入和编辑文本。
+3. **可视模式 (Visual Mode)**：允许以可视方式选择文本块，然后执行复制、删除等操作。
+4. **可视行模式 (Visual Line Mode)**：类似于可视模式，但以整行为单位选择文本。
+5. **可视块模式 (Visual Block Mode)**：以块为单位选择文本，可以在列中选择文本。
+6. **替换模式 (Replace Mode)**：允许替换光标所在位置的字符。
+7. **命令行模式 (Command-Line Mode)**：用于执行一些底层命令，如保存、退出等。
+
+## Operation In `Normal Mode`
+
+Vim 打开默认为 `Normal Mode`。如果编辑器处于其他 `Mode`，均可以使用 `<ESC>` 回到 `Normal Mode` ，比如：
+
+Press `<ESC>` to switch to `Normal Mode` in the `Insert Mode`.
+
+Press `<ESC>` to switch to `Normal Mode` in the `Visual Mode`.
+
+### Basic Movement
+
+| direction | distance | key                  |
+| --------- | -------- | -------------------- |
+| up        | 1 char   | `J` or `up arrow`    |
+| down      | 1 char   | `K` or `down arrow`  |
+| left      | 1 char   | `H` or `left arrow`  |
+| right     | 1 char   | `L` or `right arrow` |
+
+### Advanced Movement
+
+ **move cursor shortcut for word in normal mode**
 
 - `w`：下一个单词的开头。
 - `W`：下一个单词的开头，以空白字符为界。
@@ -35,56 +70,34 @@ h: left; j: up; k: down; l: left.
 - `gg`：the start of text
 - `G`: The end of text
 
-### 模式切换
+### Edition
 
-vim模式有如下种类：
+first and most common:
 
-- normal
-- insert
-- visual
-- command-line
-- replace
-- visual block
+| command    | effect |
+| ---------- | ------ |
+| `u`        | undo   |
+| `<Ctrl-r>` | redo   |
 
-**任何模式的切换都需要通过normal模式！**
+Vim 的复制粘贴：
 
-**switch to insert mode shortcut from normal mode**
+| command | effect                                                       |
+| ------- | ------------------------------------------------------------ |
+| `y`     |                                                              |
+| `y`     | 选择范围复制，比如  `ye`  会复制从当前光标指向的字符（包含）到单词尾部的内容 |
+| `dd`    | 删除                                                         |
 
-- i: insert before cursor.
-- a: insert after cursor.
-- I: insert the beginning of the line where the cursor is.
-- A: insert the ending of the line where the cursor is.
-- c: selectively delete then insert.
-- cc: delete all characters of the line where the cursor is except enter then insert.
-- s: delete the character under the cursor then insert.
-- S: delete all characters of the line where the cursor is except enter then insert.
+Vim 的删除不仅仅是删除，还会把删除的字符串保存到Vim的寄存器中，通过 `p` 粘贴出来：
 
-**switch to other mode shortcut from normal mode**
-
-- `v`: visual mode
-- `c-v`: visual block mode
-- `:`: command-line mode
-- `R`: replace mode
-
-**undo&redo**
-
-- `u`: undo
-- `<Ctrl-r>`: redo
-
-## 文本操作
-
-**replace**
-
-- `R`: replace mode
-- `r`: replace the charactor on the cursor
-
-**delete**
-
-**如果 `normal ` 模式下显示的光标是方块，`d`选中的范围为光标方块前侧到光标移动的字符（包含方块光标指向的字符）。**
+| command | effect                                             |
+| ------- | -------------------------------------------------- |
+| `x`     | undo                                               |
+| `d`     | 选择范围删除，比如 `de` 删除从当前到单词尾部的内容 |
+| `dd`    | 删除                                               |
 
 - `x`：删除当前字符
 - `d`：选择范围删除，比如 `de` 删除从当前到单词尾部的内容
-- `dd`：删除当前行
+- `dd`：delete the current line and count the line into register
 
 **格式化**
 
@@ -101,6 +114,51 @@ vim模式有如下种类：
 `: g/<string>,[end raw]/d`：删除字符串所在行，比如删除包含特定字符行和接下来两行：g/pattern/,.+2d
 
 \<range\>表示范围，`%`表示全文，n表示第n行，.表示当前行，$表示末行，^表示首行
+
+## Operation In `Visual Mode`
+
+常见
+
+| Command | Effect                          |
+| ------- | ------------------------------- |
+| gu      | lowercase the select characters |
+| gU      | uppercase the select characters |
+
+## Operation In `Insert Mode`
+
+Press `i` to switch to `Insert Mode` under the `Normal Mode`.
+
+基本操作和普通编辑器相同，略过。
+
+### 补全技巧
+
+自动补全 ctrl+p ctrl+n
+
+前面声明了结构体 `T` ，想在输入 `T.` 时弹出成员供选择，只需在用之前按一下：ctrl+f12
+
+ctrl+x ctrl+o（智能补全）
+
+ctrl+x ctrl+f（补全文件名）
+
+ jump in: ctrl+]
+
+jump back: ctrl+o / ctrl+t
+
+## Operation Mode in `Command Mode`
+
+### Help Doc
+
+在VIM中使用下述命令
+
+```vim
+:help
+```
+
+如果你有制定的文件需要打开，可以指定：
+
+```
+:help term.txt
+```
 
 ### 文件操作
 
@@ -142,34 +200,6 @@ nmap \<C-k\> :res +5\<CR\>
 nmap \<C-j\> :res -5\<CR\>
 nmap \<C-h\> :vertical resize-5\<CR\>
 nmap \<C-l\> :vertical resize+5\<CR\>
-
-## 补全技巧
-
-自动补全 ctrl+p ctrl+n
-
-前面声明了结构体T，想在输入T.时弹出成员供选择，只需在用之前按一下：ctrl+f12
-
-ctrl+x ctrl+o（智能补全）
-
-ctrl+x ctrl+f（补全文件名）
-
- jump in: ctrl+]
-
-jump back: ctrl+o / ctrl+t
-
-## 帮助文档
-
-在VIM中使用下述命令
-
-```vim
-:help
-```
-
-如果你有制定的文件需要打开，可以指定：
-
-```
-:help term.txt
-```
 
 ## Vimrc
 

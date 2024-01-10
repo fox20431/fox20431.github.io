@@ -45,12 +45,19 @@ Receive Data (RxD or RD)
 
 用杜邦线将 `RXD` 和 `TXD` 短接，再将CH340插入电脑，用 `Vofa+` 等软件发送串口信息，检查是否能收到串口信息，能收到则连通，否则不连通。
 
-## Introduce Hardware to be Used
+## Introduce Software to be Used
+
+### Windows
 
 - keil uVersion5 C51：IDE工具，用于编译可用于51单片机的代码，内置交叉编译工具集。
 - STC-ISP：STC公司单片机的烧录工具。
 
 > **交叉编译**行为是指在宿主机上编译不同的指令集架构的代码。
+
+### Linux
+
+- stdd
+- stcgal
 
 ## Reference
 
@@ -59,11 +66,11 @@ Receive Data (RxD or RD)
 
 ## 电路
 
-###  CH340 - STC89C51RC
+###  CH340 - STC89C52RC
 
 使用杜邦线，下面是CH340到STC89C51RC杜邦线连接方向。
 
-| CH340 | STC89C51RC |
+| CH340 | STC89C52RC |
 | ----- | ---------- |
 | 5V    | VCC        |
 | GND   | GND        |
@@ -73,3 +80,12 @@ Receive Data (RxD or RD)
 ## 软件使用
 
 STC-ISP 在 `下载/编程` 的时候需要先按用鼠标点击 `下载/编程` 再接电源线，否则会无法识别单片机。
+
+## 开发
+
+类型扩充定义：
+
+| Micro | Means                           |
+| ----- | ------------------------------- |
+| sfr   | 8 bit special function register |
+| sbit  | special bit                     |

@@ -360,15 +360,36 @@ systemctl enable gdm
 
 确保 `networkmanager` 包安装并且被 `systemd` 启用并运行。
 
-#### 音量
+#### 音频
 
-安装声音相关的固件，如果不安装可能导致无法正常播放音频。
+安装音视频相关的固件和工具
+
+
 
 
 ```sh
-sudo pacman -S sof-firmware alsa-firmware alsa-utils pulseaudio pulseaudio-alsa pulseaudio-bluetooth
-# sof is short for "sound open firmware
+sudo pacman -S sof-firmware alsa-firmware alsa-utils pipewire-alsa pipewire-pulse pipewire-jack
 ```
+
+- `sof-firmware`：是一个开源的音频固件项目，旨在为基于 Intel 的音频硬件（特别是使用 Intel Sound Open Firmware（SOF）架构的设备）提供通用的固件解决方案；
+- `alsa-firmware`： 是 ALSA（Advanced Linux Sound Architecture）音频系统的一部分，提供一些特定的音频设备所需的固件；
+- `pipewire-alsa` ：是 PipeWire 的一个插件，用于提供对 ALSA（Advanced Linux Sound Architecture）的支持；
+- `pipewire-pulse`：是 `pulseaudio` 的替代；
+- `pipewire-jack`：是 `jack` 的替代。
+
+**为什么使用 pipewire 替代原有的包**
+
+>  [PipeWire](https://gitlab.freedesktop.org/pipewire/pipewire) is a project that aims to greatly improve handling of audio and video under Linux.
+
+`pulseaudio` 主要作用是处理音频输入和输出，提供高级音频功能，并为应用程序提供音频服务。
+
+`JACK` 是一个用于实时音频处理的专业音频连接工具，其主要定位是提供低延迟和高性能的音频连接服务。
+
+**`alsa-firmware` 和 `sof-firmware` 关系**
+
+在一些情况下，`alsa-firmware` 可能会包含特定于某些硬件的固件，而 `sof-firmware` 则专注于提供用于 Intel SOF 架构的通用固件。
+
+`firmware`，固件时间如电子设备中的软件，介于硬件和操作系统之间。
 
 #### 蓝牙
 
@@ -376,19 +397,7 @@ sudo pacman -S sof-firmware alsa-firmware alsa-utils pulseaudio pulseaudio-alsa 
 # 安装蓝牙组件
 sudo pacman -S bluez
 # 启用蓝牙服务
-systemctl enable bluetooth
-```
-
-#### 输入法
-
-由于 `Gnome` 集成了 `ibus` ，所以推荐使用 `ibus` 输入法
-
-```shell
-sudo pacman -S ibus-libpinyin
-# 也可以选择rime
-# 优点是提示词库准确
-# 缺点是每次启动要初始化并提示
-sudo pacman -S ibus-rime
+systemctl enable --now bluetooth
 ```
 
 ### 系统配置
@@ -408,13 +417,23 @@ sudo pacman -S ibus-rime
 
 当系统使用暗黑主题，需要手动调整 `Appearance` 的 `Legacy Application` 的选项为 `Adwaita-dark`
 
- **插件推荐**
+#### Extensions
+
+`gnome-shell-extensions` 在包含在安装 Gnome 集合包中，可以为 Gnome 桌面带来拓展特性。
+
+**插件推荐**
 
 - Hibernate Status Button
 - AppIndicator and KStatusNotifierItem support (tray tool)
 - Dash to Dock
 - Just Perfection
 - GSConnect
+
+### DConf
+
+GSettings editor for GNOME，可以更改 Gnome 的更多的设置。
+
+安装 `dconf-editor` 可以可视化操作 dconf，它涵盖在 `gnome-extra`  集合包中。
 
 ### 注意事项
 
@@ -426,9 +445,11 @@ sudo pacman -S ibus-rime
 
   参考：https://bbs.archlinuxcn.org/viewtopic.php?id=11275 & https://wiki.archlinux.org/title/Kernel_mode_setting#Early_KMS_start
 
-## 安装应用
+## Advanced
 
-### YAY
+进阶设置。
+
+### 安装YAY
 
 `yay` 涵盖 `pacman` 仓库缺少的AUR（Arch User Repo，里面有闭源的软件）。
 
@@ -447,6 +468,8 @@ makepkg -si
 
 ### 安装输入法
 
+由于 `Gnome` 集成了 `ibus` ，所以推荐使用 `ibus` 输入法
+
 #### Libpinyin（推荐）
 
 安装：
@@ -457,6 +480,8 @@ sudo pacman -S ibus-libpinyin
 
 #### RIME
 
+Rime 优点是提示词库准确，缺点是每次启动要初始化并提示。
+
 安装：
 
 ```sh
@@ -465,14 +490,12 @@ sudo pacman -S ibus-rime
 
 默认是繁体字，可以使用 ctrl - \` 设置简体中文。
 
-同时可以使用修改 `~/.config/ibus/rime/build/ibus_rime.yaml`
+同时可以使用修改 `~/.config/ibus/rime/build/ibus_rime.yaml` 将输入法设置横向：
 
 ```yaml
 style:
   horizontal: true
 ```
-
-将输入法设置横向。
 
 Rime 输入法快捷键 `ctrl - grave`   与 Visual Studio Code 冲突，在 ``~/.config/ibus/rime/build/default.yaml``  文件中注释该快捷键：
 
@@ -485,46 +508,68 @@ switcher:
   	# - "Control+grave"
 ```
 
-### Docker
+### 安装字体
 
-安装Docker和Docker-compose：
+当对应编码的字体不存在时，会出现“方块字”的现象。
 
-```sh
-pacman -S docker docker-compose
+解决这个问题的方法就是安装上对应确实的字体。
 
-
-reboot
-```
-
-启用服务
+可以选择 `wqy-zenhei` 自发开源组织的字体（貌似不再维护），推荐使用选 google 的开源字体 `noto-fonts` 系列的字体（有大厂背书），同时 Adobe 也开源了 `souce-han` 系列字体。关于代码相关的字体，我推荐 `fira` 字体。
 
 ```sh
-systemctl enable --now docker
+# noto
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
+# souce han
+sudo pacman -S adobe-source-han-sans-otc-fonts
 ```
 
-将当前用户加入docker组，从而可以有权使用docker
+**添加配置文件**
+
+设置常见字体对应的 `font family` ，防止由于字体字库不全导致的样式不统一。
+
+~/.config/fontconfig/fonts.conf 
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+<fontconfig>
+  	<alias>
+	    <family>sans-serif</family>
+	    <prefer>
+		    <family>Source Han Sans SC</family>
+	    </prefer>
+    </alias>
+  	<alias>
+	    <family>serif</family>
+	    <prefer>
+		    <family>Noto Serif CJK SC</family>
+	    </prefer>
+    </alias>
+    <alias>
+	    <family>sans</family>
+	    <prefer>
+		    <family>Source Han Sans SC</family>
+	    </prefer>
+     </alias>
+    <alias>
+	    <family>monospace</family>
+	    <prefer>
+		    <family>Noto Sans Mono CJK SC</family>
+	    </prefer>
+    </alias>
+</fontconfig>
+
+```
+
+**自定义扩充方案**
+
+解决方案也很简单粗暴，如 Windows 系统去`C:\Windows\Fonts`将所有字体下载下载，再将该目录完全拷贝下来，根据Linux中的`/etc/fonts/fonts.conf`的配置，默认用户`~/.fonts/`目录可以用于存放字体文件。将Windows的所有字体都拖入到这里。
+
+利用 fontsconfig 工具刷新下缓存即可：
 
 ```sh
-usermod -a -G docker <username>
-# 需要重启生效
-reboot
+fc-cache -f -v
 ```
-
-### PDF阅读器
-
-Pdf阅读器我推荐两个：okular、evince。
-
-这两个都是开源的，但okular是KDE平台的，evince是gnome平台的。
-
-evince涵盖在gnome集合包中，安装gnome时自动安装evince。
-
-```sh
-sudo pacman -S evince
-```
-
-## Advanced
-
-进阶设置。
 
 ### 双系统
 
@@ -544,7 +589,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-#### 时区
+#### 时区不统一的问题
 
 Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 
@@ -556,74 +601,72 @@ Windows 以硬件时间为时间，Linux以硬件时间为UTC时间。
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
 
+## 软件推荐
 
+软件推荐，同时给出介绍和安装运行注意事项。
 
+### Docker
+
+安装Docker和Docker-compose：
+
+```sh
+pacman -S docker docker-compose
+```
+
+启用服务
+
+```sh
+systemctl enable --now docker
+```
+
+将当前用户加入docker组，从而可以有权使用docker
+
+```sh
+usermod -a -G docker <username>
+# 需要重启生效
+reboot
+```
+
+### Evince
+
+Gnome 下的 PDF 阅读器，类比 KDE 下的 `okular` 。
+
+```sh
+sudo pacman -S evince
+```
+
+### Foliate
+
+`evince` 不支持 epub 格式， `foliate` 支持。
+
+```sh
+sudo pacman -S foliate
+```
 
 ### OBS
 
-OBS在x11上表现并没有太大问题，但在wayland上又有一些问题。
-
-首先安装包：
+OBS 录屏、推流必备。
 
 ```sh
 sudo pacman -S gst-plugin-pipewire
 sudo pacman -S obs-studio
 ```
 
-首先obs通过`PipeWire`捕获屏幕，所以需要安装pipewire。
+`gst-plugin-pipewire` 是多媒体图像框架，wayland 下屏幕捕获需要安装该框架。
 
-然后OBS是基于QT开发的软件，如果要让其支持wayland需要安装qt相关的包。
+### MPV
 
-最后配置环境变量。
-
-### 安装pipewire
-
-https://blog.ryey.icu/replace-pulseaudio-with-pipewire.html
-
+媒体播放器，支持大量的视频格式。
 
 ```sh
-pacman -S pipewire pipewire-pulse wireplumber
+sudo pacman -S mpv
 ```
 
-```sh
-systemctl --user enable pipewire pipewire-pulse wireplumber
-systemctl --user start pipewire pipewire-pulse wireplumber
-```
-
-安装 `pipewire` 会导致 `MPV` 没声音，似乎是 `MPV` 对其不兼容，但还是选择这个作为播放音频接口。
+安装的 `pipewire` 会导致 `MPV` 没声音，似乎是 `MPV` 对其不兼容，但还是选择这个作为播放音频接口。
 
 解决方案：https://wiki.archlinux.org/title/mpv#Unable_to_play_audio_if_PipeWire_is_masked
 
-将 `--ao=alsa` 写入 `mpv.conf` 。
-
-### 安装字体
-
-当对应编码的字体不存在时，会出现“方块字”的现象。
-
-解决这个问题的方法就是安装上对应确实的字体。
-
-可以选择 `wqy-zenhei` 自发开源组织的字体（貌似不再维护），推荐使用选 google 的开源字体 `noto-fonts` 系列的字体（有大厂背书），同时 Adobe 也开源了 `souce-han` 系列字体。关于代码相关的字体，我推荐 `fira` 字体。
-
-```sh
-sudo pacman -S noto-fonts
-# 其他的通过关键字搜索
-# 安装微软相关的字体，这个字体不是很全，像楷体、仿宋之类的字体依旧不存在。
-yay -S ttf-ms-fonts
-```
-
-**自定义扩充方案**
-
-解决方案也很简单粗暴，如 Windows 系统去`C:\Windows\Fonts`将所有字体下载下载，再将该目录完全拷贝下来，根据Linux中的`/etc/fonts/fonts.conf`的配置，默认用户`~/.fonts/`目录可以用于存放字体文件。将Windows的所有字体都拖入到这里。
-
-利用 fontsconfig 工具刷新下缓存即可：
-
-```sh
-fc-cache -f -v
-```
-
-### 切换内核
-
-
+将 `--ao=alsa` 写入 `~/.config/mpv/mpv.conf` 。
 
 ## 问题及解决方案
 
@@ -707,3 +750,33 @@ Chrome地址栏输入：chrome://flags/
 搜索 `Windows Scrolling Personality` ，将其设置为Enable。
 
 但对于VSCode这类的不提供设置的暂时没好的解决方案。
+
+### 多模键盘Function按键失效问题
+
+已知出现问题的键盘有：Keychon K2、腹灵MK870。
+
+**在Linux上，Keychon K2不会将任何F1-F12功能键映射为实际的F键，而是默认将它们视为多媒体键。 Fn+F1-12的组合也不会起作用**
+
+1. 将侧边模式转换键拨至Windows,（如果你习惯使用Mac模式那么应该不会遇到这个问题）
+2. 长按Fn + X + L将F1-F12优先映射到功能键而不是媒体键
+3. 在终端输入
+
+```bash
+echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode
+```
+
+**此时Keychron键盘应该已经可以正常使用了**
+接下来可以将这项设置写入配置文件，否则每次重启你都要重新执行一遍
+
+```bash
+echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf
+```
+
+重启或者执行下面这条命令
+
+```bash
+sudo update-initramfs -u  	//Ubuntu
+mkinitcpio -P   			//ArchLinux
+```
+
+原文链接：[KEYCHRON LINUX FUNCTION KEYS](https://mikeshade.com/posts/keychron-linux-function-keys/)
