@@ -1,5 +1,5 @@
 ---
-title: "Get Started With WSL"
+title: Get Started With WSL
 excerpt: "WSL(Windows Subsystem for Linux) is released by Microsoft Company. It provides a possibility of using the POSIX operation method in Windows."
 ---
 
@@ -140,7 +140,6 @@ Create a file named `wsl-proxy-config.sh`:
 #!/bin/bash
 host_ip=$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " ")
 
-#export ALL_PROXY="http://$host_ip:7890"
 export http_proxy="http://$host_ip:7890"
 export https_proxy="http://$host_ip:7890"
 export all_proxy="http://$host_ip:7890"
