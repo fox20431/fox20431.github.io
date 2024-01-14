@@ -668,6 +668,14 @@ sudo pacman -S mpv
 
 将 `--ao=alsa` 写入 `~/.config/mpv/mpv.conf` 。
 
+### localsend
+
+局域网互传方案
+
+### KeePassXC
+
+密码管理工具
+
 ## 问题及解决方案
 
 ### Intel显卡

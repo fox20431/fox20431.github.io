@@ -29,10 +29,6 @@ not match the string `the`.
 <pre>
 "The" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
 </pre>
-
-
-[Test the regular expression](https://regex101.com/r/1paXsy/1)
-
 ## 2. Meta Characters
 
 Meta characters are the building blocks of regular expressions.  Meta
@@ -513,8 +509,6 @@ string that are not after the word `The` or `the`.
 <pre>
 "(?&lt;!(T|t)he\s)(cat)" => The cat sat on <a href="#learn-regex"><strong>cat</strong></a>.
 </pre>
-
-
 ## 5. Flags
 
 Flags are also called modifiers because they modify the output of a regular
@@ -599,8 +593,6 @@ lazy matching:
 <pre>
 "/(.*?at)/" => <a href=""><strong>The fat</strong></a> cat sat on the mat.
 </pre>
-
-
 
 ## (Optional) replace
 

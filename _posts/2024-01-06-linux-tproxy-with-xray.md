@@ -39,8 +39,7 @@ date: 2024-01-06
       },
       "streamSettings": {
         "sockopt": {
-          "tproxy": "tproxy",
-          "mark": 255
+          "tproxy": "tproxy"
         }
       }
     },
@@ -64,15 +63,13 @@ date: 2024-01-06
   "outbounds": [
     {
       "tag": "proxy",
-      "protocol": "vless", // 任意代理协议
-      "settings": {
-		//...
-      },
+      "protocol": "<protocol>",
+      // proxy setting
       "streamSettings": {
+        // proxy config
         "sockopt": {
           "mark": 255
-        },
-		// ...
+        }
       }
     },
     {
@@ -108,42 +105,26 @@ date: 2024-01-06
   ],
   "dns": {
     "hosts": {
-      "domain:googleapis.cn": "googleapis.com",
-      "dns.google": "8.8.8.8",
+      "dns.google": ["8.8.8.8", "8.8.4.4"],
       "connect.hihusky.com": "212.50.249.175"
     },
     "servers": [
+      "1.1.1.1",
+      "8.8.8.8",
       {
-        "address": "119.29.29.29",
-        "port": 53,
-        "domains": ["geosite:cn"],
-        "expectIPs": ["geoip:cn"]
-      },
-      {
-        "address": "223.6.6.6",
+        "address": "223.5.5.5",
         "port": 53,
         "domains": ["geosite:cn"]
       },
       "https://1.1.1.1/dns-query",
-      "https://doh.dns.sb/dns-query"
+      "https://8.8.8.8/dns-query",
+      "localhost"
     ]
   },
   "routing": {
-    "domainMatcher": "mph",
-    "domainStrategy": "IPIfNonMatch",
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPOnDemand",
     "rules": [
-      {
-        "type": "field",
-        "domain": ["geosite:category-ads-all"],
-        "outboundTag": "block"
-      },
-      {
-        "type": "field",
-        "inboundTag": ["all-in"],
-        "port": 123,
-        "network": "udp",
-        "outboundTag": "direct"
-      },
       {
         "type": "field",
         "inboundTag": ["all-in"],
@@ -159,29 +140,9 @@ date: 2024-01-06
       {
         "type": "field",
         "ip": [
-		  "geoip:private", 
-		  "geoip:cn",
-		  "119.29.29.29",
-		  "223.5.5.5",
-		  "212.50.249.175"
-		],
-        "outboundTag": "direct"
-      },
-   	  {
-   	    "type": "field",
-   	    "domain": [
-   	      "geosite:private",
-		  "geosite:cn",
-   	      "geosite:category-games@cn",
-          "connect.hihusky.com",
-          "domain:hihusky.com",
-          "domain:iimn.net"
-   	    ],
-   	    "outboundTag": "direct"
-   	  },
-      {
-        "type": "field",
-        "ip": ["1.1.1.1", "8.8.8.8"],
+					"1.1.1.1",
+ 					"8.8.8.8"
+				],
         "outboundTag": "proxy"
       },
       {
@@ -192,6 +153,32 @@ date: 2024-01-06
           "dns.google"
         ],
         "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private", 
+          "geoip:cn",
+		  		"223.5.5.5",
+          "212.50.249.175"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "geosite:private",
+          "geosite:cn",
+          "geosite:category-games@cn",
+          "domain:hihusky.com",
+          "domain:iimn.net"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:category-ads-all"],
+        "outboundTag": "block"
       }
     ]
   }
@@ -255,41 +242,50 @@ sudo ip -6 route del local ::/0 dev lo table 106
 
 创建 `/etc/nftables/xray.conf` ，写入：
 
-```
+```conf
 #!/usr/sbin/nft -f
 
 flush ruleset
 
 table inet xray {
+
         chain prerouting {
-                type filter hook prerouting priority filter; policy accept;
+                type filter hook prerouting priority 0; policy accept;
+                # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
-                meta l4proto tcp ip daddr 192.168.0.0/16 return
-                ip daddr 192.168.0.0/16 udp dport != 53 return
                 ip6 daddr { ::1, fe80::/10 } return
+                # don't handle the packages that the destination is device in wlan, but dns
+                meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return
                 ip6 daddr fd00::/8 udp dport != 53 return
-                meta mark 0x000000ff return
-                meta l4proto { tcp, udp } meta mark set 0x00000001 tproxy ip to 127.0.0.1:12345 accept
-                meta l4proto { tcp, udp } meta mark set 0x00000001 tproxy ip6 to [::1]:12345 accept
+                ip daddr 192.168.0.0/16 udp dport != 53 return
+                # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
+                meta mark 255 return
+                # if the above rules are not matched, the packages are accepted by 12345 which is opened by xray.
+                meta l4proto { tcp, udp } tproxy ip to 127.0.0.1:12345 accept
+                meta l4proto { tcp, udp } tproxy ip6 to [::1]:12345 accept
         }
 
         chain output {
-                type route hook output priority filter; policy accept;
+                type route hook output priority 0; policy accept;
+                # don't handle dns
+                ip protocol udp udp dport 53 return
+                ip protocol tcp tcp dport 53 return
+                # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
-                meta l4proto tcp ip daddr 192.168.0.0/16 return
-                ip daddr 192.168.0.0/16 udp dport != 53 return
                 ip6 daddr { ::1, fe80::/10 } return
+                # don't handle the packages that the destination is device in wlan, but dns
+                meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return
                 ip6 daddr fd00::/8 udp dport != 53 return
-                meta mark 0x000000ff return
-                meta l4proto { tcp, udp } meta mark set 0x00000001 accept
+                ip daddr 192.168.0.0/16 udp dport != 53 return
+                # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
+                meta mark 255 return
+                # if the above rules are not matched, the packages is marked 1
+                # packages marked 1 are send to 'lo' by the table, then follow prerouting chains rules
+                meta l4proto { tcp, udp } meta mark set 1 accept
         }
-
-        chain divert {
-                type filter hook prerouting priority mangle; policy accept;
-                meta l4proto tcp socket transparent 1 meta mark set 0x00000001 accept
-        }
+        
 }
 ```
 
@@ -316,7 +312,7 @@ ExecStart=/sbin/ip rule add fwmark 1 table 100 ; \
 /sbin/ip -6 rule add fwmark 1 table 106 ; \
 /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; \
 /sbin/ip -6 route add local ::/0 dev lo table 106 ; \
-/sbin/nft -f /etc/nftables/xray.conf;
+/sbin/nft -f /etc/nftables/xray.conf
 ExecStop=/sbin/ip rule del fwmark 1 table 100 ; \
 /sbin/ip -6 rule del fwmark 1 table 106 ; \
 /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; \
@@ -327,6 +323,42 @@ ExecStop=/sbin/ip rule del fwmark 1 table 100 ; \
 WantedBy=multi-user.target
 ```
 
+## 原理
+
+正常情况下netfilter收发报要经历以下hooks。
+
+发：
+
+output -> 
+
+收：
+
+prerouting -> input -> 
+
+
+
+上述规则配置根据判断 mark 的位置使得我们发送包的流向改变了
+
+发：
+
+output -> mark 1 -> lo -> prerouting -> xray -> 
+
+## 问题
+
+Ping会很久
+
+使用：
+
+```
+ping -n domain
+```
+
+禁止反向DNS解析就可以解决。
+
+
+
 ## TODO
 
 ping 国内地址DNS路由有问题，表现为速度很慢。
+
+https://wiki.nftables.org/wiki-nftables/index.php/Configuring_chains

@@ -1,25 +1,21 @@
 ---
-title: libvirt tutorial
+title: virt manager tutorial
 date: 2024-01-10
 ---
 
 
 
-# Libvirt 教程
+# Virt Manager 教程
 
 Libvirt 提供了软件集合用于方便管理多种虚拟机和虚拟化。
 
 > A primary goal of libvirt is to provide a single way to manage multiple different virtualization providers/hypervisors, such as the [KVM/QEMU](https://wiki.archlinux.org/title/QEMU), [Xen](https://wiki.archlinux.org/title/Xen), [LXC](https://wiki.archlinux.org/title/LXC), [OpenVZ](https://openvz.org/) or [VirtualBox](https://wiki.archlinux.org/title/VirtualBox) [hypervisors](https://wiki.archlinux.org/title/Category:Hypervisors) ([among others](https://libvirt.org/drivers.html)).
 
+`virt-manager` 是 `libvirt` 的前端图形化实现方案。
+
 ## Install
 
 安装 `libvirt` 和 `virt-manager` 。
-
-`virt-manager` 是 `libvirt` 的前端图形化实现方案。
-
-**Linux**
-
-The KVM/QEMU driver is primary libvirt driver.
 
 ```sh
 # edk2-ovmf is to support UEFI
@@ -28,7 +24,15 @@ sudo pacman -S qemu-full virt-manager edk2-ovmf swtpm
 sudo systemctl enable --now libvirtd
 ```
 
+The KVM/QEMU driver is primary libvirt driver.
+
 ## Config
+
+启用服务
+
+```
+systemctl enable --now libvirtd.service
+```
 
 将用户加入到 `libvirt` 组中以获得 `libvirt`  的操作权限。
 
@@ -36,9 +40,9 @@ sudo systemctl enable --now libvirtd
 usermod -a -G libvirt $your_username
 ```
 
-## Virt Manager
+## Libvirt 使用教程
 
-### Libvirt 创建虚拟机
+### 创建一个虚拟机
 
 1. 在 xml 中定义虚拟机资源：
 
@@ -118,13 +122,21 @@ usermod -a -G libvirt $your_username
     virsh managedsave ubuntu
     ```
 
-### Virt Manger
-
-virt-manger 具有可视化图形界面，更方便使用。
-
 ### 更多
 
 ` libvirt`  的 image 默认存储到`/var/lib/libvirt/images`
+
+## Virt Manger 创建虚拟机
+
+virt-manger 具有可视化图形界面，更方便使用。
+
+启动网卡：
+
+```sh
+sudo virsh net-start default
+# 设置为自动启动
+sudo virsh net-autostart default
+```
 
 [参考文章](https://www.arthurkoziel.com/running-virt-manager-and-libvirt-on-macos/)
 
