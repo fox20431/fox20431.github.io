@@ -169,7 +169,3 @@ S（status）表示进程状态：R表示运行，S表示睡眠，Z表示僵尸�
 
 `k`: Prompts for a process ID and closes the specified process.
 
-
-
-
-
