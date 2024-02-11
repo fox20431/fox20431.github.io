@@ -110,7 +110,7 @@ mkdir /mnt/home
 mount /dev/家目录分区 /mnt/home
 ```
 
-### 链接网络
+### 连接网络
 
 通过下述命令进入 `iw` 交互界面：
 
@@ -362,9 +362,7 @@ systemctl enable gdm
 
 #### 音频
 
-安装音视频相关的固件和工具
-
-
+安装音视频相关的固件和工具：
 
 
 ```sh
@@ -395,14 +393,20 @@ sudo pacman -S sof-firmware alsa-firmware alsa-utils pipewire-alsa pipewire-puls
 
 ```sh
 # 安装蓝牙组件
-sudo pacman -S bluez
+sudo pacman -S bluez bluez-utils blueman
 # 启用蓝牙服务
 systemctl enable --now bluetooth
 ```
 
-### 系统配置
+这里需要安装 `blueman` ，否则蓝牙连接非常卡且高保真播放不稳定，原因不明。
 
-#### Tweak
+### Gnome 增强功能
+
+#### 图形界面设置 - Tweak
+
+```
+sudo pacman -S gnome-tweaks
+```
 
 需要说明的是，legacy在Tweak表示针对之前x开发的应用，比如chrome。
 
@@ -417,17 +421,24 @@ systemctl enable --now bluetooth
 
 当系统使用暗黑主题，需要手动调整 `Appearance` 的 `Legacy Application` 的选项为 `Adwaita-dark`
 
-#### Extensions
+#### 插件系统
 
 `gnome-shell-extensions` 在包含在安装 Gnome 集合包中，可以为 Gnome 桌面带来拓展特性。
 
-**插件推荐**
+##### 插件推荐
 
 - Hibernate Status Button
+
+这些是官方维护的插件：
+
 - AppIndicator and KStatusNotifierItem support (tray tool)
 - Dash to Dock
 - Just Perfection
 - GSConnect
+
+**tophat** 
+
+计算机资源topbar实时监控
 
 ### DConf
 
@@ -720,35 +731,6 @@ gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "[{'Gdk/Wind
 
 多次解决无果，尝试询问群友，原来是因为我多加了 `GTK_IM_MODULE` 环境变量，将这个删除后生效。
 
-### 调节触摸板滚动速度
-
-一般都是使用libinput，对于这种情况可以使用[libinput-config](https://gitlab.com/warningnonpotablewater/libinput-config)，修改对应配置文件`/etc/libinput.conf`。
-
-[reddit帖子](https://www.reddit.com/r/gnome/comments/kopjm0/still_no_way_to_adjust_touchpad_scrollspeed/)也有讨论这个问题的话题。
-
-```sh
-# 0.4倍速度
-scroll-factor=0.4
-```
-
-### Logitech鼠标安装微码后无法使用解决方案
-
-当安装微`intel-ucode`码后，罗技的无线鼠标不能用（个人情况不代表全部）。解决方案：卸载微码。
-
-不想卸载微码需要如下操作才能使用：
-
-罗技鼠标采用lightspeed传输技术，若想让Linux支持该功能需要安装：
-
-```sh
-sudo pacman -S libratbag
-sudo systemctl enable ratbagd
-sudo systemctl restart ratbagd
-```
-
-更多关于libratbag可见：https://github.com/libratbag/libratbag
-
-更多可见：https://wiki.archlinux.org/title/Logitech_Unifying_Receiver
-
 ### Xwayland在缩放情况下滚动速度问题
 
 目前没发现的好的解决方案，但是chrome可以针对设置（**不推荐，会导致鼠标情况下滚轮速度非常慢**）
@@ -788,3 +770,7 @@ mkinitcpio -P   			//ArchLinux
 ```
 
 原文链接：[KEYCHRON LINUX FUNCTION KEYS](https://mikeshade.com/posts/keychron-linux-function-keys/)
+
+### Idea下ibus候选框错位问题
+
+更新idea运行的JBR版本

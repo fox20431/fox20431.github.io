@@ -161,6 +161,32 @@ OALD中的英音和美音是有区别的，**根本原因是英国人和美国�
 
 推荐[剑桥的IPA Chart](https://www.cambridge.org/features/IPAchart/)，该表格总结了音素发音的位置、以及嘴唇的松紧。
 
+摘录：
+
+English Consonants 
+
+|                                            | Bilabial | [Labiodental](javascript:void(0);) | [Dental](javascript:void(0);) | [Alveolar](javascript:void(0);) | [Postalveolar](javascript:void(0);) | [Palatal](javascript:void(0);) | [Velar](javascript:void(0);) | [Glotal](javascript:void(0);) |
+| ------------------------------------------ | -------- | ---------------------------------- | ----------------------------- | ------------------------------- | ----------------------------------- | ------------------------------ | ---------------------------- | ----------------------------- |
+| (Oral) Stop                                | p b      |                                    |                               | t d                             |                                     |                                | k g                          | ʔ                             |
+| [(Nasal) Stop](javascript:void(0);)        | m        |                                    |                               | n                               |                                     |                                | ŋ                            |                               |
+| [Tap or Flap](javascript:void(0);)         |          |                                    |                               | ɾ                               |                                     |                                |                              |                               |
+| [Affricate](javascript:void(0);)           |          |                                    |                               |                                 | tʃ dʒ                               |                                |                              |                               |
+| [Fricative](javascript:void(0);)           |          | f v                                | θ ð                           | s z                             | ʃ ʒ                                 |                                |                              | h                             |
+| [Approximant](javascript:void(0);)         | w        |                                    |                               | ɹ                               |                                     | j                              | w                            |                               |
+| [Lateral approximant](javascript:void(0);) |          |                                    |                               | l                               |                                     |                                |                              |                               |
+
+English Vowels
+
+|                             |                              | [Front](javascript:void(0);)                     | [Central](javascript:void(0);)                               | [Back](javascript:void(0);)                   |
+| --------------------------- | ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------ | --------------------------------------------- |
+| [High](javascript:void(0);) | [Tense](javascript:void(0);) | [i](javascript:viewSymbol('symbols/i.html');)    |                                                              | [u](javascript:viewSymbol('symbols/u.html');) |
+|                             | [Lax](javascript:void(0);)   | [ɪ](javascript:viewSymbol('symbols/026A.html');) |                                                              | ʊ                                             |
+| [Mid](javascript:void(0);)  | [Tense](javascript:void(0);) | [e](javascript:viewSymbol('symbols/e.html');)    |                                                              | o                                             |
+|                             | [Lax](javascript:void(0);)   | [ɛ](javascript:viewSymbol('symbols/025B.html');) | [ə](javascript:viewSymbol('symbols/schwa.html');) [ʌ](javascript:viewSymbol('symbols/028C.html');) | (ɔ)                                           |
+| [Low](javascript:void(0);)  | [Lax](javascript:void(0);)   | [æ](javascript:viewSymbol('symbols/00E6.html');) | [a](javascript:viewSymbol('symbols/a.html');)                |                                               |
+
+ 
+
 ## 拓展
 
 ### 自然拼读（Natural Spelling）

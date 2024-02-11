@@ -250,15 +250,18 @@ flush ruleset
 table inet xray {
 
         chain prerouting {
-                type filter hook prerouting priority 0; policy accept;
+                type filter hook prerouting priority 0
+                policy accept
                 # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
                 ip6 daddr { ::1, fe80::/10 } return
+                # refuse the docker
+                ip daddr { 172.17.0.0/16, 172.18.0.0/16 } return
                 # don't handle the packages that the destination is device in wlan, but dns
                 meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return
-                ip6 daddr fd00::/8 udp dport != 53 return
                 ip daddr 192.168.0.0/16 udp dport != 53 return
+                ip6 daddr fd00::/8 udp dport != 53 return
                 # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
                 meta mark 255 return
                 # if the above rules are not matched, the packages are accepted by 12345 which is opened by xray.
@@ -267,25 +270,31 @@ table inet xray {
         }
 
         chain output {
-                type route hook output priority 0; policy accept;
-                # don't handle dns
-                ip protocol udp udp dport 53 return
-                ip protocol tcp tcp dport 53 return
+                type route hook output priority 0
+                policy accept
+                # don't handle dns and mdns
+                ip protocol udp udp dport { 53, 5353 } return
                 # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
                 ip6 daddr { ::1, fe80::/10 } return
+                # refuse the docker
+                ip daddr { 172.17.0.0/16, 172.18.0.0/16 } return
                 # don't handle the packages that the destination is device in wlan, but dns
                 meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return
-                ip6 daddr fd00::/8 udp dport != 53 return
                 ip daddr 192.168.0.0/16 udp dport != 53 return
+                ip6 daddr fd00::/8 udp dport != 53 return
                 # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
                 meta mark 255 return
                 # if the above rules are not matched, the packages is marked 1
                 # packages marked 1 are send to 'lo' by the table, then follow prerouting chains rules
                 meta l4proto { tcp, udp } meta mark set 1 accept
         }
-        
+
+        chain divert {
+                type filter hook prerouting priority mangle; policy accept;
+                meta l4proto tcp socket transparent 1 meta mark set 1 accept
+        }
 }
 ```
 
