@@ -1,5 +1,5 @@
 ---
-title: linux tproxy with xray
+title: linux transparent proxy with xray
 date: 2024-01-06
 ---
 
@@ -255,8 +255,10 @@ table inet xray {
                 # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
                 ip6 daddr { ::1, fe80::/10 } return
-                # refuse the docker
-                ip daddr { 172.17.0.0/16, 172.18.0.0/16 } return
+                # exclude the docker
+                ip daddr { 172.16.0.0/12 } return
+                # exclude the virtual machine
+                ip daddr { 192.168.122.0/24 } return
                 # don't handle the packages that the destination is device in wlan, but dns
                 meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return
@@ -277,8 +279,10 @@ table inet xray {
                 # don't handle the packages that the destination is current computer.
                 ip daddr { 127.0.0.0/8, 224.0.0.0/4, 255.255.255.255 } return
                 ip6 daddr { ::1, fe80::/10 } return
-                # refuse the docker
-                ip daddr { 172.17.0.0/16, 172.18.0.0/16 } return
+                # exclude the docker
+                ip daddr { 172.16.0.0/12 } return
+                # exclude the virtual machine
+                ip daddr { 192.168.122.0/24 } return
                 # don't handle the packages that the destination is device in wlan, but dns
                 meta l4proto tcp ip daddr 192.168.0.0/16 return
                 meta l4proto tcp ip6 daddr fd00::/8 return

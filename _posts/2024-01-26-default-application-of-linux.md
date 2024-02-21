@@ -1,6 +1,6 @@
 ---
 title: default application of linux
-dateL 2024-01-26
+date: 2024-01-26
 ---
 
 # Linux的默认打开方式

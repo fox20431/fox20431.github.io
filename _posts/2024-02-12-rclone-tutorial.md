@@ -40,3 +40,42 @@ date: 2024-02-12
    ```
 
 其他帮助参数 `-vv` 可以查看更详细的 debug 信息，更外该命令提供了很好的命令行补全功能。
+
+
+### 开机自启动挂载
+
+以其中一个挂载为例
+
+编辑 `.config/systemd/user/rclone-onedrive.service` ：
+
+```
+[Unit]
+Description=Rclone OneDrive Mount Service
+# Make sure keepass exist
+AssertPathIsDirectory=%h/Documents/KeePass
+# Make sure we have network enabled
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rclone mount OneDrive:Documents/KeePass %h/Documents/KeePass
+ExecStop=/usr/bin/umount %h/Documents/KeePass
+
+# Restart the service whenever rclone exists with non-zero exit code
+Restart=on-failure
+RestartSec=15
+
+[Install]
+# Autostart after reboot
+WantedBy=default.target
+```
+
+然后执行：
+
+```sh
+# 更新配置后自动更新
+systemctl --user daemon-reload
+systemctl --user enable rclone-onedrive.service
+```
+
+
