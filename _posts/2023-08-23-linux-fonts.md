@@ -3,12 +3,37 @@ title: Linux Fonts
 date: 2023-08-23
 ---
 
-# Linux fonts
+# Linux Fonts
 
-安装基础字体：
+
+## 安装字体
+
+安装开源字体
+
+- 思源汉（Source Han）
+- Noto 以及 Noto emoji
 
 ```sh
-sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-cjk
+# arch linux
+sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-cjk 
+```
+
+## 字体管理
+
+查看字体
+
+```sh
+# 产看中文的的字体列表
+fc-list :lang=zh
+fc-list :file=/usr/share/fonts/adobe-source-han-sans/SourceHanSans.ttc
+fc-list :family
+```
+
+更新字体缓存
+
+```sh
+# 更新系统字体缓存
+sudo fc-cache -f -v
 ```
 
 ## 字体配置
@@ -22,8 +47,9 @@ sudo pacman -S adobe-source-han-sans-otc-fonts noto-fonts-cjk
 
 ### 个人配置推荐
 
-`~/.config/fontconfig/fonts.conf` 
+`~/.config/fontconfig/fonts.conf`
 
+**确保下属字体存在或者名字正确，使用 `fc-lust` 查看**
 
 ```xml
 <?xml version="1.0"?>
@@ -71,8 +97,10 @@ sudo pacman -S nerd-fonts
 ### 手动安装
 
 1. 将字体文件放在指定目录：
+
    - 系统目录：`/usr/share/fonts`
    - 用户目录：`~/.fonts/`
+
 2. 刷新字体缓存
 
     ```sh
@@ -81,12 +109,4 @@ sudo pacman -S nerd-fonts
     ```
 
 在 archlinux 中同时存在了 `source han` 和 `win11` 的字体为中文字体提供支持，Chrome 在无指定 `font-family` 样式时出现中文多种字体混用情况。
-
-## 查看安装的字体信息
-
-```sh
-fc-list :lang=zh
-fc-list :file=/usr/share/fonts/adobe-source-han-sans/SourceHanSans.ttc
-fc-list :family
-```
 

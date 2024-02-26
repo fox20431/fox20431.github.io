@@ -689,6 +689,10 @@ sudo pacman -S mpv
 
 ## 问题及解决方案
 
+**该内容可能过时，更新内容见 `troubles-and-solutions-in-linux`！！！**
+
+考虑文本内容过多问题，不再该文章下继续更新问题以及解决方案。
+
 ### Intel显卡
 
 我之前一致认为intel显卡是最简单最不需要配置的显卡，直到入手了这台电脑。
@@ -765,8 +769,8 @@ echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf
 重启或者执行下面这条命令
 
 ```bash
-sudo update-initramfs -u  	//Ubuntu
-mkinitcpio -P   			//ArchLinux
+sudo update-initramfs -u    //Ubuntu
+mkinitcpio -P               //ArchLinux
 ```
 
 原文链接：[KEYCHRON LINUX FUNCTION KEYS](https://mikeshade.com/posts/keychron-linux-function-keys/)
@@ -774,3 +778,4 @@ mkinitcpio -P   			//ArchLinux
 ### Idea下ibus候选框错位问题
 
 更新idea运行的JBR版本
+
