@@ -17,6 +17,13 @@ date: 2024-02-12
 
 1. 安装 rclone
 
+   gentoo 安装：
+
+   ```sh
+   emerge -a net-misc/rclone
+   emerge -a sys-fs/fuse
+   ```
+
 2. 配置rclone配置，如下是进入具有引导的交互界面命令，具体交互省略
 
    ```
