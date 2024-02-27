@@ -766,12 +766,19 @@ echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode
 echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf
 ```
 
-重启或者执行下面这条命令
+rebuild the `initrd`:
 
 ```bash
-sudo update-initramfs -u    //Ubuntu
-mkinitcpio -P               //ArchLinux
+sudo update-initramfs -u
+# or
+mkinitcpio -P
+# or
+dracut <path> --kver <kernel_version>
+# kernel_version is same the as `ls /lib/modules/`
 ```
+
+then reboot
+
 
 原文链接：[KEYCHRON LINUX FUNCTION KEYS](https://mikeshade.com/posts/keychron-linux-function-keys/)
 
