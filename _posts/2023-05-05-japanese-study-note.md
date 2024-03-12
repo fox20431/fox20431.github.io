@@ -1,10 +1,9 @@
 ---
-title: Japanese
+title: japanese study note
+date: 2024-05-05
 ---
 
 # Japanese
-
-
 
 ## 五十音
 

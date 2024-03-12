@@ -153,7 +153,7 @@ S（status）表示进程状态：R表示运行，S表示睡眠，Z表示僵尸�
 
 **进程排序**
 
- `P`: Sort the processes by CPU.
+`P`: Sort the processes by CPU.
 
 `M`: Sort the processes by memory(%MEM) usage;
 
