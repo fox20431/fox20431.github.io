@@ -6,16 +6,24 @@
 
 以 `gentoo` 为例。`/efi` 为 `ESP` 分区的挂载点。
 
-1. 拷贝编译内核生成的 `./arch/x86/boot/bzImage` 到 `/boot/EFI/gentoo/bzImage.efi`；
+1. 拷贝编译内核生成的 `./arch/x86/boot/bzImage` 到 `/efi/gentoo/bzImage.efi`；
+
+    ```sh
+    cp ./arch/x86/boot/bzImage /efi/EFI/gentoo/bzImage.efi
+    ```
+
 2. 用 `dracut` 生成 `initramfs(AKA. initrc)` 到 `/efi/EFI/gentoo/initrd.cpio.gz`：
     ```sh
     dracut /efi/EFI/gentoo/initrd.cpio.gz --kver <kernel_version>
     # 这个 kernel_version 可以通过 ls /lib/modules 来查看
     ```
+
 3. 用 `efibootmgr` 注册相关信息（根目录uuid以及initrd）：
     ```sh
     efibootmgr --create --disk /dev/nvme1n1 --label "Gentoo" --loader "\EFI\gentoo\bzImage.efi" -u 'root=UUID=97ffc05a-6098-4af9-9d61-a40f403fffca initrd=\EFI\gentoo\initrd.cpio.gz'
     ```
+
+更新内核只需要将`/efi/EFI/gentoo/bzImage.efi`和`/efi/EFI/gentoo/initrd.cpio.gz`更新就行。
 
 refer: 
 
