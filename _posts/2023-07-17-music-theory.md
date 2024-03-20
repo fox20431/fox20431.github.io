@@ -1,9 +1,11 @@
 ---
-title: Knowledge of music theory
+title: music theory
 date: 2023-07-17
 ---
 
-# Knowledge of music theory
+# 乐理知识
+
+学习乐理、试唱、练耳。
 
 声音四个主要要素：
 
@@ -32,4 +34,16 @@ date: 2023-07-17
 频率（音高）和声音的震动幅度有关系。
 
 响度和频率都是各个单位都是指数关系，以后慢慢展开说 
+
+## 识谱
+
+谱号
+
+调号
+
+节拍
+
+音名：CDEFGAB
+
+唱名：do re mi fa sol la si
 
