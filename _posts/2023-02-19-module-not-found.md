@@ -1,1 +1,0 @@
-当Project中含有多个Module时，Idea无法识别，有可能是因为未添加其pom.xml文件到maven中。

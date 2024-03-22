@@ -81,3 +81,7 @@ dracut --hostonly -f --kver=<kernel-version> // 待测试，已知没有 '--host
 一般是应用 `font-family` 设置中按照优先级选择到了指定字体，但是该字体包含的文字不全就导致了字体显示不统一。
 
 解决方案删除那些包含不全面的字体，这里**不推荐在Linux下使用微软移植过来的字体**，因为不可信因素太多。
+
+### xwayland 的 HiDPI 方案
+
+参考：https://yhndnzj.com/2022/10/17/sway-xwayland-real-hidpi/

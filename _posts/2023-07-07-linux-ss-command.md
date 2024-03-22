@@ -1,9 +1,9 @@
 ---
-title: ss
+title: ss command
 date: 2023-07-07
 ---
 
-# SS
+# SS Command
 
 
 
