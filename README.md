@@ -4,11 +4,33 @@
 
 ## Introduce
 
-This is the blog that records the notes.
+This is the source repository of my blog site.
 
-## Build
+Powered by [Jekyll](https://jekyllrb.com/).
 
-If you have installed the ruby on your machine, follow the following steps to run it. If not, check `Install Ruby`.
+## Usage
+
+### Install Ruby
+
+Install ruby:
+
+```sh
+sudo pkg-mgr install ruby
+```
+
+Install ruby utils:
+
+```sh
+sudo gem install bundler jekyll
+```
+
+### Build
+
+Preset the libary path
+
+```sh
+bundle config set --local path 'vendor/bundle'
+```
 
 Install the dependencies:
 
@@ -18,29 +40,11 @@ bundle install
 
 Build the site and make it available to Jekyll, a local server.
 
-```
+```sh
 bundle exec jekyll serve
 ```
 
-### Install Ruby
-
-**for Windows**
-
-Download and install `Ruby` from [the official website](https://www.ruby-lang.org/en/) then execute the command:
-
-**for Linux**
-
-Install ruby
-
-```sh
-sudo apt-get install ruby
-```
-
-```sh
-sudo gem install bundler jekyll
-```
-
-### Donate
+### Contribution
 
 First, you need to know the Jekyll convention, please check [the documentation](https://jekyllrb.com/docs/).
 

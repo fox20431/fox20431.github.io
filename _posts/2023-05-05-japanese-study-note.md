@@ -1,6 +1,6 @@
 ---
 title: japanese study note
-date: 2024-05-05
+date: 2023-05-05
 ---
 
 # Japanese

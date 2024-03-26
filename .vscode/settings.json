@@ -1,6 +1,8 @@
 {
-    "files.associations": {
-        "*.html": "liquid"
-    },
-    "liquid.format.enable": true,
+  "files.associations": {
+    "*.html": "liquid"
+  },
+  "yaml.schemas": {
+    "_config.yml": "https://json.schemastore.org/jekyll"
+  }
 }
