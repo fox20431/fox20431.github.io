@@ -36,25 +36,17 @@
   <div class="author-urls-wrapper">
     <button class="btn">{{ site.data.ui-text[site.locale].follow_label | remove: ":" | default: "Follow" }}</button>
     <ul class="author-urls social-icons">
-      {% if author.location %}
-        <li>
-          <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i>
-          <span itemprop="name" class="label">{{ author.location }}</span>
-        </li>
-      {% endif %}
-      <li></li>
-
       {% if author.links %}
         {% for link in author.links %}
           {% if link.label and link.url %}
-            <li>
+            <li class="no-underline">
               <a
-                class='no-underline'
+                class='hover:no-underline'
                 href="{{ link.url }}"
                 rel="nofollow noopener noreferrer me"
                 {% if link.url contains 'http' %}itemprop="sameAs"{% endif %}>
                 <i class="{{ link.icon | default: 'fa-solid fa-link' }}" aria-hidden="true"></i>
-                <span class="label">{{ link.label }}</span>
+                <span class="label hover:underline">{{ link.label }}</span>
               </a>
             </li>
           {% endif %}

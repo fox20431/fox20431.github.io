@@ -3,5 +3,40 @@
 
 @charset "utf-8";
 
-@import "one-punch/skins/{{ site.one-punch-skin | default: 'default' }}"; // skin
-@import "one-punch"; // main partials
+@import "skins/{{ site.one-punch-skin | default: 'default' }}"; // skin
+
+/* Variables */
+@import "variables";
+
+/* Mixins and functions */
+@import "vendor/breakpoint/breakpoint";
+@include breakpoint-set("to ems", true);
+@import "vendor/magnific-popup/magnific-popup"; // Magnific Popup
+@import "vendor/susy/susy";
+@import "mixins";
+
+/* Core CSS */
+@import "reset";
+@import "base";
+@import "forms";
+@import "tables";
+@import "animations";
+
+/* Components */
+@import "buttons";
+@import "notices";
+@import "masthead";
+@import "navigation";
+@import "footer";
+@import "search";
+@import "syntax";
+
+/* Utility classes */
+@import "utilities";
+@import "icons";
+
+/* Layout specific */
+@import "page";
+@import "archive";
+@import "sidebar";
+@import "print";
