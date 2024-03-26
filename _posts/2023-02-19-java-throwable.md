@@ -1,7 +1,7 @@
 ---
 
-title: Throwable
-date:2023-02-19
+title: 'java throwable class'
+date: 2023-02-19
 ---
 
 # Throwable
