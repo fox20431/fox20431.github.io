@@ -1,6 +1,7 @@
 {
   "files.associations": {
-    "*.html": "liquid"
+    "*.html": "liquid",
+    "lunr-store.js": "liquid"
   },
   "yaml.schemas": {
     "_config.yml": "https://json.schemastore.org/jekyll"

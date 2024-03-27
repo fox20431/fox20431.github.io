@@ -1,5 +1,5 @@
 <div class="search-content__inner-wrap">
-  {%- assign search_provider = site.search_provider | default: "lunr" -%}
+  {%- assign search_provider = "lunr" -%}
   {%- case search_provider -%}
   {%- when "lunr" -%}
   <form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">

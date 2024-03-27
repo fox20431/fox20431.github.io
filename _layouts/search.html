@@ -22,7 +22,7 @@ layout: default
 
     {{ content }}
 
-    {%- assign search_provider = site.search_provider | default: "lunr" -%}
+    {%- assign search_provider = "lunr" -%}
     {%- case search_provider -%}
       {%- when "lunr" -%}
       <input

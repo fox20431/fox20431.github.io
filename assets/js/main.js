@@ -45,6 +45,7 @@ $(function() {
 
   // Search toggle
   $(".search-toggle").on("click", function() {
+    console.log("hola")
     $(".search-content").toggleClass("is--visible");
     $(".initial-content").toggleClass("is--hidden");
     // set focus on input
