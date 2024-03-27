@@ -203,6 +203,10 @@
   .author-urls {
     span.label {
       padding-left: 5px;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
