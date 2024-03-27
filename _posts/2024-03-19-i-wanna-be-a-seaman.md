@@ -1,6 +1,7 @@
 ---
 title: i wanna be a seaman
 date: 2024-03-19
+typora-root-url: ../
 ---
 
 # 海员成长日记
@@ -17,7 +18,7 @@ date: 2024-03-19
 
 关于岗位晋升，可以参考该图：
 
-<img src="assets/images/sailor-promotion-in-20-rule.jpg" alt="20规则船员晋升流程图" style="zoom:33%;" />
+<img src="/assets/images/sailor-promotion-in-20-rule.jpg" alt="20规则船员晋升流程图" style="zoom:33%;" />
 
 报名培训价格：海手/机工7000左右，三副三管15k到20k不等。
 
