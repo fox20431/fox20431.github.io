@@ -1,11 +1,10 @@
 ---
 title: transistor unveiled
 date: 2023-12-11
+typora-root-url: ../
 ---
 
 # 揭秘晶体管
-
-
 
 ## History
 
@@ -47,13 +46,13 @@ date: 2023-12-11
 
 NPN（N型），左边N为高浓度掺杂，右边N为低浓度掺杂。
 
-![File:NPN BJT.svg - Wikimedia Commons](assets/NPN-BJT-structure.svg.png)
+<img src="/assets/images/NPN-BJT-structure.svg.png" alt="File:NPN BJT.svg - Wikimedia Commons" style="zoom:33%;" />
 
 #### 原理
 
 当B极有电子移动到 $V_{BE}$ 的时候，将吸引高浓度电子的E极大量电子涌入B极，但是 $V_{BE}$ 能力有限，多余的大量电子将在作用力下涌入到 $V_{CB}$，从而达到BE的小电流控制CB的大电流。
 
-![NPN-BJT-basic_operation](assets/NPN-BJT-basic_operation.png)
+<img src="/assets/images/NPN-BJT-basic_operation.png" alt="NPN-BJT-basic_operation" style="zoom: 25%;" />
 
 [终于有人讲了，凭什么三极管能放大? - bilibili](https://www.bilibili.com/video/BV1fB4y147Gn/?spm_id_from=333.337.search-card.all.click&vd_source=24924a2b6e399f6354bb051bd87d3bb1)
 
@@ -64,7 +63,7 @@ NPN（N型），左边N为高浓度掺杂，右边N为低浓度掺杂。
 Emitter 和 Base 的电流方向由带电属性决定：当Emitter为N、Base为P时，电流从B到P，否则反之。
 
 
-![Transistors - Practical EE](assets/BJT-symbols.jpg)
+![Transistors - Practical EE](/assets/images/BJT-symbols.jpg)
 
 ### 场效应管
 
@@ -82,7 +81,7 @@ FET相比较BJT利用电流控制开关，FET采用电压控制开关，因此FE
 
 P-Channel JFET structure:
 
-![P-channel-JFET-strructure](assets/P-channel-JFET-strructure.png)
+<img src="/assets/images/P-channel-JFET-strructure.png" alt="P-channel-JFET-strructure" style="zoom:25%;" />
 
 耗尽层（英语：depletion region），又称耗尽区、阻挡层、势垒区（barrier region），**是指PN结中在漂移运动和扩散作用的双重影响下载流子数量非常少的一个高电阻区域**。
 
@@ -90,13 +89,13 @@ P-Channel JFET structure:
 
 针对P沟道，对N型Gate施加反向偏置电压（比如-5V），会增强N型的吸引正电荷的强度，从而会在P沟道中形成一个耗尽层，当电压足够大的时候，Source到Drain的电路断开。
 
-![Principles of Operation](assets/N-channel-JFET-basic-operation.gif)
+<img src="/assets/images/N-channel-JFET-basic-operation.gif" alt="Principles of Operation" style="zoom: 50%;" />
 
 [很通俗的解释 JFET的工作原理 比MOS管简单很多 结型场效应管的工作原理 - bilibili](https://www.bilibili.com/video/BV1ne4y1y7Nt/?spm_id_from=333.337.search-card.all.click&vd_source=24924a2b6e399f6354bb051bd87d3bb1)
 
 ##### Symbols
 
-![JFET and its working - Electronics fun](assets/JFET-symbols.png)
+![JFET and its working - Electronics fun](/assets/images/JFET-symbols.png)
 
 #### MOS场效应管
 
@@ -110,17 +109,17 @@ MOSFET（Metal Oxide Semiconductor FET）
 
 The following is a simplified structure of an N channel **MOS (NMOS)** device.
 
-![MOSFET Physics](assets/N-channel-MOSFET-structure.png)
+![MOSFET Physics](/assets/images/N-channel-MOSFET-structure.png)
 
 ##### 原理
 
-![What is MOSFET?: Symbol, Construction, Working, Characteristics](assets/P-channel-MOSFET-basic-operation.png)
+![What is MOSFET?: Symbol, Construction, Working, Characteristics](/assets/images/P-channel-MOSFET-basic-operation.png)
 
 [Mos管的工作原理 - bilibili](https://www.bilibili.com/video/BV1344y167qm/?spm_id_from=333.337.search-card.all.click&vd_source=24924a2b6e399f6354bb051bd87d3bb1)
 
 ##### 符号
 
-![What is MOSFET? A detailed guide on MOSFET](assets/MOSFET-symbols.png)
+<img src="/assets/images/MOSFET-symbols.png" alt="What is MOSFET? A detailed guide on MOSFET" style="zoom: 50%;" />
 
 ## Analog Design
 
@@ -130,6 +129,6 @@ The following is a simplified structure of an N channel **MOS (NMOS)** device.
 
 以下是常见的逻辑门对应的JFET组合方式（image from [GateRL](https://www.mdpi.com/2079-9292/10/9/1032?type=check_update&version=1)）：
 
-![image-20231213145140539](assets/mos-for-logic-gates.png)
+![image-20231213145140539](/assets/images/mos-for-logic-gates.png)
 
 在实际的电路中可能会有其他的更好的排列组合方式。
