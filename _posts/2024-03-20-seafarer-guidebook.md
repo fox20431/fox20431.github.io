@@ -1,5 +1,5 @@
 ---
-title: seaman guidebook
+title: seafarer guidebook
 date: 2024-03-20
 ---
 

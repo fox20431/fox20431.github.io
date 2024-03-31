@@ -1,5 +1,5 @@
 ---
-title: i wanna be a seaman
+title: i wanna be a seafarer
 date: 2024-03-19
 typora-root-url: ../
 ---
