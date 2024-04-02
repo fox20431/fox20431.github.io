@@ -1,4 +1,11 @@
-# Git Summarize
+---
+title: git tutorial
+date: 2023-02-19
+---
+
+
+
+# Git Tutorial
 
 git的官方网址是`git-scm.com`，通过他的uri得知git的定位为scm(Software Configuration Management)。
 

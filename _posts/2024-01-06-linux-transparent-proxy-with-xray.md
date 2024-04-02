@@ -92,46 +92,22 @@ date: 2024-01-06
           "type": "http"
         }
       }
-    },
-    {
-      "tag": "dns-out",
-      "protocol": "dns",
-      "streamSettings": {
-        "sockopt": {
-          "mark": 255
-        }
-      }
     }
   ],
-  "dns": {
+    "dns": {
     "hosts": {
-      "dns.google": ["8.8.8.8", "8.8.4.4"],
-      "connect.hihusky.com": "212.50.249.175"
+      "domain:googleapis.cn": "googleapis.com",
+      "dns.google": "8.8.8.8"
     },
     "servers": [
-      "1.1.1.1",
-      "8.8.8.8",
-      {
-        "address": "223.5.5.5",
-        "port": 53,
-        "domains": ["geosite:cn"]
-      },
       "https://1.1.1.1/dns-query",
-      "https://8.8.8.8/dns-query",
       "localhost"
     ]
   },
   "routing": {
     "domainMatcher": "hybrid",
-    "domainStrategy": "IPOnDemand",
+    "domainStrategy": "IPIfNonMatch",
     "rules": [
-      {
-        "type": "field",
-        "inboundTag": ["all-in"],
-        "port": 53,
-        "network": "udp",
-        "outboundTag": "dns-out"
-      },
       {
         "type": "field",
         "protocol": ["bittorrent"],
@@ -139,16 +115,17 @@ date: 2024-01-06
       },
       {
         "type": "field",
-        "ip": [
-					"1.1.1.1",
- 					"8.8.8.8"
-				],
-        "outboundTag": "proxy"
+        "domain": ["geosite:category-ads-all"],
+        "outboundTag": "block"
       },
       {
         "type": "field",
+        "ip": [
+          "1.1.1.1",
+          "8.8.8.8",
+          "8.8.4.4"
+        ],
         "domain": [
-          "geosite:geolocation-!cn",
           "domain:googleapis.cn",
           "dns.google"
         ],
@@ -159,26 +136,23 @@ date: 2024-01-06
         "ip": [
           "geoip:private", 
           "geoip:cn",
-		  		"223.5.5.5",
+          "223.5.5.5",
           "212.50.249.175"
         ],
-        "outboundTag": "direct"
-      },
-      {
-        "type": "field",
         "domain": [
           "geosite:private",
           "geosite:cn",
           "geosite:category-games@cn",
+          "stun.l.google.com",
           "domain:hihusky.com",
-          "domain:iimn.net"
+          "domain:iimn.net",
+          "domain:snapdrop.net",
+          "domain:gov.cn",
+          "domain:douyin.com",
+          "domain:zijieapi.com",
+          "domain:zjcdn.com"
         ],
         "outboundTag": "direct"
-      },
-      {
-        "type": "field",
-        "domain": ["geosite:category-ads-all"],
-        "outboundTag": "block"
       }
     ]
   }
@@ -259,16 +233,14 @@ table inet xray {
                 ip daddr { 172.16.0.0/12 } return
                 # exclude the virtual machine
                 ip daddr { 192.168.122.0/24 } return
-                # don't handle the packages that the destination is device in wlan, but dns
-                meta l4proto tcp ip daddr 192.168.0.0/16 return
-                meta l4proto tcp ip6 daddr fd00::/8 return
-                ip daddr 192.168.0.0/16 udp dport != 53 return
-                ip6 daddr fd00::/8 udp dport != 53 return
+                # don't handle the packages that the destination is device in wlan
+                ip daddr 192.168.0.0/16 return
+                ip6 daddr fd00::/8 return
                 # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
                 meta mark 255 return
                 # if the above rules are not matched, the packages are accepted by 12345 which is opened by xray.
-                meta l4proto { tcp, udp } tproxy ip to 127.0.0.1:12345 accept
-                meta l4proto { tcp, udp } tproxy ip6 to [::1]:12345 accept
+                meta l4proto { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
+                meta l4proto { tcp, udp } meta mark set 1 tproxy ip6 to [::1]:12345 accept
         }
 
         chain output {
@@ -283,11 +255,9 @@ table inet xray {
                 ip daddr { 172.16.0.0/12 } return
                 # exclude the virtual machine
                 ip daddr { 192.168.122.0/24 } return
-                # don't handle the packages that the destination is device in wlan, but dns
-                meta l4proto tcp ip daddr 192.168.0.0/16 return
-                meta l4proto tcp ip6 daddr fd00::/8 return
-                ip daddr 192.168.0.0/16 udp dport != 53 return
-                ip6 daddr fd00::/8 udp dport != 53 return
+                # don't handle the packages that the destination is device in wlan
+                ip daddr 192.168.0.0/16 return
+                ip6 daddr fd00::/8 return
                 # don't handle the packages marked 255, 255 mark express the package has been handled by xray.
                 meta mark 255 return
                 # if the above rules are not matched, the packages is marked 1
@@ -296,7 +266,8 @@ table inet xray {
         }
 
         chain divert {
-                type filter hook prerouting priority mangle; policy accept;
+                type filter hook prerouting priority mangle
+                policy accept
                 meta l4proto tcp socket transparent 1 meta mark set 1 accept
         }
 }
@@ -340,25 +311,27 @@ WantedBy=multi-user.target
 
 正常情况下netfilter收发报要经历以下hooks。
 
-发：
-
-output -> 
-
 收：
 
-prerouting -> input -> 
-
-
+网路 -> linux网络栈 -> prerouting -> xray -> 
 
 上述规则配置根据判断 mark 的位置使得我们发送包的流向改变了
 
 发：
 
-output -> mark 1 -> lo -> prerouting -> xray -> 
+output -> mark 1 -> prerouting（mark1根据防火墙规则会进入lo，进入lo触发prerouting规则） -> xray（prerouting设置的规则会将流量导入255） -> linux网络栈 -> 网路
 
 ## 问题
 
-Ping会很久
+**上述配置并未对DNS请求进行代理**
+
+因为发出的DNS会默认遵守系统的`/etc/resolv.conf`配置的IP，多次尝试在 xray 中配置失败。
+
+目前面对 DNS 污染的方案就是使用 NetworkManager 的特性，对制定网络设置制定的 DNS 。
+
+---
+
+**Ping会很久**
 
 使用：
 
@@ -368,10 +341,3 @@ ping -n domain
 
 禁止反向DNS解析就可以解决。
 
-
-
-## TODO
-
-ping 国内地址DNS路由有问题，表现为速度很慢。
-
-https://wiki.nftables.org/wiki-nftables/index.php/Configuring_chains
