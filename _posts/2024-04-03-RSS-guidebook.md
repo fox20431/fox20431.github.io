@@ -23,25 +23,26 @@ Gnome on Linux：
 
 订阅（Feed）提供平台：
 
-- [feedx](https://feedx.net/)
-- 
+- [rsshub](https://rsshub.app)：开源可信
+- [feedx](https://feedx.net/)：年久失修
 
-新闻类：
+RSS订阅源推荐：
 
-| 新闻媒体                                                     | RSS 订阅地址                                |
-| ------------------------------------------------------------ | ------------------------------------------- |
-| [路透中文网](https://cn.reuters.com/)                        | https://feedx.net/rss/reuters.xml           |
-| [纽约时报中文网](https://cn.nytimes.com/)                    | https://feedx.net/rss/nytimes.xml           |
-| [FT中文网](http://www.ftchinese.com/)                        | https://www.ftchinese.com/rss/news          |
-| [BBC News](https://www.bbc.com)                              | https://feeds.bbci.co.uk/news/world/rss.xml |
-| [法国国际广播电台](http://cn.rfi.fr/)                        | https://feedx.net/rss/rfi.xml               |
-| [德国之声](http://www.dw.com/)                               | https://feedx.net/rss/dw.xml                |
-| [俄罗斯卫星通讯社](http://sputniknews.cn/)                   | https://feedx.net/rss/sputnik.xml           |
-| [联合早报](https://www.zaobao.com.sg/)                       | https://feedx.net/rss/zaobaotoday.xml       |
-| [朝鲜日报网](http://cnnews.chosun.com/)                      | https://feedx.net/rss/chosun.xml            |
-| [共同网](https://china.kyodonews.net/)                       | https://feedx.net/rss/kyodo.xml             |
-| [朝日新闻](https://asahichinese-j.com/whatsnew/)             | https://feedx.net/rss/asahi.xml             |
-| [日经中文网](https://cn.nikkei.com/)                         | https://feedx.net/rss/nikkei.xml            |
-| [苹果日报](https://hk.news.appledaily.com/daily/international/) | https://feedx.net/rss/appledaily.xml        |
-| [中央社](http://m.cna.com.tw/list/firstnews)                 | https://feedx.net/rss/cna.xml               |
-| [澎湃新闻](http://www.thepaper.cn/)                          | https://feedx.net/rss/thepaper.xml          |
+- [RSS Source](https://rss-source.com/)
+
+**世界新闻：**
+
+The Guardian: https://www.theguardian.com/uk/rss
+
+BBC: [http://feeds.bbci.co.uk/news/video_and_audio/news_front_page...](http://feeds.bbci.co.uk/news/video_and_audio/news_front_page/rss.xml?edition=uk)
+
+Reuters: http://feeds.reuters.com/Reuters/worldNews
+
+**科技新闻：**
+
+Here is the RSS feed of Hacker News: https://news.ycombinator.com/rss
+
+Ars Technica: http://feeds.arstechnica.com/arstechnica/index/
+
+LWN: https://lwn.net/headlines/newrss
+
