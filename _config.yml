@@ -15,14 +15,13 @@ sass:
   sass_dir: _sass
   style: compressed
 
-
 # Site Settings
 locale: "en-US"
 title: "One Punch"
 title_separator: "-"
 subtitle: # site tagline that appears below site title in masthead
 name: "Ming Li"
-description: "All it is Just a Punch."
+description: "One blog punch all questions."
 url: "https://fox20431.github.io"
 baseurl: "" # the subpath of your site, e.g. "/blog"
 logo: "favicon.ico" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
